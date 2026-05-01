@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://6d20in30nrkn"]
+
+[ext_resource type="Texture2D" uid="uid://jv57gm5u1lfa" path="res://kenney_space-shooter-redux/PNG/Enemies/enemyGreen1.png" id="1_v7ugi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cag5b"]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jiu8v"]
+radius = 30.0
+
+[node name="DebugDummy" type="RigidBody2D"]
+scale = Vector2(0.2, 0.2)
+collision_layer = 4
+collision_mask = 4
+mass = 0.5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4.76837e-07)
+scale = Vector2(0.648643, 0.703367)
+texture = ExtResource("1_v7ugi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cag5b")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_jiu8v")

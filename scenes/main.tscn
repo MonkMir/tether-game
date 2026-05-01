@@ -1,0 +1,116 @@
+[gd_scene load_steps=19 format=3 uid="uid://cispfyjhtrf2u"]
+
+[ext_resource type="Script" uid="uid://b1pfhde0p3uad" path="res://scripts/other scripts/Pause.gd" id="1_baels"]
+[ext_resource type="Script" uid="uid://cjhwap0ms2gko" path="res://scripts/other scripts/Player.gd" id="2_0qund"]
+[ext_resource type="PackedScene" uid="uid://c5ipjdvuqk2ci" path="res://scenes/dummies/arrow_dummy.tscn" id="3_uviln"]
+[ext_resource type="PackedScene" uid="uid://db0s0w2do4o4o" path="res://scenes/dummies/bomber_dummy.tscn" id="4_sfych"]
+[ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://scenes/health_bar.tscn" id="5_8gikd"]
+[ext_resource type="PackedScene" uid="uid://dbax4wv030pfo" path="res://scenes/dummies/parabolic_dummy.tscn" id="5_vu7ec"]
+[ext_resource type="Script" uid="uid://ba40nwh8lu65b" path="res://scripts/other scripts/Enemy Spawner.gd" id="6_0p816"]
+[ext_resource type="PackedScene" uid="uid://cdk16uvt8jqbb" path="res://scenes/enemies/arrow_enemy.tscn" id="7_02yj2"]
+[ext_resource type="PackedScene" uid="uid://dkq6ilqibkqvo" path="res://scenes/enemies/bomber_enemy.tscn" id="7_27k66"]
+[ext_resource type="Script" uid="uid://da7f2buhged70" path="res://scripts/other scripts/ScoreLabel.gd" id="8_14cfy"]
+[ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://scripts/other scripts/GameOverLabel.gd" id="9_iqu0m"]
+[ext_resource type="PackedScene" uid="uid://cm6ubd5en4t7e" path="res://scenes/enemies/parabolic_enemy.tscn" id="11_mpg2q"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m7dn7"]
+load_path = "res://.godot/imported/2d shmup experiment bg.png-ee718841997e80af9a4210bed9428d6e.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y2x55"]
+load_path = "res://.godot/imported/playerShip3_red.png-a646d88c4dd5b9a5ac9a7606e0094d9d.ctex"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2ck4e"]
+radius = 64.0312
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fohr5"]
+radius = 19.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_c5177"]
+font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_qrb1h"]
+font_size = 100
+
+[node name="Main" type="Node2D"]
+metadata/_edit_lock_ = true
+
+[node name="SpaceBackground" type="Sprite2D" parent="."]
+position = Vector2(576, 324)
+scale = Vector2(1.2, 1.20446)
+texture = SubResource("CompressedTexture2D_m7dn7")
+metadata/_edit_lock_ = true
+
+[node name="Pause" type="Node2D" parent="."]
+process_mode = 3
+script = ExtResource("1_baels")
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
+position = Vector2(-192, 313)
+script = ExtResource("2_0qund")
+arrow_dummy_scene = ExtResource("3_uviln")
+bomber_dummy_scene = ExtResource("4_sfych")
+parabolic_dummy_scene = ExtResource("5_vu7ec")
+
+[node name="PlayerSprite" type="Sprite2D" parent="Player"]
+rotation = 1.5708
+scale = Vector2(0.6, 0.6)
+texture = SubResource("CompressedTexture2D_y2x55")
+
+[node name="TetherRange" type="Area2D" parent="Player"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/TetherRange"]
+position = Vector2(-3, 0)
+shape = SubResource("CircleShape2D_2ck4e")
+debug_color = Color(0.662399, 0.513404, 3.85046e-07, 0.42)
+
+[node name="Hurtbox" type="Area2D" parent="Player" groups=["player"]]
+collision_mask = 2
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="Player/Hurtbox"]
+position = Vector2(-3, 0)
+shape = SubResource("CircleShape2D_fohr5")
+
+[node name="HealthBarCanvas" type="CanvasLayer" parent="Player"]
+
+[node name="HealthBar" parent="Player/HealthBarCanvas" instance=ExtResource("5_8gikd")]
+
+[node name="Tether" type="DampedSpringJoint2D" parent="Player"]
+node_a = NodePath("..")
+
+[node name="Line2D" type="Line2D" parent="Player/Tether"]
+
+[node name="EnemySpawner" type="Node2D" parent="."]
+script = ExtResource("6_0p816")
+arrowScene = ExtResource("7_02yj2")
+bomberScene = ExtResource("7_27k66")
+parabolicScene = ExtResource("11_mpg2q")
+
+[node name="Timer" type="Timer" parent="EnemySpawner"]
+wait_time = 2.0
+autostart = true
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 26.0
+offset_top = 67.0
+offset_right = 163.0
+offset_bottom = 117.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_c5177")
+script = ExtResource("8_14cfy")
+
+[node name="GameOverLabel" type="Label" parent="."]
+visible = false
+offset_right = 1156.0
+offset_bottom = 647.0
+text = "UR DOGWATER!"
+label_settings = SubResource("LabelSettings_qrb1h")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("9_iqu0m")
+
+[connection signal="area_entered" from="Player/TetherRange" to="Player" method="_on_tether_range_area_entered"]
+[connection signal="area_exited" from="Player/TetherRange" to="Player" method="_on_tether_range_area_exited"]
+[connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_hurtbox_area_entered"]
+[connection signal="timeout" from="EnemySpawner/Timer" to="EnemySpawner" method="spawn_enemy"]
