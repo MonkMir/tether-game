@@ -21,7 +21,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameState="*res://scripts/other scripts/game_state.gd"
+GameState="*res://scripts/other-scripts/game_state.gd"
 
 [display]
 
@@ -36,6 +36,7 @@ folder_colors={
 "res://scenes/enemies/": "red",
 "res://scenes/projectiles/": "green",
 "res://scripts/": "purple",
+"res://scripts/custom-classes/": "gray",
 "res://scripts/dummies/": "blue",
 "res://scripts/enemies/": "red"
 }

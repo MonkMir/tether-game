@@ -14,6 +14,7 @@ const SCORE_REWARD := 10
 @onready var circlingRange := $CirclingRange/CollisionShape
 @onready var timer := $BombTimer
 @onready var healthBar := $HealthBar
+@onready var healthIndicatorBar := $HealthBar/HealthIndicatorBar
 
 enum State{
 	APPROACH,
@@ -61,8 +62,9 @@ var playerDir := Vector2.ZERO
 
 
 func _ready():
-	healthBar.size = Vector2(600, 90)
-	healthBar.pivot_offset = Vector2(-33, -50)
+	healthIndicatorBar.size = Vector2(600, 90)
+	#replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
+	healthIndicatorBar.position = Vector2(-healthIndicatorBar.size.x / 2, -512)
 	healthBar._init_health(health)
 
 func _process(delta):

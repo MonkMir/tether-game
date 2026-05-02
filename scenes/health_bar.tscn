@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://ce7vb62j3bjsi"]
+[gd_scene format=3 uid="uid://ce7vb62j3bjsi"]
 
-[ext_resource type="Script" path="res://scripts/other scripts/HealthBar.gd" id="1_jmkhu"]
+[ext_resource type="Script" uid="uid://d3gcv7ye4yg8h" path="res://scripts/other-scripts/HealthBar.gd" id="1_jmkhu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kgpi3"]
 
@@ -19,17 +19,20 @@ shadow_offset = Vector2(0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ufj63"]
 bg_color = Color(0.90415, 0.700859, 0.689114, 1)
 
-[node name="HealthBar" type="ProgressBar"]
+[node name="HealthBar" type="Node2D" unique_id=993042800]
+script = ExtResource("1_jmkhu")
+
+[node name="HealthIndicatorBar" type="ProgressBar" parent="." unique_id=427511554]
 z_index = 1
 anchors_preset = -1
 anchor_left = 0.056
 anchor_top = 0.062
 anchor_right = 0.951
 anchor_bottom = 0.086
-offset_left = -8.512
-offset_top = -8.176
-offset_right = -0.552002
-offset_bottom = 5.272
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 1120.0
+offset_bottom = 56.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 1
@@ -37,23 +40,28 @@ theme_override_styles/background = SubResource("StyleBoxEmpty_kgpi3")
 theme_override_styles/fill = SubResource("StyleBoxFlat_odq4e")
 value = 80.0
 show_percentage = false
-script = ExtResource("1_jmkhu")
+metadata/_edit_group_ = true
 
-[node name="DamageIndicatorBar" type="ProgressBar" parent="."]
+[node name="DamageIndicatorBar" type="ProgressBar" parent="HealthIndicatorBar" unique_id=579317846]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 8.512e-05
+offset_top = 8.176e-05
+offset_right = 8.535385e-05
+offset_bottom = 8.2969666e-05
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ae7y7")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ufj63")
 value = 90.0
 show_percentage = false
+metadata/_edit_group_ = true
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="HealthIndicatorBar" unique_id=813506413]
 wait_time = 0.7
 one_shot = true
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="HealthIndicatorBar/Timer" to="." method="_on_timer_timeout"]

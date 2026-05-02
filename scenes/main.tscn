@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cispfyjhtrf2u"]
+[gd_scene format=3 uid="uid://cispfyjhtrf2u"]
 
 [ext_resource type="Script" uid="uid://b1pfhde0p3uad" path="res://scripts/other scripts/Pause.gd" id="1_baels"]
 [ext_resource type="Script" uid="uid://cjhwap0ms2gko" path="res://scripts/other scripts/Player.gd" id="2_0qund"]
@@ -31,67 +31,67 @@ font_size = 36
 [sub_resource type="LabelSettings" id="LabelSettings_qrb1h"]
 font_size = 100
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=1762207710]
 metadata/_edit_lock_ = true
 
-[node name="SpaceBackground" type="Sprite2D" parent="."]
+[node name="SpaceBackground" type="Sprite2D" parent="." unique_id=2056954656]
 position = Vector2(576, 324)
 scale = Vector2(1.2, 1.20446)
 texture = SubResource("CompressedTexture2D_m7dn7")
 metadata/_edit_lock_ = true
 
-[node name="Pause" type="Node2D" parent="."]
+[node name="Pause" type="Node2D" parent="." unique_id=175845290]
 process_mode = 3
 script = ExtResource("1_baels")
 
-[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1602113016 groups=["player"]]
 position = Vector2(-192, 313)
 script = ExtResource("2_0qund")
 arrow_dummy_scene = ExtResource("3_uviln")
 bomber_dummy_scene = ExtResource("4_sfych")
 parabolic_dummy_scene = ExtResource("5_vu7ec")
 
-[node name="PlayerSprite" type="Sprite2D" parent="Player"]
+[node name="PlayerSprite" type="Sprite2D" parent="Player" unique_id=667586115]
 rotation = 1.5708
 scale = Vector2(0.6, 0.6)
 texture = SubResource("CompressedTexture2D_y2x55")
 
-[node name="TetherRange" type="Area2D" parent="Player"]
+[node name="TetherRange" type="Area2D" parent="Player" unique_id=1278955747]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/TetherRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/TetherRange" unique_id=1995370784]
 position = Vector2(-3, 0)
 shape = SubResource("CircleShape2D_2ck4e")
 debug_color = Color(0.662399, 0.513404, 3.85046e-07, 0.42)
 
-[node name="Hurtbox" type="Area2D" parent="Player" groups=["player"]]
+[node name="Hurtbox" type="Area2D" parent="Player" unique_id=1965372258 groups=["player"]]
 collision_mask = 2
 
-[node name="PlayerCollision" type="CollisionShape2D" parent="Player/Hurtbox"]
+[node name="PlayerCollision" type="CollisionShape2D" parent="Player/Hurtbox" unique_id=692477112]
 position = Vector2(-3, 0)
 shape = SubResource("CircleShape2D_fohr5")
 
-[node name="HealthBarCanvas" type="CanvasLayer" parent="Player"]
+[node name="HealthBarCanvas" type="CanvasLayer" parent="Player" unique_id=699513260]
 
-[node name="HealthBar" parent="Player/HealthBarCanvas" instance=ExtResource("5_8gikd")]
+[node name="HealthBar" parent="Player/HealthBarCanvas" unique_id=2038185358 instance=ExtResource("5_8gikd")]
 
-[node name="Tether" type="DampedSpringJoint2D" parent="Player"]
+[node name="Tether" type="DampedSpringJoint2D" parent="Player" unique_id=334980996]
 node_a = NodePath("..")
 
-[node name="Line2D" type="Line2D" parent="Player/Tether"]
+[node name="Line2D" type="Line2D" parent="Player/Tether" unique_id=1085476644]
 
-[node name="EnemySpawner" type="Node2D" parent="."]
+[node name="EnemySpawner" type="Node2D" parent="." unique_id=187246452]
 script = ExtResource("6_0p816")
 arrowScene = ExtResource("7_02yj2")
 bomberScene = ExtResource("7_27k66")
 parabolicScene = ExtResource("11_mpg2q")
 
-[node name="Timer" type="Timer" parent="EnemySpawner"]
+[node name="Timer" type="Timer" parent="EnemySpawner" unique_id=394046482]
 wait_time = 2.0
 autostart = true
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="ScoreLabel" type="Label" parent="." unique_id=1923520075]
 offset_left = 26.0
 offset_top = 67.0
 offset_right = 163.0
@@ -100,7 +100,7 @@ text = "Score: 0"
 label_settings = SubResource("LabelSettings_c5177")
 script = ExtResource("8_14cfy")
 
-[node name="GameOverLabel" type="Label" parent="."]
+[node name="GameOverLabel" type="Label" parent="." unique_id=1847655957]
 visible = false
 offset_right = 1156.0
 offset_bottom = 647.0

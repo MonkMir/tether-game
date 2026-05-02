@@ -10,6 +10,7 @@ const SCORE_REWARD := 15
 @onready var sprite := $Sprite2D
 @onready var collision := $Collision
 @onready var healthBar := $HealthBar
+@onready var healthIndicatorBar := $HealthBar/HealthIndicatorBar
 
 enum State{
 	COOLDOWN,
@@ -31,8 +32,9 @@ var distance : float = -INF
 var prevDistance : float = INF
 
 func _ready():
-	healthBar.size = Vector2(600, 90)
-	healthBar.pivot_offset = Vector2(-33, -40)
+	healthIndicatorBar.size = Vector2(600, 90)
+	#replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
+	healthIndicatorBar.position = Vector2(-healthIndicatorBar.size.x / 2, -512)
 	healthBar._init_health(health)
 	
 
@@ -75,7 +77,7 @@ func _process(delta):
 		die()
 
 func _track_state_timeout():
-	if player != null:
+	if player != null: 
 		trackedPos = player.position
 		look_at(trackedPos)
 		#self.rotation += 2 * PI #handles negative rotation overflow

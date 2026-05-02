@@ -10,6 +10,7 @@ const SCORE_REWARD := 15
 @onready var sprite := $Sprite2D
 @onready var collision := $Collision
 @onready var healthBar := $HealthBar
+@onready var healthIndicatorBar := $HealthBar/HealthIndicatorBar
 
 enum State{
 	REPOSITION
@@ -25,8 +26,9 @@ const DECELERATION := 1000
 const MAX_SPEED := 900
 
 func _ready():
-	healthBar.size = Vector2(600, 90)
-	healthBar.pivot_offset = Vector2(-33, -40)
+	healthIndicatorBar.size = Vector2(600, 90)
+	#replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
+	healthIndicatorBar.position = Vector2(-healthIndicatorBar.size.x / 2, -512)
 	healthBar._init_health(health)
 
 func _process(delta):

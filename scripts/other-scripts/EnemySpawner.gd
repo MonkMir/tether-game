@@ -7,7 +7,7 @@ extends Node2D
 var newEnemy 
 
 func _ready():
-	spawn_enemy()	
+	spawn_enemy()
 
 func spawn_enemy():
 	
@@ -38,6 +38,3 @@ func spawn_enemy():
 	self.add_child(newEnemy)
 	newEnemy.position.x = x
 	newEnemy.position.y = randY
-	
-
-#
