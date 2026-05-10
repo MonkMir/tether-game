@@ -25,6 +25,8 @@ GameState="*res://scripts/other-scripts/game_state.gd"
 
 [display]
 
+window/size/viewport_width=2016
+window/size/viewport_height=1134
 window/size/always_on_top=true
 window/stretch/mode="viewport"
 

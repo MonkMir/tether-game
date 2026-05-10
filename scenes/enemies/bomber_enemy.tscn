@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dkq6ilqibkqvo"]
+[gd_scene format=3 uid="uid://dkq6ilqibkqvo"]
 
-[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://icon.svg" id="1_2erl4"]
-[ext_resource type="Script" path="res://scripts/enemies/bomber_enemy.gd" id="1_138tr"]
+[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="1_2erl4"]
+[ext_resource type="Script" uid="uid://d3x2be4rk2d5a" path="res://scripts/enemies/bomber_enemy.gd" id="1_138tr"]
 [ext_resource type="PackedScene" uid="uid://lmd53ytjfn6h" path="res://scenes/projectiles/bomber_bomb.tscn" id="2_uaeju"]
-[ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://health_bar.tscn" id="4_14nm2"]
+[ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://scenes/health_bar.tscn" id="4_14nm2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2it25"]
 radius = 33.0
@@ -11,74 +11,74 @@ radius = 33.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_8iqoc"]
 radius = 251.018
 
-[node name="BomberEnemy" type="Area2D" groups=["enemies"]]
+[node name="BomberEnemy" type="Area2D" unique_id=718487168 groups=["enemies"]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_138tr")
 bomb_scene = ExtResource("2_uaeju")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1998829578]
 modulate = Color(0.964706, 0, 0, 1)
 scale = Vector2(0.47, 0.47)
 texture = ExtResource("1_2erl4")
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1853227656]
 shape = SubResource("CircleShape2D_2it25")
 
-[node name="RaycastManager" type="Node2D" parent="."]
+[node name="RaycastManager" type="Node2D" parent="." unique_id=242428574]
 
-[node name="RayRight" type="RayCast2D" parent="RaycastManager"]
+[node name="RayRight" type="RayCast2D" parent="RaycastManager" unique_id=1336048189]
 target_position = Vector2(50, 0)
 collision_mask = 3
 collide_with_areas = true
 
-[node name="RayLowRight" type="RayCast2D" parent="RaycastManager"]
+[node name="RayLowRight" type="RayCast2D" parent="RaycastManager" unique_id=734879251]
 target_position = Vector2(35, 35)
 collision_mask = 3
 collide_with_areas = true
 
-[node name="RayDown" type="RayCast2D" parent="RaycastManager"]
+[node name="RayDown" type="RayCast2D" parent="RaycastManager" unique_id=251275376]
 collision_mask = 3
 collide_with_areas = true
 
-[node name="RayLowLeft" type="RayCast2D" parent="RaycastManager"]
+[node name="RayLowLeft" type="RayCast2D" parent="RaycastManager" unique_id=488025281]
 target_position = Vector2(-35, 35)
 collision_mask = 3
 collide_with_areas = true
 
-[node name="RayLeft" type="RayCast2D" parent="RaycastManager"]
+[node name="RayLeft" type="RayCast2D" parent="RaycastManager" unique_id=1709568464]
 target_position = Vector2(-50, 0)
 collision_mask = 3
 collide_with_areas = true
 
-[node name="RayHighLeft" type="RayCast2D" parent="RaycastManager"]
+[node name="RayHighLeft" type="RayCast2D" parent="RaycastManager" unique_id=1558029259]
 target_position = Vector2(-35, -35)
 collision_mask = 3
 collide_with_areas = true
 
-[node name="RayUp" type="RayCast2D" parent="RaycastManager"]
+[node name="RayUp" type="RayCast2D" parent="RaycastManager" unique_id=1724708728]
 position = Vector2(0, -1)
 target_position = Vector2(0, -50)
 collision_mask = 3
 collide_with_areas = true
 
-[node name="RayHighRight" type="RayCast2D" parent="RaycastManager"]
+[node name="RayHighRight" type="RayCast2D" parent="RaycastManager" unique_id=234712564]
 target_position = Vector2(35, -35)
 collision_mask = 3
 collide_with_areas = true
 
-[node name="CirclingRange" type="Area2D" parent="."]
+[node name="CirclingRange" type="Area2D" parent="." unique_id=360031255]
 collision_layer = 0
 
-[node name="CollisionShape" type="CollisionShape2D" parent="CirclingRange"]
+[node name="CollisionShape" type="CollisionShape2D" parent="CirclingRange" unique_id=1744727171]
 shape = SubResource("CircleShape2D_8iqoc")
 debug_color = Color(0.639885, 0.520378, 0.194966, 0.42)
 
-[node name="BombTimer" type="Timer" parent="."]
+[node name="BombTimer" type="Timer" parent="." unique_id=1547855069]
 wait_time = 3.5
 autostart = true
 
-[node name="HealthBar" parent="." instance=ExtResource("4_14nm2")]
+[node name="HealthBar" parent="." unique_id=152253538 instance=ExtResource("4_14nm2")]
 visible = false
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

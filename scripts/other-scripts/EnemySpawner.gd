@@ -22,7 +22,7 @@ func spawn_enemy():
 	elif enemyRando == 3:
 		newEnemy = parabolicScene.instantiate()
 	
-	var difficultyFactor: int = (GameState.score / 10)
+	#var difficultyFactor: int = (GameState.score / 10)
 	
 	
 	#Randomized Spawn Location

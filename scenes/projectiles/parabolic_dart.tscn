@@ -1,22 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://dbd4nfgtdauq8"]
+[gd_scene format=3 uid="uid://dbd4nfgtdauq8"]
 
-[ext_resource type="Script" path="res://scripts/parabolic_dart.gd" id="1_rp2uv"]
-[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://icon.svg" id="2_opwxq"]
+[ext_resource type="Script" uid="uid://b1uny31w4pb81" path="res://scripts/projectiles/parabolic_dart.gd" id="1_rp2uv"]
+[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="2_opwxq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c37ne"]
 radius = 14.0
 
-[node name="Parabolic Dart" type="Area2D"]
+[node name="Parabolic Dart" type="Area2D" unique_id=1545782455]
 script = ExtResource("1_rp2uv")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=8059440]
 modulate = Color(0.454902, 0, 0.729412, 1)
 position = Vector2(5.00679e-06, -3.8147e-06)
 rotation = 0.785398
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_opwxq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1508892101]
 shape = SubResource("CircleShape2D_c37ne")
 metadata/_edit_group_ = true
 

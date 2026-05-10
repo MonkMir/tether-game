@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b6c5c4w5v7ayv" path="res://scripts/enemies/parabolic_enemy.gd" id="1_g1qcc"]
 [ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="2_hi3oc"]
+[ext_resource type="PackedScene" uid="uid://dbd4nfgtdauq8" path="res://scenes/projectiles/parabolic_dart.tscn" id="2_rrf74"]
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://scenes/health_bar.tscn" id="3_0nowd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0scfs"]
@@ -10,11 +11,18 @@ size = Vector2(176, 53.25)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cqygl"]
 size = Vector2(52, 176)
 
+[sub_resource type="Curve2D" id="Curve2D_4p0rb"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 256, 128, 0, 0, 0, 0, 2048, 128, 0.5228814, -122.86618, -0.5228814, 122.86618, 2176, 251.38983, 0.63199484, -140.68787, -0.63199484, 140.68787, 2176, 1026.983, 0, 0, 0, 0, 2048, 1168, 126.17119, -0.49673697, -126.17119, 0.49673697, 256, 1168, 0, 0, 0, 0, 128, 1026.983, 0.11234021, 123.41422, -0.11234021, -123.41422, 128, 251.38983, 0, 0, 0, 0, 256, 128)
+}
+point_count = 9
+
 [node name="ParabolicEnemy" type="Area2D" unique_id=1016096092 groups=["enemies"]]
 scale = Vector2(0.5, 0.5)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_g1qcc")
+dart_scene = ExtResource("2_rrf74")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=937709827]
 modulate = Color(0.45098, 0, 1, 1)
@@ -35,24 +43,27 @@ shape = SubResource("RectangleShape2D_0scfs")
 shape = SubResource("RectangleShape2D_cqygl")
 
 [node name="ShotInterval" type="Timer" parent="." unique_id=443666101]
-wait_time = 2.0
+wait_time = 1.5
 one_shot = true
 
 [node name="ShotCluster" type="Timer" parent="." unique_id=599696654]
-wait_time = 0.03
+wait_time = 0.05
 one_shot = true
 
 [node name="HealthBar" parent="." unique_id=411879369 instance=ExtResource("3_0nowd")]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 30.0
-offset_top = 40.0
-offset_right = 630.0
-offset_bottom = 140.0
-pivot_offset = Vector2(-30, -40)
 metadata/_edit_use_anchors_ = true
 
+[node name="TransformDecoupler" type="Node" parent="." unique_id=711663323]
+
+[node name="Path2D" type="Path2D" parent="TransformDecoupler" unique_id=282886554]
+position = Vector2(0, 53.907692)
+scale = Vector2(0.5, 0.45384616)
+curve = SubResource("Curve2D_4p0rb")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="TransformDecoupler/Path2D" unique_id=1131896882]
+position = Vector2(256, 128)
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="ShotInterval" to="." method="_on_shot_interval_timeout"]
+[connection signal="timeout" from="ShotCluster" to="." method="_on_shot_cluster_timeout"]
