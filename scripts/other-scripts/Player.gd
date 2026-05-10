@@ -5,9 +5,11 @@ extends Node2D
 @export var parabolic_dummy_scene: PackedScene
 
 @onready var main := get_parent()
-@onready var healthBar = $HealthBarCanvas/HealthBar
+@onready var healthBar := $HealthBarCanvas/HealthBar
+@onready var sprite := $PlayerSprite
 @onready var spring := $Tether
 @onready var line := $Tether/Line2D 
+@onready var tetherCooldown := $TetherCooldown
 
 var newDummy : Node = null
 
@@ -18,6 +20,9 @@ var enemiesInRange : int = 0
 var tetherLength := 0
 var maxLength := 325
 
+
+
+
 ##GAME START INITIALIZATIONS
 func _ready():
 	healthBar._init_health(health)
@@ -25,23 +30,29 @@ func _ready():
 
 func _physics_process(_delta): 
 	##PLAYER MOVEMENT
-	var mousePos = get_global_mouse_position()
-	position = mousePos
+	var mousePosition = get_global_mouse_position()
+	position = mousePosition
 	
+	##TETHER COOLDOWN
 	
+	if tetherCooldown.time_left != 0.0:
+		sprite.modulate = Color(0.111, 0.111, 0.111, 0.502)
+	else: 
+		sprite.modulate = Color(1, 1, 1, 1)
 	
 	
 	
 	
 	
 	#pls rember to delet this
-	
-	if Input.is_action_just_pressed("Shoot") and releaseReady == true:
-		spring.node_b = NodePath()
-		newDummy = null
-		releaseReady = false
-	elif Input.is_action_just_pressed("Shoot") and enemiesInRange > 0:
-		init_target()
+	#
+	#if Input.is_action_just_pressed("Shoot") and isTethered == true:
+		#spring.node_b = NodePath()
+		#newDummy = null
+		#isTethered = false
+		#tetherCooldown.start()
+	#elif Input.is_action_just_pressed("Shoot") and enemiesInRange > 0:
+		#init_target()
 	  
 	
 	
@@ -76,15 +87,25 @@ func _physics_process(_delta):
 		self.queue_free()
 		GameState.is_game_over = true
 
-var releaseReady := false
+var isTethered := false
 ##USER INPUTS
 func _input(event):
-	if event.is_action_pressed("Tether") and releaseReady == true:
+	
+	
+	if event.is_action_pressed("Tether") and isTethered == true:
 		spring.node_b = NodePath()
 		newDummy = null
-		releaseReady = false
-	elif event.is_action_pressed("Tether") and enemiesInRange > 0:
+		isTethered = false
+		
+		#active development (else delete)
+		
+		
+	elif event.is_action_pressed("Tether") and enemiesInRange > 0 and tetherCooldown.time_left == 0.0:
 		init_target()
+		tetherCooldown.start()
+		
+	elif event.is_action_pressed("Tether") and tetherCooldown.time_left == 0.0 and isTethered == false:
+		tetherCooldown.start()
 
 ##PLAYER HURT CALACULATION
 
@@ -111,29 +132,29 @@ func init_target():
 		#next step in enemy script (could we keep it in player with targetedEnemy.[data]??)
 	swap_and_tether(targetedEnemy.position, targetedEnemy.rotation, targetedEnemy.type)
 
-var dummyPos : Vector2 = Vector2(0, 0) #init elsewhere
-var dummyRot : float = 0
+var dummyPosition : Vector2 = Vector2(0, 0) #init elsewhere
+var dummyRotation : float = 0
 var dummyType : String = ""
 
 func swap_and_tether(pos: Vector2, rot:float, type: String):
-	dummyPos = pos - position
-	dummyRot = rot
+	dummyPosition = pos - position
+	dummyRotation = rot
 	dummyType = type
 	
 	if dummyType == "arrow":  
 		newDummy = arrow_dummy_scene.instantiate()
-	elif dummyType == "bomber":  
+	elif dummyType == "bomber":
 		newDummy = bomber_dummy_scene.instantiate()
 	elif dummyType == "parabolic":  
 		newDummy = parabolic_dummy_scene.instantiate()
 	
-	newDummy.global_position = dummyPos
-	newDummy.rotation = dummyRot
+	newDummy.global_position = dummyPosition
+	newDummy.rotation = dummyRotation
 	
 	add_child(newDummy) #can we do add_sibling?
 	newDummy.reparent(main)
 	spring.node_b = newDummy.get_path()
-	releaseReady = true
+	isTethered = true
 	targetedEnemy.queue_free()
 
 func break_tether():
@@ -144,5 +165,6 @@ func break_tether():
 ##NUMBER OF TETHERABLE ENEMIES IN RANGE
 func _on_tether_range_area_entered(_area): #only detects enemy layer
 		enemiesInRange += 1
+
 func _on_tether_range_area_exited(_area):
 	enemiesInRange -= 1

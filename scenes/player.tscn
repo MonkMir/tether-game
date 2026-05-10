@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://b0u1q6i5db5ou"]
+
+[ext_resource type="Script" uid="uid://cjhwap0ms2gko" path="res://scripts/other-scripts/Player.gd" id="1_tuyoq"]
+[ext_resource type="PackedScene" uid="uid://c5ipjdvuqk2ci" path="res://scenes/dummies/arrow_dummy.tscn" id="2_fjrip"]
+[ext_resource type="PackedScene" uid="uid://db0s0w2do4o4o" path="res://scenes/dummies/bomber_dummy.tscn" id="3_smehm"]
+[ext_resource type="PackedScene" uid="uid://dbax4wv030pfo" path="res://scenes/dummies/parabolic_dummy.tscn" id="4_ur7pv"]
+[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="5_y4r1p"]
+[ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://scenes/health_bar.tscn" id="6_d2wvv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2ck4e"]
+radius = 88.005684
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fohr5"]
+radius = 24.0
+
+[node name="Player" type="CharacterBody2D" unique_id=994072363 groups=["player"]]
+script = ExtResource("1_tuyoq")
+arrow_dummy_scene = ExtResource("2_fjrip")
+bomber_dummy_scene = ExtResource("3_smehm")
+parabolic_dummy_scene = ExtResource("4_ur7pv")
+
+[node name="PlayerSprite" type="Sprite2D" parent="." unique_id=1062684667]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("5_y4r1p")
+
+[node name="TetherRange" type="Area2D" parent="." unique_id=1682285353]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TetherRange" unique_id=956201445]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_2ck4e")
+debug_color = Color(0.662399, 0.513404, 3.85046e-07, 0.42)
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1128003117 groups=["player"]]
+collision_mask = 2
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="Hurtbox" unique_id=2093795865]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_fohr5")
+
+[node name="HealthBarCanvas" type="CanvasLayer" parent="." unique_id=879228658]
+
+[node name="HealthBar" parent="HealthBarCanvas" unique_id=993042800 instance=ExtResource("6_d2wvv")]
+
+[node name="Tether" type="DampedSpringJoint2D" parent="." unique_id=1080168469]
+node_a = NodePath("..")
+
+[node name="Line2D" type="Line2D" parent="Tether" unique_id=1432720532]
+
+[node name="TetherCooldown" type="Timer" parent="." unique_id=1620952528]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="area_entered" from="TetherRange" to="." method="_on_tether_range_area_entered"]
+[connection signal="area_exited" from="TetherRange" to="." method="_on_tether_range_area_exited"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
