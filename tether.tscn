@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://3s58x1bgjui4"]
+
+[ext_resource type="Script" uid="uid://c76w5mw4mgqrw" path="res://tether.gd" id="1_wbd1m"]
+
+[node name="Tether" type="Node2D" unique_id=1948318608]
+script = ExtResource("1_wbd1m")
+
+[node name="LineTexture" type="Line2D" parent="." unique_id=705149266]

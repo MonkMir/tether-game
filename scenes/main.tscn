@@ -31,7 +31,7 @@ process_mode = 3
 script = ExtResource("1_baels")
 
 [node name="Player" parent="." unique_id=994072363 instance=ExtResource("2_tipki")]
-position = Vector2(-192, 313)
+position = Vector2(568, 160)
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=187246452]
 script = ExtResource("6_0p816")
@@ -65,5 +65,8 @@ script = ExtResource("9_iqu0m")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1673976300]
 position = Vector2(584, 336)
 zoom = Vector2(1.72, 1.72)
+
+[node name="ArrowEnemy" parent="." unique_id=1625970007 instance=ExtResource("9_trceg")]
+position = Vector2(568, 248)
 
 [connection signal="timeout" from="EnemySpawner/Timer" to="EnemySpawner" method="spawn_enemy"]

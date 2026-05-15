@@ -3,6 +3,7 @@ extends Node2D
 @export var arrow_dummy_scene: PackedScene
 @export var bomber_dummy_scene: PackedScene
 @export var parabolic_dummy_scene: PackedScene
+@export var tether: PackedScene
 
 @onready var main := get_parent()
 @onready var healthBar := $HealthBarCanvas/HealthBar
@@ -65,20 +66,20 @@ func _physics_process(_delta):
 	
 	
 	##DRAW TETHER LINE
-	line.points = []
-	line.add_point(Vector2(0, 0)) #player's position is always (0, 0) relative to Line2D child
-	if newDummy != null:
-		line.add_point(newDummy.position - global_position)
-	
-	##TETHER LENGTH TRACKING
-	if spring.node_b != NodePath():
-		tetherLength = line.get_point_position(1).distance_to(line.get_point_position(2))
-	else:
-		tetherLength = 0
+	#line.points = []
+	#line.add_point(Vector2(0, 0)) #player's position is always (0, 0) relative to Line2D child
+	#if newDummy != null:
+		#line.add_point(newDummy.position - global_position)
+	#
+	###TETHER LENGTH TRACKING
+	#if spring.node_b != NodePath():
+		#tetherLength = line.get_point_position(1).distance_to(line.get_point_position(2))
+	#else:
+		#tetherLength = 0
 
 	##TETHER MAX LENGTH BREAK
-	if tetherLength > maxLength:
-		break_tether()
+	#if tetherLength > maxLength:
+		#break_tether()
 	
 	##OTHER PROCESSES
 	
@@ -93,11 +94,10 @@ func _input(event):
 	
 	
 	if event.is_action_pressed("Tether") and isTethered == true:
-		spring.node_b = NodePath()
+		#spring.node_b = NodePath()
 		newDummy = null
 		isTethered = false
 		
-		#active development (else delete)
 		
 		
 	elif event.is_action_pressed("Tether") and enemiesInRange > 0 and tetherCooldown.time_left == 0.0:
@@ -153,9 +153,12 @@ func swap_and_tether(pos: Vector2, rot:float, type: String):
 	
 	add_child(newDummy) #can we do add_sibling?
 	newDummy.reparent(main)
-	spring.node_b = newDummy.get_path()
+	
 	isTethered = true
 	targetedEnemy.queue_free()
+	
+	
+	main.add_child(tether.instantiate())
 
 func break_tether():
 	spring.node_b = NodePath()

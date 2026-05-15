@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5ipjdvuqk2ci"]
+[gd_scene format=3 uid="uid://c5ipjdvuqk2ci"]
 
-[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://icon.svg" id="1_6b3km"]
+[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="1_6b3km"]
 [ext_resource type="Script" uid="uid://d4ht5o6c2k2ro" path="res://scripts/dummies/arrow_dummy.gd" id="1_c41mt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwnxe"]
@@ -9,26 +9,26 @@ size = Vector2(84, 38)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qlxjl"]
 size = Vector2(84, 38)
 
-[node name="ArrowDummy" type="RigidBody2D" groups=["dummies"]]
+[node name="ArrowDummy" type="RigidBody2D" unique_id=615306433 groups=["dummies"]]
 collision_layer = 4
 collision_mask = 4
 mass = 0.5
 script = ExtResource("1_c41mt")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=262126794]
 position = Vector2(1.42109e-14, 7.15256e-07)
 scale = Vector2(0.6875, 0.3125)
 texture = ExtResource("1_6b3km")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=981011974]
 shape = SubResource("RectangleShape2D_gwnxe")
 debug_color = Color(0.392157, 0.392157, 0.980392, 0.419608)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=1574035858]
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=239790728]
 shape = SubResource("RectangleShape2D_qlxjl")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_entered"]
