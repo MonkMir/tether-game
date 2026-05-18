@@ -31,7 +31,7 @@ process_mode = 3
 script = ExtResource("1_baels")
 
 [node name="Player" parent="." unique_id=994072363 instance=ExtResource("2_tipki")]
-position = Vector2(568, 160)
+position = Vector2(576, 336)
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=187246452]
 script = ExtResource("6_0p816")
@@ -40,7 +40,7 @@ bomberScene = ExtResource("10_a8y0u")
 parabolicScene = ExtResource("11_mpg2q")
 
 [node name="Timer" type="Timer" parent="EnemySpawner" unique_id=394046482]
-wait_time = 2.5
+wait_time = 1.5
 autostart = true
 
 [node name="ScoreLabel" type="Label" parent="." unique_id=1923520075]

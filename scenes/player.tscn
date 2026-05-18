@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://scenes/health_bar.tscn" id="6_d2wvv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2ck4e"]
-radius = 88.005684
+radius = 112.00446
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fohr5"]
 radius = 24.0
@@ -51,7 +51,7 @@ node_a = NodePath("..")
 [node name="Line2D" type="Line2D" parent="Tether" unique_id=1432720532]
 
 [node name="TetherCooldown" type="Timer" parent="." unique_id=1620952528]
-wait_time = 2.0
+wait_time = 1.5
 one_shot = true
 
 [connection signal="area_entered" from="TetherRange" to="." method="_on_tether_range_area_entered"]

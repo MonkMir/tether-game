@@ -5,47 +5,51 @@ extends RigidBody2D
 
 enum State{
 	PASSIVE,
-	SLINGSHOT,
 	SPECIAL
 }
 var state := State.PASSIVE
 
 var atkPower : float
 
-const IDEAL_MAX_SPEED : int = 1500
-#const SLINGSHOT_MAX_SPEED : int = 3000
-#var currentMaxSpeed : float
+#WARNING Speed controlled by tether script
+const ABSOLUTE_SPEED_LIMIT : int = 2500
+const DEFAULT_SPEED_LIMIT : int = 2000 #1200 
+var speedLimit : float 
+var currentSpeed : float
 
-var launchForce : float = 1720
+var launchSpeed : float = 1720
 var direction := Vector2.ZERO
 var newDir : Vector2
-#
-#func _ready():
-	#currentMaxSpeed = IDEAL_MAX_SPEED
+
+func _ready():
+	speedLimit = DEFAULT_SPEED_LIMIT
 
 func _physics_process(delta):
-	print(linear_velocity)
-	
-	#What is 17 here?
-	atkPower = linear_velocity.length() / 17
+	currentSpeed = linear_velocity.length()
+	print(speedLimit)
+	#What is magic number here?
+	atkPower = linear_velocity.length() / 15
 	#if player.isTethered == false: state = State.SPECIAL
 	match state:
 		State.PASSIVE:
-			if linear_velocity.length() > IDEAL_MAX_SPEED:
-				linear_velocity = linear_velocity.normalized() * IDEAL_MAX_SPEED
 			
-			if player.isTethered == false:
-				self.state = State.SPECIAL
+			if currentSpeed > speedLimit:
+				linear_velocity = linear_velocity.normalized() * speedLimit
+			
+			
+			#This condition is important for enemy ragdoll upon player death
+			if player:
+				if player.isTethered == false:
+					self.state = State.SPECIAL
 			
 		State.SPECIAL:
 			custom_integrator = true
 			
 			var previousMoveDirection = linear_velocity.normalized()
-			linear_velocity = launchForce * previousMoveDirection
+			linear_velocity = launchSpeed * previousMoveDirection
 			
 			#BUG add rotation instructions after passive angular velocity is fixed
-	
-	
+
 
 func launch_dir() -> Vector2: #not functional
 		var enemies = get_tree().get_nodes_in_group("enemies")
@@ -67,7 +71,6 @@ func launch_dir() -> Vector2: #not functional
 		else:
 			print("womp")
 			return direction
-
 
 func _on_area_entered(area):
 	if area.is_in_group("enemies"):

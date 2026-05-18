@@ -7,6 +7,7 @@ extends Node2D
 
 @onready var main := get_parent()
 @onready var healthBar := $HealthBarCanvas/HealthBar
+@onready var camera := $"../Camera2D"
 @onready var sprite := $PlayerSprite
 @onready var spring := $Tether
 @onready var line := $Tether/Line2D 
@@ -14,7 +15,7 @@ extends Node2D
 
 var newDummy : Node = null
 
-var health: int = 100
+var health: int = 1000 #revert to 100 later
 var damageCalc: int = 20
 
 var enemiesInRange : int = 0
@@ -29,10 +30,27 @@ func _ready():
 	healthBar._init_health(health)
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
-func _physics_process(_delta): 
+func _physics_process(delta): 
 	##PLAYER MOVEMENT
-	var mousePosition = get_global_mouse_position()
-	position = mousePosition
+	#var mousePosition = get_global_mouse_position()
+	#position = mousePosition
+	var moveSpeed := 1000 
+	var inputDirection = Input.get_vector("Stick Left", "Stick Right", "Stick Up", "Stick Down")
+	position += inputDirection * moveSpeed * delta
+	
+	var camera_rect = get_static_camera_rect()
+	position = position.clamp(camera_rect.position, camera_rect.end)
+	
+	
+	#var dashDistance = 300
+	#var dashTime = 0.25
+	#
+	#if Input.is_action_just_pressed("Dash"):
+		#var dash_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		#dash_tween.tween_property(self, "position", position + inputDirection * dashDistance, dashTime)
+		#await dash_tween.finished
+
+	
 	
 	##TETHER COOLDOWN
 	
@@ -42,44 +60,6 @@ func _physics_process(_delta):
 		sprite.modulate = Color(1, 1, 1, 1)
 	
 	
-	
-	
-	
-	#pls rember to delet this
-	#
-	#if Input.is_action_just_pressed("Shoot") and isTethered == true:
-		#spring.node_b = NodePath()
-		#newDummy = null
-		#isTethered = false
-		#tetherCooldown.start()
-	#elif Input.is_action_just_pressed("Shoot") and enemiesInRange > 0:
-		#init_target()
-	  
-	
-	
-	
-	
-	
-	
-	
-	##TETHER PROCESSES
-	
-	
-	##DRAW TETHER LINE
-	#line.points = []
-	#line.add_point(Vector2(0, 0)) #player's position is always (0, 0) relative to Line2D child
-	#if newDummy != null:
-		#line.add_point(newDummy.position - global_position)
-	#
-	###TETHER LENGTH TRACKING
-	#if spring.node_b != NodePath():
-		#tetherLength = line.get_point_position(1).distance_to(line.get_point_position(2))
-	#else:
-		#tetherLength = 0
-
-	##TETHER MAX LENGTH BREAK
-	#if tetherLength > maxLength:
-		#break_tether()
 	
 	##OTHER PROCESSES
 	
@@ -160,14 +140,15 @@ func swap_and_tether(pos: Vector2, rot:float, type: String):
 	
 	main.add_child(tether.instantiate())
 
-func break_tether():
-	spring.node_b = NodePath()
-	newDummy = null
-	line.clear_points()
-
 ##NUMBER OF TETHERABLE ENEMIES IN RANGE
 func _on_tether_range_area_entered(_area): #only detects enemy layer
 		enemiesInRange += 1
 
 func _on_tether_range_area_exited(_area):
 	enemiesInRange -= 1
+
+func get_static_camera_rect() -> Rect2:
+	var cameraSize = get_viewport_rect().size / camera.zoom
+	var cameraCornerTopLeft := Vector2(camera.global_position - (cameraSize / 2))
+	
+	return Rect2(cameraCornerTopLeft, cameraSize)

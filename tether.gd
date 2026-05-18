@@ -6,34 +6,44 @@ extends Node2D
 
 var pointDistance : float
 
-@export var maxLength : int = 180
-#var slingshotMaxLength : int = 250
+@export var maxLength : int = 120 #180 max if we use dynamic stretching
 var currentMaxLength : float
 
 func _ready():
 	if player.newDummy != null:
 		dummy = player.newDummy
 
-func _physics_process(_delta):
-	
-	line.clear_points()
-	line.add_point(player.position - global_position)
-	line.add_point(dummy.position - global_position)
-	
-	pointDistance = line.get_point_position(0).distance_to(line.get_point_position(1))
-	
-	if pointDistance >= maxLength:
-		apply_elastic_force()
-	
-	if player.isTethered == false:
+func _physics_process(delta):
+	if player:
+		if player.isTethered == false:
+			queue_free()
+		
+		line.clear_points()
+		line.add_point(player.position - global_position)
+		line.add_point(dummy.position - global_position)
+		
+		pointDistance = line.get_point_position(0).distance_to(line.get_point_position(1))
+		
+		if pointDistance >= maxLength:
+			apply_elastic_force()
+		
+		
+		##What I really want is to make a formula to get to max within x variable seconds under ideal conditions
+		#var speedIncreaseThreshold := 10
+		#if dummy.currentSpeed >= dummy.speedLimit - speedIncreaseThreshold:
+			#dummy.speedLimit += 150 * delta
+		#else:
+			#dummy.speedLimit -= 300 * delta
+		
+		## DEBUG TOOLS
+		
+		if Input.is_action_just_pressed("Scroll Up"):
+			maxLength -= 20
+		elif Input.is_action_just_pressed("Scroll Down"):
+				maxLength += 20
+		
+	elif !player:
 		queue_free()
-	
-	## DEBUG TOOLS
-	
-	if Input.is_action_just_pressed("Scroll Up"):
-		maxLength -= 20
-	elif Input.is_action_just_pressed("Scroll Down"):
-		maxLength += 20
 
 @export var springStiffness : float = 1.125
 
