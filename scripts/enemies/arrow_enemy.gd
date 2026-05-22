@@ -20,7 +20,7 @@ enum State{
 
 var state = State.COOLDOWN
 
-var trackedPos := Vector2.INF
+var targetPoint := Vector2.INF
 
 var speed : float = BASE_SPEED
 const SPEED_GROWTH := 500
@@ -53,7 +53,7 @@ func _process(delta):
 			position += (direction * restingSpeed) * delta
 		
 		State.ATTACK:
-			distance = position.distance_to(trackedPos)
+			distance = position.distance_to(targetPoint)
 			unspin()
 			if distance < prevDistance: #checks when point is crossed
 				speed = min(speed + SPEED_GROWTH * delta, MAX_SPEED)
@@ -78,8 +78,8 @@ func _process(delta):
 
 func _track_state_timeout():
 	if player != null: 
-		trackedPos = player.position
-		look_at(trackedPos)
+		targetPoint = player.position
+		look_at(targetPoint)
 		#self.rotation += 2 * PI #handles negative rotation overflow
 		#self.rotation = fmod(rotation, 2 * PI) #handles rotation overflow
 		unspin()
@@ -101,6 +101,9 @@ func unspin():
 func receive_dam_param(damage):
 	health -= damage
 	healthBar.health = health
+	
+	#Be deathly cautious adding parameters here that could cause silent errors
+	GameState.comboCounter += 1
 
 func die():
 	GameState.score += SCORE_REWARD

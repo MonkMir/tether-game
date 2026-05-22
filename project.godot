@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameState="*res://scripts/other-scripts/game_state.gd"
+SignalBus="*uid://bb45a8hu1r72m"
 
 [display]
 

@@ -1,6 +1,6 @@
 extends Label
 
-func _process(delta):
+func _process(_delta):
 	if GameState.is_game_over: #you can also do == true before colon
 		self.visible = true 
 	
