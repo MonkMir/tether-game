@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://db0s0w2do4o4o"]
+[gd_scene format=3 uid="uid://db0s0w2do4o4o"]
 
-[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://icon.svg" id="1_6db12"]
-[ext_resource type="Script" path="res://scripts/dummies/bomber_dummy.gd" id="1_v4dsp"]
+[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="1_6db12"]
+[ext_resource type="Script" uid="uid://du8ba100vtkpg" path="res://scripts/dummies/bomber_dummy.gd" id="1_v4dsp"]
 [ext_resource type="PackedScene" uid="uid://bicsicm0jambh" path="res://scenes/projectiles/explosion.tscn" id="2_fl6hi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6exgv"]
@@ -10,28 +10,28 @@ radius = 32.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_njpye"]
 radius = 32.0156
 
-[node name="BomberDummy" type="RigidBody2D"]
+[node name="BomberDummy" type="RigidBody2D" unique_id=416578855]
 mass = 0.5
 script = ExtResource("1_v4dsp")
 explosion_scene = ExtResource("2_fl6hi")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1919040042]
 modulate = Color(1, 0, 0, 1)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("1_6db12")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1795609423]
 shape = SubResource("CircleShape2D_6exgv")
 debug_color = Color(0.392157, 0.392157, 0.980392, 0.447059)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." unique_id=748782765]
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=1838623025]
 shape = SubResource("CircleShape2D_njpye")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=2107764547]
 wait_time = 0.5
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_in_trigger_range"]

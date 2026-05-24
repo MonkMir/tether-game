@@ -13,14 +13,14 @@ func _ready():
 	if player.newDummy != null:
 		dummy = player.newDummy
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if player:
 		if player.isTethered == false:
 			queue_free()
-		
-		line.clear_points()
-		line.add_point(player.position - global_position)
-		line.add_point(dummy.position - global_position)
+		else:
+			line.clear_points()
+			line.add_point(player.position - global_position)
+			line.add_point(dummy.position - global_position)
 		
 		pointDistance = line.get_point_position(0).distance_to(line.get_point_position(1))
 		

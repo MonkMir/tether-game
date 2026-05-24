@@ -1,7 +1,4 @@
-extends RigidBody2D
-
-@onready var player := get_node("/root/Main/Player")
-@onready var spring := get_node("/root/Main/Player/Tether")
+extends Dummy
 
 enum State{
 	PASSIVE,
@@ -9,33 +6,19 @@ enum State{
 }
 var state := State.PASSIVE
 
-var atkPower : float
-
-#WARNING Speed controlled by tether script
 #const DEFAULT_SPEED_LIMIT : int = 2000 #1200 
-var speedLimit : int = 1850
-const MAX_SPEED_LIMIT : int = 2000
-const MIN_SPEED_LIMIT : int = 1000
-var currentSpeed : float
+#const MAX_SPEED_LIMIT : int = 2000
+#const MIN_SPEED_LIMIT : int = 1000
 
 var launchSpeed : float = 3500 #minimum speed to oneshot
 #var direction := Vector2.ZERO
 var newDir : Vector2
 
 
-func _physics_process(_delta):
-	
-	##SPEED MANAGER
-	currentSpeed = linear_velocity.length()
-	
-	
-	
-	#What is magic number here?
-	atkPower = linear_velocity.length() / 35
-	
+func _physics_process(delta):
+	super(delta)
 	match state:
 		State.PASSIVE:
-			
 			if currentSpeed > speedLimit:
 				linear_velocity = linear_velocity.normalized() * speedLimit
 			
@@ -77,10 +60,6 @@ func _physics_process(_delta):
 			#print("womp")
 			#return direction
 
-func _on_area_entered(area):
-	if area.is_in_group("enemies"):
-		area.receive_dam_param(atkPower)
-
-func get_combo_speed_limit() -> float: #may not be in use
-	var percentToMaxCombo = inverse_lerp(0, GameState.MAX_COMBO, GameState.comboCounter)
-	return lerp(MIN_SPEED_LIMIT, MAX_SPEED_LIMIT, percentToMaxCombo)
+#func get_combo_speed_limit() -> float: #may not be in use
+	#var percentToMaxCombo = inverse_lerp(0, GameState.MAX_COMBO, GameState.comboCounter)
+	#return lerp(MIN_SPEED_LIMIT, MAX_SPEED_LIMIT, percentToMaxCombo)

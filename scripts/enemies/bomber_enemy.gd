@@ -1,20 +1,14 @@
-extends Area2D
+extends Enemy
 
-var type := "bomber"
-var health := 100
 var ATK_POWER := 10
 const SCORE_REWARD := 10
 
 @onready var main := get_node("/root/Main")
-@onready var player := get_node("/root/Main/Player")
 @export var bomb_scene : PackedScene
 
-@onready var sprite := $Sprite2D
-@onready var collision := $Collision
 @onready var circlingRange := $CirclingRange/CollisionShape
 @onready var timer := $BombTimer
-@onready var healthBar := $HealthBar
-@onready var healthIndicatorBar := $HealthBar/HealthIndicatorBar
+
 
 enum State{
 	APPROACH,
@@ -62,15 +56,16 @@ var playerDir := Vector2.ZERO
 
 
 func _ready():
+	super()
+	enemyName = "bomber"
+	
 	healthIndicatorBar.size = Vector2(600, 90)
 	#replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
 	healthIndicatorBar.position = Vector2(-healthIndicatorBar.size.x / 2, -512)
-	healthBar._init_health(health)
+
 
 func _process(delta):
-	if is_instance_valid(healthBar):
-		if healthBar.is_visible_in_tree() == false:
-			healthBar.show()
+	super(delta)
 	
 	dotProdArray = [] #reset arrays each process cycle
 	repelArray = []
@@ -88,10 +83,8 @@ func _process(delta):
 			var perpPlayerDir := (playerDir + playerDir.rotated(rad_to_deg(90))).normalized()
 			move_and_avoid(perpPlayerDir, delta)
 			
-			#if timer.time_left == 0:
-				#timer.start()
-	if health <= 0:
-		die()
+			if timer.time_left == 0:
+				timer.start()
 
 func move_and_avoid(targetDir, delta): #movement with relevent context
 	for dir in cardinalDirs:
@@ -136,34 +129,20 @@ func subtract_arrays(arr1 : Array, arr2 : Array) -> Array:
 		result.append(arr1[n] - arr2[n])
 	return result
 
-func get_ideal_dir(interestArray: Array) -> Vector2: 
-	var desiredIndex := interestArray.find(interestArray.max())
+func get_ideal_dir(_interestArray: Array) -> Vector2: 
+	var desiredIndex := interestArray.find(_interestArray.max())
 	var idealDir = cardinalDirs[desiredIndex]
 	return idealDir
-
 
 func spawn_bomb():
 	var newBomb := bomb_scene.instantiate()
 	newBomb.position = position
 	main.add_child(newBomb)
+
 func _on_bomb_timer_timeout():
 	spawn_bomb()
-
-
-func receive_dam_param(damage):
-	health -= damage
-	healthBar.health = health
-func _on_area_entered(area):
-	if area.is_in_group("player"):
-		player.receive_dam_param(ATK_POWER)
-
 
 func _on_circling_range_area_entered(_area):
 	state = State.CIRCLE
 func _on_circling_range_area_exited(_area):
 	state = State.APPROACH
-	#timer.stop()
-
-func die():
-	GameState.score += SCORE_REWARD
-	queue_free()

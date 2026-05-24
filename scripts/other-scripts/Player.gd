@@ -33,7 +33,6 @@ func _ready():
 	
 func _physics_process(delta): 
 	
-	
 	##PLAYER MOVEMENT
 	var inputDirection = Input.get_vector("Stick Left", "Stick Right", "Stick Up", "Stick Down")
 	position += inputDirection * moveSpeed * delta
@@ -96,22 +95,21 @@ func init_target():
 	if nearestEnemy != null:
 		targetedEnemy = nearestEnemy
 		#next step in enemy script (could we keep it in player with targetedEnemy.[data]??)
-	swap_and_tether(targetedEnemy.position, targetedEnemy.rotation, targetedEnemy.type)
+	swap_and_tether(targetedEnemy.position, targetedEnemy.rotation, targetedEnemy.enemyName)
 
 var dummyPosition : Vector2  #init elsewhere
 var dummyRotation : float
-var dummyType : String
+var dummyEnemyName : String
 
-func swap_and_tether(pos: Vector2, rot:float, type: String):
+func swap_and_tether(pos: Vector2, rot:float, enemyName: String):
 	dummyPosition = pos - position
 	dummyRotation = rot
-	dummyType = type
-	
-	if dummyType == "arrow":  
+	dummyEnemyName = enemyName
+	if dummyEnemyName == "arrow":  
 		newDummy = arrow_dummy_scene.instantiate()
-	elif dummyType == "bomber":
+	elif dummyEnemyName == "bomber":
 		newDummy = bomber_dummy_scene.instantiate()
-	elif dummyType == "parabolic":  
+	elif dummyEnemyName == "parabolic":  
 		newDummy = parabolic_dummy_scene.instantiate()
 	
 	newDummy.global_position = dummyPosition

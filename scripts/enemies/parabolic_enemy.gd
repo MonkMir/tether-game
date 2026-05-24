@@ -1,4 +1,4 @@
-extends Area2D
+extends Enemy
 
 #BUG enemy sometimes gets stuck. in this case, previousState = null which suggests
 #that it never leaves GO_TO_PATH 
@@ -7,25 +7,14 @@ extends Area2D
 #
 #BUG make spin_and_transition use time based transition rather than rate based.
 #maybe add an optional lerp variation?
-#
-#
-#
-#
-
-var type := "parabolic"
-var health := 100
-const ATK_POWER := 7
-const SCORE_REWARD := 15
 
 @onready var main := get_node("/root/Main")
-@onready var player := get_node("/root/Main/Player")
 @export var dart_scene : PackedScene
 @onready var shotIntervalTimer := $ShotInterval
 @onready var shotClusterTimer := $ShotCluster
 @onready var collision1 := $Collision
 @onready var collision2 := $CollisionShape2D
-@onready var healthBar := $HealthBar
-@onready var healthIndicatorBar := $HealthBar/HealthIndicatorBar
+
 @onready var path := $TransformDecoupler/Path2D
 @onready var pathFollow := $TransformDecoupler/Path2D/PathFollow2D
 
@@ -45,7 +34,6 @@ var targetPointOnPath := Vector2(INF, INF) #should be generated at the end of st
 
 var reachedTargetSpin : bool = false
 
-var speed : float = BASE_SPEED
 var currentSpinDegPerSec : float = INF
 
 var invertShotArc : int = 1
@@ -56,18 +44,18 @@ const DECELERATION := 1000
 const MAX_SPEED := 1200
 
 func _ready():
+	super()
+	enemyName = "parabolic"
+	attackPower = 5
+	
 	healthIndicatorBar.size = Vector2(600, 90)
 	#replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
 	healthIndicatorBar.position = Vector2(-healthIndicatorBar.size.x / 2, -512)
-	healthBar._init_health(health)
+
 
 func _process(delta):
-	if is_instance_valid(healthBar):
-		if healthBar.is_visible_in_tree() == false:
-			healthBar.show()
-		
+	super(delta)
 	match state:
-		
 		State.GO_TO_PATH:
 			spin_and_transition(1080.0, delta)
 			enable_collision(false)
@@ -76,7 +64,6 @@ func _process(delta):
 			
 			var directionToTarget = (targetPointOnPath - position).normalized()
 			var distanceToTarget = position.distance_to(targetPointOnPath)
-			
 			
 			if distanceToTarget >= speed * delta:
 				speed = min(speed + SPEED_GROWTH * delta, MAX_SPEED)
@@ -127,15 +114,6 @@ func _process(delta):
 					
 					targetPointOnPath = generate_new_path_target()
 					state = State.REPOSITION
-	
-	
-	if health <= 0:
-		die()
-
-		
-func _on_area_entered(area):
-	if area.is_in_group("player"):
-		player.receive_dam_param(ATK_POWER)
 
 #Note: if you want to reuse this function in other project, you should refactor to use secondsToTransition
 func spin_and_transition(targetSpinDegPerSec, delta, spinTransitionDegPerSec = 200.0) -> void:
@@ -165,18 +143,6 @@ func spawn_dart():
 	newDart.plusOrMinus *= invertShotArc
 	main.add_child(newDart)
 
-func receive_dam_param(damage):
-	health -= damage
-	healthBar.health = health
-
-func die():
-	GameState.score += SCORE_REWARD
-	queue_free()
-	#maybe spawn_score_change_particle?
-
-#func get_path_length():
-	#return path.curve.get_baked_length()
-	
 func generate_path_progress() -> float:
 	var maxProgress : float = path.curve.get_baked_length()
 	var randomProgress : float = randf_range(0.0, maxProgress)
@@ -193,7 +159,6 @@ func generate_new_path_target() -> Vector2:
 	
 	return randomPathTarget
 
-
 func _on_shot_interval_timeout():
 	var shotsRemaining : int = 3
 	invertShotArc *= -1
@@ -204,8 +169,6 @@ func _on_shot_interval_timeout():
 		for shot in shotsRemaining:
 			shotClusterTimer.start()
 			await shotClusterTimer.timeout
-
-
 
 func _on_shot_cluster_timeout():
 	spawn_dart()

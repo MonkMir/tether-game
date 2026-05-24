@@ -13,7 +13,7 @@ func spawn_enemy():
 	
 	#From Outside of Script
 	
-	var enemyRando := 1#randi_range(1, 3)
+	var enemyRando := randi_range(1, 3)
 	
 	if enemyRando == 1:
 		newEnemy = arrowScene.instantiate()

@@ -9,7 +9,7 @@
 radius = 33.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8iqoc"]
-radius = 251.018
+radius = 320.09998
 
 [node name="BomberEnemy" type="Area2D" unique_id=718487168 groups=["enemies"]]
 collision_layer = 2
@@ -75,8 +75,8 @@ shape = SubResource("CircleShape2D_8iqoc")
 debug_color = Color(0.639885, 0.520378, 0.194966, 0.42)
 
 [node name="BombTimer" type="Timer" parent="." unique_id=1547855069]
-wait_time = 3.5
-autostart = true
+wait_time = 3.75
+one_shot = true
 
 [node name="HealthBar" parent="." unique_id=152253538 instance=ExtResource("4_14nm2")]
 visible = false
