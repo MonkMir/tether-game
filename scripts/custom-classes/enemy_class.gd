@@ -22,11 +22,6 @@ func _ready():
 	healthBar._init_health(health)
 
 func _process(_delta):
-#why am I running this every frame? I think this fixes a flicker bug but idk
-	if healthBar:
-		if healthBar.is_visible_in_tree() == false:
-			healthBar.show()
-	
 	if health <= 0:
 		die()
 

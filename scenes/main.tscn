@@ -40,7 +40,7 @@ bomberScene = ExtResource("10_a8y0u")
 parabolicScene = ExtResource("11_mpg2q")
 
 [node name="Timer" type="Timer" parent="EnemySpawner" unique_id=394046482]
-wait_time = 1.5
+wait_time = 2.0
 autostart = true
 
 [node name="ScoreLabel" type="Label" parent="." unique_id=1923520075]

@@ -9,14 +9,25 @@ extends Node2D
 
 
 var health = 0 : set = set_health
+var isPlayerHealth : bool
 
 func _ready():
 	set_as_top_level(true)
+	if get_ancestry_flag(self, "player") == true:
+		isPlayerHealth = true
+	
+	if isPlayerHealth == true:
+		show()
+	else:
+		hide()
 
 func set_health(newHealth):
 	var prevHealth = health
 	health = min(healthIndicatorBar.max_value, newHealth)
 	healthIndicatorBar.value = health
+	#WARNING calculate max on the fly rather than hard coding 100
+	if health < 100:
+		show()
 	
 	if health <= 0:
 		queue_free()
@@ -25,7 +36,8 @@ func set_health(newHealth):
 	else:
 		damageIndicatorBar.value = health
 
-func _init_health(_health): #I don't like that _health starts with an underscore
+#To be called in by the health bar's user
+func _init_health(_health):
 	health = _health
 	healthIndicatorBar.max_value = health
 	healthIndicatorBar.value = health
@@ -41,3 +53,12 @@ func _process(_delta):
 
 func _on_timer_timeout():
 	damageIndicatorBar.value = health
+
+func get_ancestry_flag(targetNode: Node, targetGroup : String) -> bool:
+	var player_nodes = get_tree().get_nodes_in_group(targetGroup)
+	
+	for player in player_nodes:
+		if player.is_ancestor_of(targetNode):
+			return true
+			
+	return false
