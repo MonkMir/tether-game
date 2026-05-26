@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="1_6db12"]
 [ext_resource type="Script" uid="uid://du8ba100vtkpg" path="res://scripts/dummies/bomber_dummy.gd" id="1_v4dsp"]
 [ext_resource type="PackedScene" uid="uid://bicsicm0jambh" path="res://scenes/projectiles/explosion.tscn" id="2_fl6hi"]
+[ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://scenes/health_bar.tscn" id="4_4qf5x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6exgv"]
 radius = 32.0
@@ -33,6 +34,8 @@ shape = SubResource("CircleShape2D_njpye")
 
 [node name="Timer" type="Timer" parent="." unique_id=2107764547]
 wait_time = 0.5
+
+[node name="HealthBar" parent="." unique_id=993042800 instance=ExtResource("4_4qf5x")]
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_in_trigger_range"]
 [connection signal="timeout" from="Timer" to="." method="_on_fuse_timer"]

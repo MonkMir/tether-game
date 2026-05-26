@@ -95,13 +95,14 @@ func init_target():
 	if nearestEnemy != null:
 		targetedEnemy = nearestEnemy
 		#next step in enemy script (could we keep it in player with targetedEnemy.[data]??)
-	swap_and_tether(targetedEnemy.position, targetedEnemy.rotation, targetedEnemy.enemyName)
+	swap_and_tether(targetedEnemy.position, targetedEnemy.rotation, targetedEnemy.health, targetedEnemy.enemyName)
 
 var dummyPosition : Vector2  #init elsewhere
 var dummyRotation : float
+var dummyHealth : float
 var dummyEnemyName : String
 
-func swap_and_tether(pos: Vector2, rot:float, enemyName: String):
+func swap_and_tether(pos: Vector2, rot:float, enemyHealth: float, enemyName: String):
 	dummyPosition = pos - position
 	dummyRotation = rot
 	dummyEnemyName = enemyName
@@ -111,12 +112,13 @@ func swap_and_tether(pos: Vector2, rot:float, enemyName: String):
 		newDummy = bomber_dummy_scene.instantiate()
 	elif dummyEnemyName == "parabolic":  
 		newDummy = parabolic_dummy_scene.instantiate()
-	
+	newDummy.health = enemyHealth
 	newDummy.global_position = dummyPosition
 	newDummy.rotation = dummyRotation
 	
 	add_child(newDummy)
 	newDummy.reparent(main)
+	
 	
 	isTethered = true
 	targetedEnemy.queue_free()

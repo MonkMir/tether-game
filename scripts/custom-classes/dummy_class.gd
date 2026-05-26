@@ -24,15 +24,15 @@ func _ready():
 	#replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
 	healthIndicatorBar.position = Vector2(-healthIndicatorBar.size.x / 2, -512)
 	healthBar._init_health(health)
-	
 
-
+var speedToDamageDivisor : int = 35
 func _physics_process(delta):
-	print("Instance ID: ", get_instance_id(), " | Health: ", health)
+	if !healthBar:
+		return
+	
 	healthBar.health = health
 	currentSpeed = linear_velocity.length()
-	#What is magic number here?
-	attackPower = linear_velocity.length() / 35
+	attackPower = linear_velocity.length() / speedToDamageDivisor
 	
 	if get_despawn_rect().has_point(global_position):
 		timeOutOfBoundsSeconds = 0.0
@@ -42,11 +42,25 @@ func _physics_process(delta):
 			if !player or self != player.newDummy:
 				print("despawn")
 				queue_free()
+	
+	if health <= 0:
+		die()
 
-
+var maxSelfDamage: float = 12.5
+var selfDamage: float
 func _on_area_entered(_area):
 	if _area.is_in_group("enemies"):
 		_area.receive_dam_param(attackPower)
+		
+		if self.state == self.State.SPECIAL:
+			return
+		var toMaxSpeedRatio : float = inverse_lerp(0, speedLimit, linear_velocity.length())
+		selfDamage = maxSelfDamage * toMaxSpeedRatio
+		receive_dam_param(selfDamage)
+
+func receive_dam_param(damage):
+	health -= damage
+	healthBar.health = health
 
 func get_player() -> Node:
 	return get_tree().get_first_node_in_group("player")
@@ -59,3 +73,7 @@ func get_static_camera_rect() -> Rect2:
 
 func get_despawn_rect() -> Rect2:
 	return get_static_camera_rect().grow(100)
+
+func die():
+	queue_free()
+	

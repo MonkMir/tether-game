@@ -31,21 +31,6 @@ func _physics_process(_delta):
 	
 	if pointDistance >= maxLength:
 		apply_elastic_force()
-	
-	
-	##What I really want is to make a formula to get to max within x variable seconds under ideal conditions
-	#var speedIncreaseThreshold := 10
-	#if dummy.currentSpeed >= dummy.speedLimit - speedIncreaseThreshold:
-		#dummy.speedLimit += 150 * delta
-	#else:
-		#dummy.speedLimit -= 300 * delta
-	
-	## DEBUG TOOLS
-	
-	if Input.is_action_just_pressed("Scroll Up"):
-		maxLength -= 20
-	elif Input.is_action_just_pressed("Scroll Down"):
-			maxLength += 20
 
 @export var springStiffness : float = 1.125
 
