@@ -45,11 +45,6 @@ shape = SubResource("CircleShape2D_fohr5")
 
 [node name="HealthBar" parent="HealthBarCanvas" unique_id=993042800 instance=ExtResource("6_d2wvv")]
 
-[node name="Tether" type="DampedSpringJoint2D" parent="." unique_id=1080168469]
-node_a = NodePath("..")
-
-[node name="Line2D" type="Line2D" parent="Tether" unique_id=1432720532]
-
 [node name="TetherCooldown" type="Timer" parent="." unique_id=1620952528]
 wait_time = 1.5
 one_shot = true

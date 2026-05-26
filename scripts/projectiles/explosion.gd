@@ -1,4 +1,4 @@
-extends Area2D
+extends Projectile
 
 const ATK_POWER := 60
 const PLAYER_DAM := 20
@@ -7,9 +7,11 @@ const PLAYER_DAM := 20
 @onready var sprite := $Sprite2D
 
 func _ready():
+	super()
 	timer.start()
 
 func _process(delta):
+	super(delta)
 	sprite.scale += Vector2(7, 7) * delta
 
 func _on_area_entered(area):

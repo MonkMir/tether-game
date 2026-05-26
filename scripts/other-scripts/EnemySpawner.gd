@@ -5,11 +5,20 @@ extends Node2D
 @export var parabolicScene: PackedScene
 
 var newEnemy 
+var player : Node
+
+var maxEnemies : int = 15
+
 
 func _ready():
+	player = get_player()
 	spawn_enemy()
 
 func spawn_enemy():
+	if !player:
+		return
+	if get_tree().get_nodes_in_group("enemies").size() >= maxEnemies:
+		return
 	
 	#From Outside of Script
 	
@@ -38,3 +47,6 @@ func spawn_enemy():
 	self.add_child(newEnemy)
 	newEnemy.position.x = x
 	newEnemy.position.y = randY
+
+func get_player() -> Node:
+	return get_tree().get_first_node_in_group("player")

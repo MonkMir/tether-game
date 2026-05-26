@@ -1,8 +1,6 @@
-extends Area2D
+extends Projectile
 
 const ATK_POWER := 5
-
-@onready var player := get_node("/root/Main/Player")
 
 var startPoint : Vector2
 var endPoint : Vector2
@@ -20,6 +18,7 @@ var finalDir : Vector2
 var finalSpeed := 420
 
 func _ready():
+	super()
 	if player:
 		endPoint = player.position
 	startPoint = global_position
@@ -31,6 +30,7 @@ func _ready():
 	controlPoint = midPoint + controlPerpDist * plusOrMinus * perpDir
 	finalDir = (endPoint - controlPoint).normalized()
 func _process(delta):
+	super(delta)
 	
 	rotation += 20 * delta
 	
@@ -40,6 +40,6 @@ func _process(delta):
 	else:
 		position += finalSpeed * finalDir * delta
 
-func _on_player_entered(area):
-	if area.is_in_group("player"):
+func _on_player_entered(_area):
+	if _area.is_in_group("player"):
 		player.receive_dam_param(ATK_POWER)

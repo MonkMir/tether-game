@@ -3,7 +3,7 @@ extends Dummy
 @export var explosion_scene : PackedScene
 
 @onready var main := get_node("/root/Main")
-@onready var timer := $Timer
+@onready var selfDestructTimer := $Timer
 
 enum State{
 	PASSIVE,
@@ -12,8 +12,12 @@ enum State{
 var state := State.PASSIVE
 
 
-func _physics_process(_delta):
-	#Do not call super(). Let explosion handle contact damage
+func _physics_process(delta):
+	super(delta)
+	#Set to zero to allow the explosion to handle the damage 
+	attackPower = 0
+	
+	
 	currentSpeed = linear_velocity.length()
 	
 	match state:
@@ -26,8 +30,8 @@ func _physics_process(_delta):
 					state = State.SPECIAL
 			
 		State.SPECIAL:
-			if timer.time_left == 0:
-				timer.start()
+			if selfDestructTimer.time_left == 0:
+				selfDestructTimer.start()
 
 func _on_in_trigger_range(_area):
 	self_destruct()

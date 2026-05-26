@@ -14,36 +14,38 @@ func _ready():
 		dummy = player.newDummy
 
 func _physics_process(_delta):
-	if player:
-		if player.isTethered == false:
-			queue_free()
-		else:
-			line.clear_points()
-			line.add_point(player.position - global_position)
-			line.add_point(dummy.position - global_position)
-		
-		pointDistance = line.get_point_position(0).distance_to(line.get_point_position(1))
-		
-		if pointDistance >= maxLength:
-			apply_elastic_force()
-		
-		
-		##What I really want is to make a formula to get to max within x variable seconds under ideal conditions
-		#var speedIncreaseThreshold := 10
-		#if dummy.currentSpeed >= dummy.speedLimit - speedIncreaseThreshold:
-			#dummy.speedLimit += 150 * delta
-		#else:
-			#dummy.speedLimit -= 300 * delta
-		
-		## DEBUG TOOLS
-		
-		if Input.is_action_just_pressed("Scroll Up"):
-			maxLength -= 20
-		elif Input.is_action_just_pressed("Scroll Down"):
-				maxLength += 20
-		
-	elif !player:
+	if !player:
 		queue_free()
+		return
+	
+	if !dummy or player.isTethered == false:
+		player.isTethered = false
+		queue_free()
+		return
+	
+	line.clear_points()
+	line.add_point(player.position - global_position)
+	line.add_point(dummy.position - global_position)
+	
+	pointDistance = line.get_point_position(0).distance_to(line.get_point_position(1))
+	
+	if pointDistance >= maxLength:
+		apply_elastic_force()
+	
+	
+	##What I really want is to make a formula to get to max within x variable seconds under ideal conditions
+	#var speedIncreaseThreshold := 10
+	#if dummy.currentSpeed >= dummy.speedLimit - speedIncreaseThreshold:
+		#dummy.speedLimit += 150 * delta
+	#else:
+		#dummy.speedLimit -= 300 * delta
+	
+	## DEBUG TOOLS
+	
+	if Input.is_action_just_pressed("Scroll Up"):
+		maxLength -= 20
+	elif Input.is_action_just_pressed("Scroll Down"):
+			maxLength += 20
 
 @export var springStiffness : float = 1.125
 
