@@ -14,16 +14,15 @@ var isDummyHealth : bool
 
 func _ready():
 	set_as_top_level(true)
-	if check_ancestry_for_group(self, "player") == true:
+	if evaluate_ancestry_for_group("player") == true:
 		isPlayerHealth = true
-	if check_ancestry_for_group(self, "dummies") == true:
+	if evaluate_ancestry_for_group("dummies") == true:
 		isDummyHealth = true
 	
 	if isPlayerHealth == true or isDummyHealth == true:
 		show()
 	else:
 		hide()
-
 
 func set_health(newHealth):
 	var prevHealth = health
@@ -40,31 +39,24 @@ func set_health(newHealth):
 	else:
 		damageIndicatorBar.value = health
 
-#To be called in by the health bar's user
-func _init_health(_health):
-	health = _health
-	#healthIndicatorBar.max_value = health #Hey but like why were these here before?
-	healthIndicatorBar.value = health
-	#damageIndicatorBar.max_value = health
-	damageIndicatorBar.value = health
-	
-
 func _process(_delta):
-	
-	if check_ancestry_for_group(self, "dummies") == true:
-		print(str(self.health) + "/100 HP")
-	
-	
-	var getGrandparent := get_parent().get_parent()
-	if getGrandparent != get_node("/root/Main/Player"):
+	if !isPlayerHealth:
 		global_position = get_parent().global_position 
 		scale = Vector2(.1, .1)
 
 func _on_timer_timeout():
 	damageIndicatorBar.value = health
 
-func check_ancestry_for_group(targetNode: Node, targetGroup: String) -> bool:
-	var ancestorNode = targetNode.get_parent()
+#To be called in by the health bar's user
+func _init_health(_health):
+	health = _health
+	#healthIndicatorBar.max_value = health #These lines are bad if you want to pass in a part full bar
+	healthIndicatorBar.value = health
+	#damageIndicatorBar.max_value = health
+	damageIndicatorBar.value = health
+
+func evaluate_ancestry_for_group(targetGroup: String) -> bool:
+	var ancestorNode = get_parent()
 	while ancestorNode != null:
 		if ancestorNode.is_in_group(targetGroup):
 			return true
