@@ -4,7 +4,7 @@ const ATK_POWER := 20
 
 @onready var timer := $Timer
 @onready var sprite := $Sprite2D
-@onready var player := get_node("/root/Main/Player")
+@onready var player := get_tree().get_first_node_in_group("player")
 
 func _ready():
 	timer.start()

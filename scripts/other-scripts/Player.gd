@@ -5,7 +5,7 @@ extends Node2D
 @export var parabolic_dummy_scene: PackedScene
 @export var tether: PackedScene
 
-@onready var main := get_parent()
+@onready var level := get_parent()
 @onready var healthBar := $HealthBarCanvas/HealthBar
 @onready var camera := $"../Camera2D"
 @onready var sprite := $PlayerSprite
@@ -117,13 +117,16 @@ func swap_and_tether(pos: Vector2, rot:float, enemyHealth: float, enemyName: Str
 	newDummy.rotation = dummyRotation
 	
 	add_child(newDummy)
-	newDummy.reparent(main)
+	newDummy.reparent(level)
 	
 	
 	isTethered = true
 	targetedEnemy.queue_free()
 	
-	main.add_child(tether.instantiate())
+	var newTether = tether.instantiate()
+	newTether.tetherOriginNode = self
+	level.add_child(newTether)
+	
 
 func _on_tether_range_area_entered(_area): #only detects enemy layer
 	enemiesInRange += 1

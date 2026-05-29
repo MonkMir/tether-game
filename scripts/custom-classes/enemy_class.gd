@@ -11,7 +11,7 @@ var scoreReward : int = 10
 @onready var healthIndicatorBar := $HealthBar/HealthIndicatorBar
 @onready var sprite := $Sprite2D
 @onready var collision := $CollisionShape2D
-@onready var camera := get_node("/root/Main/Camera2D")
+@onready var camera := get_viewport().get_camera_2d()
 
 @export var speed : float
 
@@ -20,9 +20,12 @@ func _ready():
 	area_entered.connect(_on_area_entered)
 	
 	healthBar._init_health(health)
+	
+	healthIndicatorBar.size = Vector2(600, 90)
+	#replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
+	healthIndicatorBar.position = Vector2(-healthIndicatorBar.size.x / 2, -512)
 
 func _process(_delta):
-	
 	if !player and get_despawn_rect().has_point(global_position) == false:
 		queue_free()
 	

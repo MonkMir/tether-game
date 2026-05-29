@@ -14,9 +14,13 @@ var launchSpeed : float = 3500 #minimum speed to oneshot
 #var direction := Vector2.ZERO
 var newDir : Vector2
 
+#TESTING
+func _ready():
+	super()
 
 func _physics_process(delta):
 	super(delta)
+	
 	match state:
 		State.PASSIVE:
 			if currentSpeed > speedLimit:
@@ -38,8 +42,8 @@ func _physics_process(delta):
 			
 			#BUG add rotation instructions after passive angular velocity is fixed
 
-
-#func launch_dir() -> Vector2: #not functional
+#not functional
+#func launch_dir() -> Vector2: 
 		#var enemies = get_tree().get_nodes_in_group("enemies")
 		#var enemyDir : Vector2
 		#var selectDotProd : float = -INF

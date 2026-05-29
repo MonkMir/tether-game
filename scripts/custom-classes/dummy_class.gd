@@ -4,7 +4,7 @@ class_name Dummy
 #DESPAWN LOGIC
 @onready var player : Node
 @onready var area := $Area2D
-@onready var camera := get_node("/root/Main/Camera2D")
+@onready var camera := get_viewport().get_camera_2d()
 @onready var healthBar := $HealthBar
 @onready var healthIndicatorBar := $HealthBar/HealthIndicatorBar
 
@@ -25,12 +25,12 @@ func _ready():
 	healthIndicatorBar.position = Vector2(-healthIndicatorBar.size.x / 2, -512)
 	healthBar._init_health(health)
 
+
 var speedToDamageDivisor : int = 35
 func _physics_process(delta):
 	if !healthBar:
 		return
-	
-	healthBar.health = health
+	#healthBar.health = health #WARNING this might be a vestige from prior testing. test it 
 	currentSpeed = linear_velocity.length()
 	attackPower = linear_velocity.length() / speedToDamageDivisor
 	
@@ -40,7 +40,6 @@ func _physics_process(delta):
 		timeOutOfBoundsSeconds += delta
 		if timeOutOfBoundsSeconds >= maxOffscreenTimeSeconds:
 			if !player or self != player.newDummy:
-				print("despawn")
 				queue_free()
 	
 	if health <= 0:

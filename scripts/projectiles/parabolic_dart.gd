@@ -18,7 +18,6 @@ var finalDir : Vector2
 var finalSpeed := 420
 
 func _ready():
-	super()
 	if player:
 		endPoint = player.position
 	startPoint = global_position

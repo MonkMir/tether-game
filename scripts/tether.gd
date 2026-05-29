@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var player := get_node("/root/Main/Player")
+@onready var tetherOriginNode : Node
 @onready var dummy
 @onready var line := $LineTexture
 
@@ -10,21 +10,21 @@ var pointDistance : float
 var currentMaxLength : float
 
 func _ready():
-	if player.newDummy != null:
-		dummy = player.newDummy
+	if tetherOriginNode.newDummy != null:
+		dummy = tetherOriginNode.newDummy
 
 func _physics_process(_delta):
-	if !player:
+	if !tetherOriginNode:
 		queue_free()
 		return
 	
-	if !dummy or player.isTethered == false:
-		player.isTethered = false
+	if !dummy or tetherOriginNode.isTethered == false:
+		tetherOriginNode.isTethered = false
 		queue_free()
 		return
 	
 	line.clear_points()
-	line.add_point(player.position - global_position)
+	line.add_point(tetherOriginNode.position - global_position)
 	line.add_point(dummy.position - global_position)
 	
 	pointDistance = line.get_point_position(0).distance_to(line.get_point_position(1))
@@ -37,7 +37,7 @@ func _physics_process(_delta):
 func get_elastic_pull_force() -> Vector2:
 	var distanceExceeded : float = max(pointDistance - maxLength, 0.0)
 	
-	var reboundDirection : Vector2 = (player.global_position - dummy.global_position).normalized() #direction to player
+	var reboundDirection : Vector2 = (tetherOriginNode.global_position - dummy.global_position).normalized() #direction to tetherOriginNode
 	var elasticForce : float = distanceExceeded**2 * springStiffness
 	
 	return elasticForce * reboundDirection
@@ -45,7 +45,7 @@ func get_elastic_pull_force() -> Vector2:
 @export var counterForceWeight := 5.0
 
 func get_damping_force() -> Vector2:
-	var reboundDirection : Vector2 = (player.global_position - dummy.global_position).normalized() #direction to player
+	var reboundDirection : Vector2 = (tetherOriginNode.global_position - dummy.global_position).normalized() #direction to tetherOriginNode
 	var startingVector : Vector2 = dummy.linear_velocity 
 	var velocityToPlayer : float = startingVector.dot(reboundDirection)
 	

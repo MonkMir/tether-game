@@ -47,10 +47,6 @@ func _ready():
 	super()
 	enemyName = "parabolic"
 	attackPower = 5
-	
-	healthIndicatorBar.size = Vector2(600, 90)
-	#replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
-	healthIndicatorBar.position = Vector2(-healthIndicatorBar.size.x / 2, -512)
 
 
 func _process(delta):

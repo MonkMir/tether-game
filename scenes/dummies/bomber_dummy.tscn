@@ -11,7 +11,7 @@ radius = 32.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_njpye"]
 radius = 32.0156
 
-[node name="BomberDummy" type="RigidBody2D" unique_id=416578855]
+[node name="BomberDummy" type="RigidBody2D" unique_id=416578855 groups=["dummies"]]
 mass = 0.5
 script = ExtResource("1_v4dsp")
 explosion_scene = ExtResource("2_fl6hi")

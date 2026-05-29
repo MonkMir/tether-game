@@ -1,9 +1,9 @@
 extends Area2D
 class_name Projectile
 
-@onready var player : Node
+@onready var player := get_tree().get_first_node_in_group("player")
 @onready var area := $Area2D
-@onready var camera := get_node("/root/Main/Camera2D")
+@onready var camera := get_viewport().get_camera_2d()
 
 var attackPower : float
 
@@ -13,9 +13,6 @@ var currentSpeed : float
 var timeOutOfBoundsSeconds : float = 0.0
 var maxOffscreenTimeSeconds : float = 3.0
 
-func _ready():
-	player = get_player()
-
 func _process(delta):
 	if get_despawn_rect().has_point(global_position):
 		timeOutOfBoundsSeconds = 0.0
@@ -23,10 +20,6 @@ func _process(delta):
 		timeOutOfBoundsSeconds += delta
 		if timeOutOfBoundsSeconds >= maxOffscreenTimeSeconds:
 			queue_free()
-
-
-func get_player() -> Node:
-	return get_tree().get_first_node_in_group("player")
 
 func get_static_camera_rect() -> Rect2:
 	var cameraSize = get_viewport_rect().size / camera.zoom

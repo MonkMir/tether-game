@@ -1,4 +1,5 @@
 extends Node2D
+#rename damage indicator to trailing bar or something
 
 #IMPORTANT: health bar's default position is at the top of the screen rather than the player
 # setting it's position manually.
@@ -18,6 +19,9 @@ func _ready():
 		isPlayerHealth = true
 	if evaluate_ancestry_for_group("dummies") == true:
 		isDummyHealth = true
+		#This is a really stupid way to do this but too lazy.
+		#The source of this bandaid likely has to do with the order of the dummy spawn code
+		isPlayerHealth = false 
 	
 	if isPlayerHealth == true or isDummyHealth == true:
 		show()
