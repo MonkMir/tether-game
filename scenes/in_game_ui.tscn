@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://34lp4apat21h"]
+
+[ext_resource type="Script" uid="uid://cf2kds67t7h0b" path="res://scripts/pause_menu.gd" id="1_kplmn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kplmn"]
+bg_color = Color(0.08235294, 0.19607843, 0.30588236, 1)
+skew = Vector2(0.28, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 12
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fqvwy"]
+bg_color = Color(0.075, 0.25, 0.15666667, 1)
+skew = Vector2(0.28, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 12
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ria60"]
+bg_color = Color(0.0627451, 0.20784314, 0.12941177, 1)
+skew = Vector2(0.28, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 12
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6qwj3"]
+bg_color = Color(0.0627451, 0.20784314, 0.12941177, 1)
+skew = Vector2(0.28, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 12
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a45jx"]
+bg_color = Color(0.075, 0.25, 0.15666667, 1)
+skew = Vector2(0.28, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 12
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fnge6"]
+bg_color = Color(0.0627451, 0.20784314, 0.12941177, 1)
+skew = Vector2(0.28, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 12
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_276nr"]
+bg_color = Color(0.0627451, 0.20784314, 0.12941177, 1)
+skew = Vector2(0.28, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 12
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_04xgm"]
+bg_color = Color(0.0627451, 0.20784314, 0.12941177, 1)
+skew = Vector2(0.28, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 12
+corner_radius_bottom_right = 20
+
+[node name="InGameUI" type="CanvasLayer" unique_id=1644306105]
+
+[node name="Menu" type="Control" parent="." unique_id=356940545]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseMenu" type="MarginContainer" parent="Menu" unique_id=1041511619]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -262.5
+offset_right = 250.0
+offset_bottom = 262.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kplmn")
+
+[node name="DebugBackground" type="ColorRect" parent="Menu/PauseMenu" unique_id=1645128328]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/PauseMenu" unique_id=356556188]
+custom_minimum_size = Vector2(500, 525)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 36
+
+[node name="ResumeButton" type="Button" parent="Menu/PauseMenu/VBoxContainer" unique_id=375980014]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_kplmn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+text = "RESUME"
+
+[node name="RestartButton" type="Button" parent="Menu/PauseMenu/VBoxContainer" unique_id=258593913]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_kplmn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a45jx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fnge6")
+theme_override_styles/focus = SubResource("StyleBoxFlat_276nr")
+text = "RESTART"
+
+[node name="QuitButton" type="Button" parent="Menu/PauseMenu/VBoxContainer" unique_id=729818849]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_kplmn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a45jx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fnge6")
+theme_override_styles/focus = SubResource("StyleBoxFlat_04xgm")
+text = "QUIT"
+
+[connection signal="pressed" from="Menu/PauseMenu/VBoxContainer/ResumeButton" to="Menu/PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Menu/PauseMenu/VBoxContainer/RestartButton" to="Menu/PauseMenu" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Menu/PauseMenu/VBoxContainer/QuitButton" to="Menu/PauseMenu" method="_on_quit_button_pressed"]
