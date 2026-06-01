@@ -22,7 +22,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameState="*res://scripts/other-scripts/game_state.gd"
-PauseManager="*uid://b1pfhde0p3uad"
 
 [display]
 

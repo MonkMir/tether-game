@@ -17,7 +17,7 @@ font_size = 100
 [node name="Level1" type="Node2D" unique_id=657166130]
 
 [node name="Player" parent="." unique_id=994072363 instance=ExtResource("1_j7kpp")]
-position = Vector2(576, 336)
+position = Vector2(576, 320)
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=2100611888]
 script = ExtResource("2_bjebc")
@@ -49,7 +49,7 @@ vertical_alignment = 1
 script = ExtResource("7_sof0w")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1506603802]
-position = Vector2(584, 336)
+position = Vector2(576, 320)
 zoom = Vector2(1.72, 1.72)
 
 [connection signal="timeout" from="EnemySpawner/Timer" to="EnemySpawner" method="spawn_enemy"]
