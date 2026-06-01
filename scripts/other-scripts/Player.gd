@@ -29,7 +29,6 @@ const MAX_SPEED : int = 1000
 ##GAME START INITIALIZATIONS
 func _ready():
 	healthBar._init_health(health)
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
 func _physics_process(delta): 
 	

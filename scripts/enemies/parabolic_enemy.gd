@@ -8,7 +8,6 @@ extends Enemy
 #BUG make spin_and_transition use time based transition rather than rate based.
 #maybe add an optional lerp variation?
 
-@onready var main := get_node("/root/Main")
 @export var dart_scene : PackedScene
 @onready var shotIntervalTimer := $ShotInterval
 @onready var shotClusterTimer := $ShotCluster
@@ -137,7 +136,7 @@ func spawn_dart():
 	var newDart := dart_scene.instantiate()
 	newDart.position = position
 	newDart.plusOrMinus *= invertShotArc
-	main.add_child(newDart)
+	get_parent().add_child(newDart)
 
 func generate_path_progress() -> float:
 	var maxProgress : float = path.curve.get_baked_length()

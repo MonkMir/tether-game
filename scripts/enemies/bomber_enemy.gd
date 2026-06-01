@@ -3,12 +3,10 @@ extends Enemy
 var ATK_POWER := 10
 const SCORE_REWARD := 10
 
-@onready var main := get_node("/root/Main")
 @export var bomb_scene : PackedScene
 
 @onready var circlingRange := $CirclingRange/CollisionShape
 @onready var timer := $BombTimer
-
 
 enum State{
 	APPROACH,
@@ -133,7 +131,7 @@ func get_ideal_dir(_interestArray: Array) -> Vector2:
 func spawn_bomb():
 	var newBomb := bomb_scene.instantiate()
 	newBomb.position = position
-	main.add_child(newBomb)
+	get_parent().add_child(newBomb)
 
 func _on_bomb_timer_timeout():
 	spawn_bomb()

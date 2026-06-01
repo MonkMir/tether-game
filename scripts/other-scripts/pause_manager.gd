@@ -10,15 +10,10 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("Pause"):
 		toggle_pause()
-		
-		if get_tree().paused == true:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			print("PAUSED")
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-			print("UNPAUSED")
-			
+	
 func toggle_pause() -> void:
+	if GameState.is_pausable == false:
+		return
 	
 	var currentFrame = Engine.get_process_frames()
 	if currentFrame == lastToggleFrame:
@@ -27,4 +22,5 @@ func toggle_pause() -> void:
 	lastToggleFrame = currentFrame
 	
 	get_tree().paused = !get_tree().paused
-	pause_toggled.emit(get_tree().paused)
+	var isPaused : bool = get_tree().paused
+	pause_toggled.emit(isPaused)

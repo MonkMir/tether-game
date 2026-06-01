@@ -1,8 +1,5 @@
 extends Dummy
 
-
-@onready var main := get_node("/root/Main")
-
 var dupe : PackedScene
 
 enum State {
@@ -58,7 +55,7 @@ func _physics_process(delta):
 				dupeNode.position = position
 				dupeNode.apply_central_impulse(finalDir * 1000)
 				dupeNode.angular_velocity = angular_velocity
-				main.add_child(dupeNode)
+				get_parent().add_child(dupeNode)
 				queue_free()
 	
 		State.REST:

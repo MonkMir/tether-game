@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://34lp4apat21h"]
 
+[ext_resource type="Script" uid="uid://bt54v8vd0x276" path="res://scripts/other-scripts/menu_manager.gd" id="1_fqvwy"]
 [ext_resource type="Script" uid="uid://cf2kds67t7h0b" path="res://scripts/pause_menu.gd" id="1_kplmn"]
+[ext_resource type="Script" uid="uid://6o4txy54pcjf" path="res://scenes/main_menu.gd" id="2_a45jx"]
+[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="2_fnge6"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kplmn"]
-bg_color = Color(0.08235294, 0.19607843, 0.30588236, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qinws"]
+bg_color = Color(0.083699994, 0.20062165, 0.31, 0.74509805)
 skew = Vector2(0.28, 0)
 corner_radius_top_left = 20
 corner_radius_top_right = 12
@@ -25,6 +28,13 @@ corner_radius_bottom_right = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6qwj3"]
 bg_color = Color(0.0627451, 0.20784314, 0.12941177, 1)
+skew = Vector2(0.28, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 12
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kplmn"]
+bg_color = Color(0.083699994, 0.20062165, 0.31, 0.74509805)
 skew = Vector2(0.28, 0)
 corner_radius_top_left = 20
 corner_radius_top_right = 12
@@ -58,18 +68,35 @@ corner_radius_top_left = 20
 corner_radius_top_right = 12
 corner_radius_bottom_right = 20
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_huati"]
+bg_color = Color(0, 0.16016667, 0.31, 1)
+skew = Vector2(0.28, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 12
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jlb72"]
+bg_color = Color(0, 0.16016667, 0.31, 1)
+skew = Vector2(0.28, 0)
+corner_radius_top_left = 20
+corner_radius_top_right = 12
+corner_radius_bottom_right = 20
+
 [node name="InGameUI" type="CanvasLayer" unique_id=1644306105]
 
-[node name="Menu" type="Control" parent="." unique_id=356940545]
-process_mode = 2
+[node name="MenuManager" type="Control" parent="." unique_id=356940545]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_fqvwy")
 
-[node name="PauseMenu" type="MarginContainer" parent="Menu" unique_id=1041511619]
+[node name="PauseMenu" type="MarginContainer" parent="MenuManager" unique_id=1041511619]
+process_mode = 2
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -84,29 +111,31 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kplmn")
 
-[node name="DebugBackground" type="ColorRect" parent="Menu/PauseMenu" unique_id=1645128328]
-visible = false
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Menu/PauseMenu" unique_id=356556188]
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuManager/PauseMenu" unique_id=356556188]
 custom_minimum_size = Vector2(500, 525)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 36
 
-[node name="ResumeButton" type="Button" parent="Menu/PauseMenu/VBoxContainer" unique_id=375980014]
+[node name="MouseResetPositionPause" type="Control" parent="MenuManager/PauseMenu/VBoxContainer" unique_id=1302348411]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ResumeButton" type="Button" parent="MenuManager/PauseMenu/VBoxContainer" unique_id=375980014]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_font_sizes/font_size = 73
-theme_override_styles/normal = SubResource("StyleBoxFlat_kplmn")
+theme_override_styles/normal = SubResource("StyleBoxFlat_qinws")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
 theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
 text = "RESUME"
 
-[node name="RestartButton" type="Button" parent="Menu/PauseMenu/VBoxContainer" unique_id=258593913]
+[node name="RestartButton" type="Button" parent="MenuManager/PauseMenu/VBoxContainer" unique_id=258593913]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_font_sizes/font_size = 73
@@ -116,7 +145,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fnge6")
 theme_override_styles/focus = SubResource("StyleBoxFlat_276nr")
 text = "RESTART"
 
-[node name="QuitButton" type="Button" parent="Menu/PauseMenu/VBoxContainer" unique_id=729818849]
+[node name="QuitButton" type="Button" parent="MenuManager/PauseMenu/VBoxContainer" unique_id=729818849]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_font_sizes/font_size = 73
@@ -126,6 +155,87 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_fnge6")
 theme_override_styles/focus = SubResource("StyleBoxFlat_04xgm")
 text = "QUIT"
 
-[connection signal="pressed" from="Menu/PauseMenu/VBoxContainer/ResumeButton" to="Menu/PauseMenu" method="_on_resume_button_pressed"]
-[connection signal="pressed" from="Menu/PauseMenu/VBoxContainer/RestartButton" to="Menu/PauseMenu" method="_on_restart_button_pressed"]
-[connection signal="pressed" from="Menu/PauseMenu/VBoxContainer/QuitButton" to="Menu/PauseMenu" method="_on_quit_button_pressed"]
+[node name="MainMenu" type="MarginContainer" parent="MenuManager" unique_id=13769595]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_a45jx")
+
+[node name="TextureRect" type="TextureRect" parent="MenuManager/MainMenu" unique_id=1302152522]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_fnge6")
+
+[node name="TextContainer" type="MarginContainer" parent="MenuManager/MainMenu" unique_id=99278055]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/margin_bottom = 550
+
+[node name="SettingsLabel" type="Label" parent="MenuManager/MainMenu/TextContainer" unique_id=1748454740]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 65
+text = "Aww, what's wrong?  My settings 
+        aren't good enough for you? Gonna cry about it? You are a bitch"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuManager/MainMenu" unique_id=231625656]
+custom_minimum_size = Vector2(700, 1000)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 30
+alignment = 2
+
+[node name="PlayButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer" unique_id=942504903]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_huati")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+text = "PLAY"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MenuManager/MainMenu/VBoxContainer" unique_id=648869905]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 45
+alignment = 1
+
+[node name="SettingsButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer/HBoxContainer" unique_id=2055075532]
+custom_minimum_size = Vector2(400, 150)
+layout_mode = 2
+focus_neighbor_right = NodePath("../QuitButton")
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_jlb72")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+text = "SETTINGS"
+
+[node name="QuitButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer/HBoxContainer" unique_id=1645163010]
+custom_minimum_size = Vector2(270, 150)
+layout_mode = 2
+focus_neighbor_left = NodePath("../SettingsButton")
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_jlb72")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+text = "QUIT"
+
+[connection signal="pressed" from="MenuManager/PauseMenu/VBoxContainer/ResumeButton" to="MenuManager/PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="MenuManager/PauseMenu/VBoxContainer/RestartButton" to="MenuManager/PauseMenu" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="MenuManager/PauseMenu/VBoxContainer/QuitButton" to="MenuManager/PauseMenu" method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MenuManager/MainMenu/VBoxContainer/PlayButton" to="MenuManager/MainMenu" method="_on_play_button_pressed"]
+[connection signal="pressed" from="MenuManager/MainMenu/VBoxContainer/HBoxContainer/SettingsButton" to="MenuManager/MainMenu" method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MenuManager/MainMenu/VBoxContainer/HBoxContainer/QuitButton" to="MenuManager/MainMenu" method="_on_quit_button_pressed"]

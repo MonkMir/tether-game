@@ -1,61 +1,8 @@
 [gd_scene format=3 uid="uid://cispfyjhtrf2u"]
 
-[ext_resource type="PackedScene" uid="uid://b0u1q6i5db5ou" path="res://scenes/player.tscn" id="2_tipki"]
-[ext_resource type="Script" uid="uid://ba40nwh8lu65b" path="res://scripts/other-scripts/EnemySpawner.gd" id="6_0p816"]
-[ext_resource type="Script" uid="uid://da7f2buhged70" path="res://scripts/other-scripts/ScoreLabel.gd" id="8_14cfy"]
 [ext_resource type="PackedScene" uid="uid://34lp4apat21h" path="res://scenes/in_game_ui.tscn" id="8_tipki"]
-[ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://scripts/other-scripts/GameOverLabel.gd" id="9_iqu0m"]
-[ext_resource type="PackedScene" uid="uid://cdk16uvt8jqbb" path="res://scenes/enemies/arrow_enemy.tscn" id="9_trceg"]
-[ext_resource type="PackedScene" uid="uid://dkq6ilqibkqvo" path="res://scenes/enemies/bomber_enemy.tscn" id="10_a8y0u"]
-[ext_resource type="PackedScene" uid="uid://cm6ubd5en4t7e" path="res://scenes/enemies/parabolic_enemy.tscn" id="11_mpg2q"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_c5177"]
-font_size = 36
-
-[sub_resource type="LabelSettings" id="LabelSettings_qrb1h"]
-font_size = 100
 
 [node name="Main" type="Node2D" unique_id=1762207710]
 metadata/_edit_lock_ = true
 
-[node name="Level1" type="Node2D" parent="." unique_id=880129070]
-
-[node name="Player" parent="Level1" unique_id=994072363 instance=ExtResource("2_tipki")]
-position = Vector2(576, 336)
-
-[node name="EnemySpawner" type="Node2D" parent="Level1" unique_id=187246452]
-script = ExtResource("6_0p816")
-arrowScene = ExtResource("9_trceg")
-bomberScene = ExtResource("10_a8y0u")
-parabolicScene = ExtResource("11_mpg2q")
-
-[node name="Timer" type="Timer" parent="Level1/EnemySpawner" unique_id=394046482]
-wait_time = 2.5
-autostart = true
-
-[node name="ScoreLabel" type="Label" parent="Level1" unique_id=1923520075]
-offset_left = 26.0
-offset_top = 67.0
-offset_right = 163.0
-offset_bottom = 117.0
-text = "Score: 0"
-label_settings = SubResource("LabelSettings_c5177")
-script = ExtResource("8_14cfy")
-
-[node name="GameOverLabel" type="Label" parent="Level1" unique_id=1847655957]
-visible = false
-offset_right = 1156.0
-offset_bottom = 647.0
-text = "UR DOGWATER!"
-label_settings = SubResource("LabelSettings_qrb1h")
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("9_iqu0m")
-
-[node name="Camera2D" type="Camera2D" parent="Level1" unique_id=1673976300]
-position = Vector2(584, 336)
-zoom = Vector2(1.72, 1.72)
-
 [node name="InGameUI" parent="." unique_id=356940545 instance=ExtResource("8_tipki")]
-
-[connection signal="timeout" from="Level1/EnemySpawner/Timer" to="Level1/EnemySpawner" method="spawn_enemy"]
