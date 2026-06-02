@@ -1,17 +1,11 @@
 extends MarginContainer
 
-func _ready():
-	hide()
-	
-	GameState.pause_toggled.connect(_on_pause_toggled)
-
-func _on_pause_toggled(isPaused) -> void:
-	if isPaused:
-		show()
-		%ResumeButton.grab_focus()
-	else:
-		hide()
-
+##TESTING
+#func _ready():
+	#print(%MouseResetPositionPause.global_position)
+#
+#func _process(delta):
+	#print(%MouseResetPositionPause.global_position)
 
 func _on_resume_button_pressed():
 	GameState.toggle_pause()
@@ -25,7 +19,7 @@ func _on_quit_button_pressed():
 	GameState.toggle_pause()
 	GameState.is_pausable = false
 
-func update_active_menu_variables():
+func set_menu_properties():
 	var manager = get_parent()
 	manager.defaultFocusButton = %ResumeButton
 	manager.mouseResetPosition = %MouseResetPositionPause.global_position
