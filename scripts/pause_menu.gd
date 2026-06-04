@@ -1,11 +1,8 @@
 extends MarginContainer
 
-##TESTING
-#func _ready():
-	#print(%MouseResetPositionPause.global_position)
-#
-#func _process(delta):
-	#print(%MouseResetPositionPause.global_position)
+@onready var manager : Control = get_parent()
+@export var mouse_reset_node : Control 
+@export var default_focus_object : Control
 
 func _on_resume_button_pressed():
 	GameState.toggle_pause()
@@ -20,9 +17,8 @@ func _on_quit_button_pressed():
 	GameState.is_pausable = false
 
 func set_menu_properties():
-	var manager = get_parent()
-	manager.defaultFocusButton = %ResumeButton
-	manager.mouseResetPosition = %MouseResetPositionPause.global_position
+	manager.defaultFocusButton = default_focus_object
+	manager.mouse_reset_data = mouse_reset_node
 
 func reload_level():
 	var rootNode = get_tree().current_scene

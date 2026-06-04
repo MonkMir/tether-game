@@ -12,7 +12,7 @@ const KEYBOARD_AND_JOYPAD_EVENTS : Array = ["InputEventJoypadButton", "InputEven
 #WARNING These are settings for main menu,
 #but should be handled without hard-coding
 var defaultFocusButton : Button
-var mouseResetPosition : Vector2
+var mouse_reset_data
 
 @export var onReadyMenu : Node
 @export var menu_stack : Array = []
@@ -95,11 +95,21 @@ func clear_navigation_focus():
 
 ## MOUSE 
 
+func _get_mouse_reset_position(data) -> Vector2:
+	if data is Vector2:
+		printerr("_get_mouse_reset_position called redundantly")
+		return data
+	elif data is Node:
+		await RenderingServer.frame_post_draw
+		return data.global_position
+	else:
+		return get_viewport().get_visible_rect().size / 2
+
 func _guarded_mouse_reset() -> void:
-	#await get_tree().process_frame
 	if is_mouse_inside_window():
 		isAutomatedMouseMovement = true
-		get_viewport().warp_mouse(mouseResetPosition)
+		var _final_position = await _get_mouse_reset_position(mouse_reset_data)
+		get_viewport().warp_mouse(_final_position)
 
 func is_mouse_inside_window() -> bool:
 	var mousePosition = get_viewport().get_mouse_position()
