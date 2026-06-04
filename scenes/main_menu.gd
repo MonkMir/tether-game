@@ -17,5 +17,5 @@ func _on_quit_button_pressed():
 	get_tree().quit()
 
 func set_menu_properties():
-	manager.defaultFocusButton = default_focus_object
+	manager.default_focus = default_focus_object
 	manager.mouse_reset_data = null
