@@ -95,9 +95,17 @@ grow_vertical = 2
 script = ExtResource("1_fqvwy")
 onReadyMenu = NodePath("MainMenu")
 
+[node name="DelayUntilRepeat" type="Timer" parent="MenuManager" unique_id=259922699]
+unique_name_in_owner = true
+wait_time = 0.4
+one_shot = true
+
+[node name="RepeatInterval" type="Timer" parent="MenuManager" unique_id=387866141]
+unique_name_in_owner = true
+wait_time = 0.05
+
 [node name="PauseMenu" type="MarginContainer" parent="MenuManager" unique_id=1041511619 node_paths=PackedStringArray("mouse_reset_node", "default_focus_object")]
 process_mode = 2
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -149,6 +157,36 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_276nr")
 text = "RESTART"
 
 [node name="QuitButton" type="Button" parent="MenuManager/PauseMenu/VBoxContainer" unique_id=729818849]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_kplmn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a45jx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fnge6")
+theme_override_styles/focus = SubResource("StyleBoxFlat_04xgm")
+text = "QUIT"
+
+[node name="QuitButton2" type="Button" parent="MenuManager/PauseMenu/VBoxContainer" unique_id=1123818039]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_kplmn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a45jx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fnge6")
+theme_override_styles/focus = SubResource("StyleBoxFlat_04xgm")
+text = "QUIT"
+
+[node name="QuitButton3" type="Button" parent="MenuManager/PauseMenu/VBoxContainer" unique_id=1874657349]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_kplmn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a45jx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fnge6")
+theme_override_styles/focus = SubResource("StyleBoxFlat_04xgm")
+text = "QUIT"
+
+[node name="QuitButton4" type="Button" parent="MenuManager/PauseMenu/VBoxContainer" unique_id=658447777]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_font_sizes/font_size = 73
@@ -238,9 +276,78 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
 theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
 text = "QUIT"
 
+[node name="HBoxContainer2" type="HBoxContainer" parent="MenuManager/MainMenu/VBoxContainer" unique_id=1783587720]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 45
+alignment = 1
+
+[node name="SettingsButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer/HBoxContainer2" unique_id=1987399413]
+custom_minimum_size = Vector2(400, 150)
+layout_mode = 2
+focus_neighbor_right = NodePath("../QuitButton")
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_jlb72")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+text = "SETTINGS"
+
+[node name="QuitButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer/HBoxContainer2" unique_id=448884370]
+custom_minimum_size = Vector2(270, 150)
+layout_mode = 2
+focus_neighbor_left = NodePath("../SettingsButton")
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_jlb72")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+text = "QUIT"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MenuManager/MainMenu/VBoxContainer" unique_id=1102231552]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 45
+alignment = 1
+
+[node name="SettingsButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer/HBoxContainer3" unique_id=1727603186]
+custom_minimum_size = Vector2(400, 150)
+layout_mode = 2
+focus_neighbor_right = NodePath("../QuitButton")
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_jlb72")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+text = "SETTINGS"
+
+[node name="QuitButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer/HBoxContainer3" unique_id=1537568601]
+custom_minimum_size = Vector2(270, 150)
+layout_mode = 2
+focus_neighbor_left = NodePath("../SettingsButton")
+theme_override_font_sizes/font_size = 73
+theme_override_styles/normal = SubResource("StyleBoxFlat_jlb72")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+text = "QUIT"
+
+[connection signal="timeout" from="MenuManager/DelayUntilRepeat" to="MenuManager" method="_on_delay_until_repeat_timeout"]
+[connection signal="timeout" from="MenuManager/RepeatInterval" to="MenuManager" method="_on_repeat_interval_timeout"]
 [connection signal="pressed" from="MenuManager/PauseMenu/VBoxContainer/ResumeButton" to="MenuManager/PauseMenu" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="MenuManager/PauseMenu/VBoxContainer/RestartButton" to="MenuManager/PauseMenu" method="_on_restart_button_pressed"]
 [connection signal="pressed" from="MenuManager/PauseMenu/VBoxContainer/QuitButton" to="MenuManager/PauseMenu" method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MenuManager/PauseMenu/VBoxContainer/QuitButton2" to="MenuManager/PauseMenu" method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MenuManager/PauseMenu/VBoxContainer/QuitButton3" to="MenuManager/PauseMenu" method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MenuManager/PauseMenu/VBoxContainer/QuitButton4" to="MenuManager/PauseMenu" method="_on_quit_button_pressed"]
 [connection signal="pressed" from="MenuManager/MainMenu/VBoxContainer/PlayButton" to="MenuManager/MainMenu" method="_on_play_button_pressed"]
 [connection signal="pressed" from="MenuManager/MainMenu/VBoxContainer/HBoxContainer/SettingsButton" to="MenuManager/MainMenu" method="_on_settings_button_pressed"]
 [connection signal="pressed" from="MenuManager/MainMenu/VBoxContainer/HBoxContainer/QuitButton" to="MenuManager/MainMenu" method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MenuManager/MainMenu/VBoxContainer/HBoxContainer2/SettingsButton" to="MenuManager/MainMenu" method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MenuManager/MainMenu/VBoxContainer/HBoxContainer2/QuitButton" to="MenuManager/MainMenu" method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MenuManager/MainMenu/VBoxContainer/HBoxContainer3/SettingsButton" to="MenuManager/MainMenu" method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MenuManager/MainMenu/VBoxContainer/HBoxContainer3/QuitButton" to="MenuManager/MainMenu" method="_on_quit_button_pressed"]
