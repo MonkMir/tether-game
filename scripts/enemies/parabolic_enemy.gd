@@ -1,169 +1,170 @@
 extends Enemy
 
-#BUG enemy sometimes gets stuck. in this case, previousState = null which suggests
-#that it never leaves GO_TO_PATH 
+
+# BUG enemy sometimes gets stuck. in this case, previousState = null which suggests
+# that it never leaves GO_TO_PATH
 #
-#BUG clear shot interval code. I like how it works
+# BUG clear shot interval code. I like how it works
 #
-#BUG make spin_and_transition use time based transition rather than rate based.
-#maybe add an optional lerp variation?
+# BUG make spin_and_transition use time based transition rather than rate based.
+# maybe add an optional lerp variation?
 
-@export var dart_scene : PackedScene
-@onready var shotIntervalTimer := $ShotInterval
-@onready var shotClusterTimer := $ShotCluster
-@onready var collision1 := $Collision
-@onready var collision2 := $CollisionShape2D
-
-@onready var path := $TransformDecoupler/Path2D
-@onready var pathFollow := $TransformDecoupler/Path2D/PathFollow2D
-
-enum State{
+enum State {
 	GO_TO_PATH,
 	ATTACK,
 	REPOSITION
 }
 
+@export var dart_scene : PackedScene
+
 var state = State.GO_TO_PATH
-var previousState = null
-
-var randomPathLength := INF
-var previousDistanceToTarget := INF
-var targetPathProgress : float
-var targetPointOnPath := Vector2(INF, INF) #should be generated at the end of state during transition
-
-var reachedTargetSpin : bool = false
-
-var currentSpinDegPerSec : float = INF
-
-var invertShotArc : int = 1
+var previous_state = null
+var random_path_length := INF
+var previous_distance_to_target := INF
+var target_path_progress : float
+var target_point_on_path := Vector2(INF, INF) # should be generated at the end of state during transition
+var reached_target_spin : bool = false
+var current_spin_deg_per_sec : float = INF
+var invert_shot_arc : int = 1
 
 const SPEED_GROWTH := 500
 const BASE_SPEED := 100
 const DECELERATION := 1000
 const MAX_SPEED := 1200
 
+@onready var shot_interval_timer := $ShotInterval
+@onready var shot_cluster_timer := $ShotCluster
+@onready var collision1 := $Collision
+@onready var collision2 := $CollisionShape2D
+@onready var path := $TransformDecoupler/Path2D
+@onready var path_follow := $TransformDecoupler/Path2D/PathFollow2D
+
+
 func _ready():
 	super()
-	enemyName = "parabolic"
-	attackPower = 5
+	enemy_name = "parabolic"
+	attack_power = 5
 
 
-func _process(delta):
+func _process(delta: float):
 	super(delta)
+	
 	match state:
 		State.GO_TO_PATH:
 			spin_and_transition(1080.0, delta)
 			enable_collision(false)
-			if targetPointOnPath == Vector2(INF, INF):
-				targetPointOnPath = generate_new_path_target()
 			
-			var directionToTarget = (targetPointOnPath - position).normalized()
-			var distanceToTarget = position.distance_to(targetPointOnPath)
+			if target_point_on_path == Vector2(INF, INF):
+				target_point_on_path = generate_new_path_target()
 			
-			if distanceToTarget >= speed * delta:
+			var direction_to_target = (target_point_on_path - position).normalized()
+			var distance_to_target = position.distance_to(target_point_on_path)
+			
+			if distance_to_target >= speed * delta:
 				speed = min(speed + SPEED_GROWTH * delta, MAX_SPEED)
-				position += directionToTarget * speed * delta
+				position += direction_to_target * speed * delta
 			else:
 				enable_collision(true)
-				position = targetPointOnPath
+				position = target_point_on_path
 				speed = 0.0
-				
-				pathFollow.progress = path.curve.get_closest_offset(path.to_local(global_position))
-				targetPointOnPath = generate_new_path_target()
+				path_follow.progress = path.curve.get_closest_offset(path.to_local(global_position))
+				target_point_on_path = generate_new_path_target()
 				state = State.ATTACK
-			
-			
-#Speed should probably be used in this state...
+		# Speed should probably be used in this state...
 		State.REPOSITION:
-			#would be better if transition rate was total time to transition instead of degpersec
-			if previousState == State.GO_TO_PATH:
+			# would be better if transition rate was total time to transition instead of degpersec
+			if previous_state == State.GO_TO_PATH:
 				spin_and_transition(250.0, delta, 500.0)
 			else:
 				spin_and_transition(250.0, delta)
-				
-			if currentSpinDegPerSec == 250.0:
-				reachedTargetSpin = true
 			
-			if reachedTargetSpin == true:
+			if current_spin_deg_per_sec == 250.0:
+				reached_target_spin = true
+			
+			if reached_target_spin == true:
 				move_along_path()
 			
-			if position.is_equal_approx(targetPointOnPath):
-				position = pathFollow.global_position
-				reachedTargetSpin = false
-				
-				previousState = State.REPOSITION
-				targetPointOnPath = generate_new_path_target()
+			if position.is_equal_approx(target_point_on_path):
+				position = path_follow.global_position
+				reached_target_spin = false
+				previous_state = State.REPOSITION
+				target_point_on_path = generate_new_path_target()
 				state = State.ATTACK
-				
 		State.ATTACK:
 			spin_and_transition(1420.0, delta, 800.0)
 			
-			if currentSpinDegPerSec == 1420.0:
-				reachedTargetSpin = true
+			if current_spin_deg_per_sec == 1420.0:
+				reached_target_spin = true
 			
-			if reachedTargetSpin == true:
-				if shotIntervalTimer.time_left == 0.0 and player != null:
-					shotIntervalTimer.start()
-					
-					previousState = State.ATTACK
-					
-					targetPointOnPath = generate_new_path_target()
-					state = State.REPOSITION
+			if reached_target_spin == true:
+				if shot_interval_timer.time_left == 0.0 and player != null:
+					shot_interval_timer.start()
+				
+				previous_state = State.ATTACK
+				target_point_on_path = generate_new_path_target()
+				state = State.REPOSITION
 
-#Note: if you want to reuse this function in other project, you should refactor to use secondsToTransition
-func spin_and_transition(targetSpinDegPerSec, delta, spinTransitionDegPerSec = 200.0) -> void:
-	#Declare currentSpinDegPerSec as INF to bypass or 0 not to bypass the initial spin transition
-	if currentSpinDegPerSec == INF:
-		currentSpinDegPerSec = targetSpinDegPerSec
+
+# Note: if you want to reuse this function in other project, you should refactor to use secondsToTransition
+func spin_and_transition(target_spin_deg_per_sec, delta, spin_transition_deg_per_sec = 200.0) -> void:
+	# Declare currentSpinDegPerSec as INF to bypass or 0 not to bypass the initial spin transition
+	if current_spin_deg_per_sec == INF:
+		current_spin_deg_per_sec = target_spin_deg_per_sec
 	else:
-		#currentSpinDegPerSec != targetSpinDegPerSec
-		currentSpinDegPerSec = move_toward(currentSpinDegPerSec, targetSpinDegPerSec,
-		spinTransitionDegPerSec * delta)
-		
-	#use a Node2D as a container to replace self if more specificity is needed
-	self.rotate(deg_to_rad(currentSpinDegPerSec) * delta)
+		# currentSpinDegPerSec != targetSpinDegPerSec
+		current_spin_deg_per_sec = move_toward(current_spin_deg_per_sec, target_spin_deg_per_sec, spin_transition_deg_per_sec * delta)
+	
+	# use a Node2D as a container to replace self if more specificity is needed
+	self.rotate(deg_to_rad(current_spin_deg_per_sec) * delta)
+
 
 func move_along_path():
-	##should I use delta here?
-	pathFollow.progress = lerp(pathFollow.progress, targetPathProgress, .05)
-	position = pathFollow.global_position
+	# #should I use delta here?
+	path_follow.progress = lerp(path_follow.progress, target_path_progress, .05)
+	position = path_follow.global_position
 
-func enable_collision(_isEnabled : bool) -> void:
-	collision1.set_deferred("disabled", !_isEnabled)
-	collision2.set_deferred("disabled", !_isEnabled)
+
+func enable_collision(is_enabled : bool) -> void:
+	collision1.set_deferred("disabled", !is_enabled)
+	collision2.set_deferred("disabled", !is_enabled)
+
 
 func spawn_dart():
-	var newDart := dart_scene.instantiate()
-	newDart.position = position
-	newDart.plusOrMinus *= invertShotArc
-	get_parent().add_child(newDart)
+	var NewDart := dart_scene.instantiate()
+	NewDart.position = position
+	NewDart.plus_or_minus *= invert_shot_arc
+	get_parent().add_child(NewDart)
+
 
 func generate_path_progress() -> float:
-	var maxProgress : float = path.curve.get_baked_length()
-	var randomProgress : float = randf_range(0.0, maxProgress)
-	return randomProgress
+	var max_progress : float = path.curve.get_baked_length()
+	var random_progress : float = randf_range(0.0, max_progress)
+	
+	return random_progress
+
 
 func generate_new_path_target() -> Vector2:
-	var _targetPathProgress := generate_path_progress()
+	var _target_path_progress := generate_path_progress()
+	var local_path_target : Vector2 = path.curve.sample_baked(_target_path_progress)
+	var random_path_target = path.to_global(local_path_target)
 	
-	var localPathTarget : Vector2 = path.curve.sample_baked(_targetPathProgress)
-	var randomPathTarget = path.to_global(localPathTarget)
+	# basically a setter function
+	target_path_progress = _target_path_progress
 	
-	#basically a setter function 
-	targetPathProgress = _targetPathProgress
-	
-	return randomPathTarget
+	return random_path_target
+
 
 func _on_shot_interval_timeout():
-	var shotsRemaining : int = 3
-	invertShotArc *= -1
+	var shots_remaining : int = 3
+	invert_shot_arc *= -1
 	
-	if shotsRemaining == 0:
+	if shots_remaining == 0:
 		pass
 	else:
-		for shot in shotsRemaining:
-			shotClusterTimer.start()
-			await shotClusterTimer.timeout
+		for shot in shots_remaining:
+			shot_cluster_timer.start()
+			await shot_cluster_timer.timeout
+
 
 func _on_shot_cluster_timeout():
 	spawn_dart()

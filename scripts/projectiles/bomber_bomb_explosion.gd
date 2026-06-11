@@ -1,23 +1,23 @@
 extends Area2D
 
-const ATK_POWER := 20
+const ATTACK_POWER : int = 20
+@onready var _timer := $Timer
+@onready var _sprite := $Sprite2D
+@onready var _player := get_tree().get_first_node_in_group("player")
 
-@onready var timer := $Timer
-@onready var sprite := $Sprite2D
-@onready var player := get_tree().get_first_node_in_group("player")
 
 func _ready():
-	timer.start()
+	_timer.start()
+
 
 func _process(delta):
-	sprite.scale += Vector2(6, 6) * delta
-
+	_sprite.scale += Vector2(6, 6) * delta
 
 
 func _on_timer_timeout():
 	queue_free()
 
 
-func _on_player_entered(area):
-	if area.is_in_group("player"):
-		player.receive_dam_param(ATK_POWER)
+func _on_player_entered(hurtbox):
+	if hurtbox.is_in_group("player"):
+		_player.receive_dam_param(ATTACK_POWER)

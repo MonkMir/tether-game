@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://dasxgerg7vyai"]
 
 [ext_resource type="PackedScene" uid="uid://b0u1q6i5db5ou" path="res://scenes/player.tscn" id="1_j7kpp"]
-[ext_resource type="Script" uid="uid://ba40nwh8lu65b" path="res://scripts/other-scripts/EnemySpawner.gd" id="2_bjebc"]
+[ext_resource type="Script" uid="uid://ba40nwh8lu65b" path="res://scripts/other-scripts/enemy_spawner.gd" id="2_bjebc"]
 [ext_resource type="PackedScene" uid="uid://cdk16uvt8jqbb" path="res://scenes/enemies/arrow_enemy.tscn" id="3_5rr72"]
 [ext_resource type="PackedScene" uid="uid://dkq6ilqibkqvo" path="res://scenes/enemies/bomber_enemy.tscn" id="4_gyffv"]
 [ext_resource type="PackedScene" uid="uid://cm6ubd5en4t7e" path="res://scenes/enemies/parabolic_enemy.tscn" id="5_1pe0h"]
-[ext_resource type="Script" uid="uid://da7f2buhged70" path="res://scripts/other-scripts/ScoreLabel.gd" id="6_27bay"]
-[ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://scripts/other-scripts/GameOverLabel.gd" id="7_sof0w"]
+[ext_resource type="Script" uid="uid://da7f2buhged70" path="res://scripts/other-scripts/score_label.gd" id="6_27bay"]
+[ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://scripts/other-scripts/game_over_label.gd" id="7_sof0w"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_c5177"]
 font_size = 36
@@ -21,9 +21,9 @@ position = Vector2(576, 320)
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=2100611888]
 script = ExtResource("2_bjebc")
-arrowScene = ExtResource("3_5rr72")
-bomberScene = ExtResource("4_gyffv")
-parabolicScene = ExtResource("5_1pe0h")
+arrow_scene = ExtResource("3_5rr72")
+bomber_scene = ExtResource("4_gyffv")
+parabolic_scene = ExtResource("5_1pe0h")
 
 [node name="Timer" type="Timer" parent="EnemySpawner" unique_id=75497692]
 wait_time = 2.5

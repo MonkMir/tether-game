@@ -84,7 +84,7 @@ corner_radius_bottom_right = 20
 
 [node name="InGameUI" type="CanvasLayer" unique_id=1644306105]
 
-[node name="MenuManager" type="Control" parent="." unique_id=356940545 node_paths=PackedStringArray("onReadyMenu")]
+[node name="MenuManager" type="Control" parent="." unique_id=356940545 node_paths=PackedStringArray("onready_menu")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -93,7 +93,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fqvwy")
-onReadyMenu = NodePath("MainMenu")
+onready_menu = NodePath("MainMenu")
 
 [node name="DelayUntilRepeat" type="Timer" parent="MenuManager" unique_id=259922699]
 unique_name_in_owner = true

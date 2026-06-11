@@ -1,18 +1,17 @@
 extends Node
 
-signal pause_toggled(isPaused : bool)
-
-var is_pausable = false
-var is_game_over = false
-
-var lastPauseToggleFrame: int = 0
-
-var score = 0
-var comboCounter : int = 0
+signal pause_toggled(is_paused : bool)
 const MAX_COMBO : int = 24
+var is_pausable : bool = false
+var is_game_over : bool = false
+var last_pause_toggle_frame: int = 0
+var score : int = 0
+var combo_counter : int = 0
+
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
+
 
 func _input(event):
 	if event.is_action_pressed("Pause"):
@@ -23,20 +22,22 @@ func game_over_reset():
 	score = 0 
 	is_game_over = false
 
+
 func toggle_pause() -> void:
 	if is_pausable == false:
 		return
 	
-	var currentFrame = Engine.get_process_frames()
-	if currentFrame == lastPauseToggleFrame:
+	var current_frame : int = Engine.get_process_frames()
+	if current_frame == last_pause_toggle_frame:
 		return
 	
-	lastPauseToggleFrame = currentFrame
+	last_pause_toggle_frame = current_frame
 	
 	get_tree().paused = !get_tree().paused
-	var isPaused : bool = get_tree().paused
-	pause_toggled.emit(isPaused)
+	var is_paused : bool = get_tree().paused
+	pause_toggled.emit(is_paused)
 
-#to be called by process or setter
+
+# To be called by process or setter
 func update_combo():
-	comboCounter = clampi(comboCounter, 0, MAX_COMBO)
+	combo_counter = clampi(combo_counter, 0, MAX_COMBO)

@@ -1,24 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://bicsicm0jambh"]
+[gd_scene format=3 uid="uid://bicsicm0jambh"]
 
-[ext_resource type="Script" path="res://scripts/projectiles/explosion.gd" id="1_d88ag"]
-[ext_resource type="Texture2D" uid="uid://b1jib5cafy1uv" path="res://explosion-png-200.png" id="2_t3cmy"]
+[ext_resource type="Script" uid="uid://ddt6k33dqf1yk" path="res://scripts/projectiles/explosion.gd" id="1_d88ag"]
+[ext_resource type="Texture2D" uid="uid://b1jib5cafy1uv" path="res://assets/explosion-png-200.png" id="2_t3cmy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1h8a8"]
 radius = 200.01
 
-[node name="Explosion" type="Area2D"]
+[node name="Explosion" type="Area2D" unique_id=1431074492]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_d88ag")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=601367712]
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_t3cmy")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1924089520]
 shape = SubResource("CircleShape2D_1h8a8")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1402510047]
 wait_time = 0.13
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

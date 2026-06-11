@@ -1,42 +1,52 @@
 extends Sprite2D
 
-@onready var player := get_tree().get_first_node_in_group("player")
+
+const MIN_SPEED := 20
+const ACCELERATION := 3.5
+
 @export var explosion_scene : PackedScene
 
-var dir : Vector2
+var direction : Vector2
 var speed := 320.0
-const  ACCEL := 3.5
-const MIN_SPEED := 20
+
+@onready var player := get_tree().get_first_node_in_group("player")
+
 
 func _ready():
 	if player != null:
-		dir = (player.position - position).normalized()
+		direction = (player.position - position).normalized()
 
-func _process(delta):
+
+func _process(delta: float):
 	if speed > MIN_SPEED:
-		speed -= ACCEL
-		position += speed * dir * delta
-	else: 
-		speed = 0 
-		position += MIN_SPEED * dir * delta
-		modulate = Color(3, 3, 3, .7)
+		speed -= ACCELERATION
+		position += speed * direction * delta
+	else:
+		speed = 0
+		position += MIN_SPEED * direction * delta
+	
+	modulate = Color(3, 3, 3, .7)
+
+
+func explode():
+	var Explosion := explosion_scene.instantiate()
+	Explosion.position = position
+	#WARNING idk what parent even is lol
+	get_parent().add_child(Explosion)
+	queue_free()
+
+
+func evaluate_ancestry_for_group(target_group: String) -> bool:
+	var ancestor_node = get_parent()
+	
+	while ancestor_node != null:
+		if ancestor_node.is_in_group(target_group):
+			return true
+		ancestor_node = ancestor_node.get_parent()
+	
+	return false
 
 
 func _on_timer_timeout():
 	queue_free()
 	explode()
-
-func explode():
-	var explosion := explosion_scene.instantiate()
-	explosion.position = position
-	#WARNING idk what parent even is
-	get_parent().add_child(explosion)
-	queue_free()
-
-func evaluate_ancestry_for_group(targetGroup: String) -> bool:
-	var ancestorNode = get_parent()
-	while ancestorNode != null:
-		if ancestorNode.is_in_group(targetGroup):
-			return true
-		ancestorNode = ancestorNode.get_parent()
-	return false

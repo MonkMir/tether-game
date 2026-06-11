@@ -55,7 +55,7 @@ var playerDir := Vector2.ZERO
 
 func _ready():
 	super()
-	enemyName = "bomber"
+	enemy_name = "bomber"
 
 
 func _process(delta):
@@ -129,9 +129,9 @@ func get_ideal_dir(_interestArray: Array) -> Vector2:
 	return idealDir
 
 func spawn_bomb():
-	var newBomb := bomb_scene.instantiate()
-	newBomb.position = position
-	get_parent().add_child(newBomb)
+	var NewBomb := bomb_scene.instantiate()
+	NewBomb.position = position
+	get_parent().add_child(NewBomb)
 
 func _on_bomb_timer_timeout():
 	spawn_bomb()

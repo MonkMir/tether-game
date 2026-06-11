@@ -1,21 +1,24 @@
 extends Projectile
 
-const ATK_POWER := 60
-const PLAYER_DAM := 20
+const ATTACK_POWER : int = 60
+#const PLAYER_DAMAGE : int = 20 # make sure this isn't needed before delete
+@onready var _timer := $Timer
+@onready var _sprite := $Sprite2D
 
-@onready var timer := $Timer
-@onready var sprite := $Sprite2D
 
 func _ready():
-	timer.start()
+	_timer.start()
+
 
 func _process(delta):
 	super(delta)
-	sprite.scale += Vector2(7, 7) * delta
+	_sprite.scale += Vector2(7, 7) * delta
 
-func _on_area_entered(_area):
-	if _area.is_in_group("enemies"):
-		_area.receive_dam_param(ATK_POWER)
+
+func _on_area_entered(hurtbox):
+	if hurtbox.is_in_group("enemies"):
+		hurtbox.receive_dam_param(ATTACK_POWER)
+
 
 func _on_timer_timeout():
 	queue_free()
