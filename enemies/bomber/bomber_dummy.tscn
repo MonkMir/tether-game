@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://db0s0w2do4o4o"]
 
 [ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="1_6db12"]
-[ext_resource type="Script" uid="uid://du8ba100vtkpg" path="res://scripts/dummies/bomber_dummy.gd" id="1_v4dsp"]
-[ext_resource type="PackedScene" uid="uid://bicsicm0jambh" path="res://scenes/projectiles/explosion.tscn" id="2_fl6hi"]
-[ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://scenes/health_bar.tscn" id="4_4qf5x"]
+[ext_resource type="Script" uid="uid://du8ba100vtkpg" path="res://enemies/bomber/bomber_dummy.gd" id="1_v4dsp"]
+[ext_resource type="PackedScene" uid="uid://bicsicm0jambh" path="res://enemies/bomber/explosion.tscn" id="2_fl6hi"]
+[ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="4_4qf5x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6exgv"]
 radius = 32.0

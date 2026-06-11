@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bicsicm0jambh"]
 
-[ext_resource type="Script" uid="uid://ddt6k33dqf1yk" path="res://scripts/projectiles/explosion.gd" id="1_d88ag"]
+[ext_resource type="Script" uid="uid://ddt6k33dqf1yk" path="res://enemies/bomber/explosion.gd" id="1_d88ag"]
 [ext_resource type="Texture2D" uid="uid://b1jib5cafy1uv" path="res://assets/explosion-png-200.png" id="2_t3cmy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1h8a8"]

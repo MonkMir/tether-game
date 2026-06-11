@@ -280,7 +280,7 @@ func start_game():
 	GameState.is_pausable = true
 	
 	# In the future, don't hard code the level 1 preload
-	var selected_level : Node2D = preload("res://scenes/levels/level_1.tscn").instantiate()
+	var selected_level : Node2D = preload("res://levels/level_1.tscn").instantiate()
 	get_tree().current_scene.add_child(selected_level)
 
 
@@ -293,7 +293,7 @@ func reload_level():
 	
 	await get_tree().process_frame
 	
-	var new_level : Node2D = preload("res://scenes/levels/level_1.tscn").instantiate()
+	var new_level : Node2D = preload("res://levels/level_1.tscn").instantiate()
 	root_node.add_child(new_level)
 	
 # PAUSE HANDLING

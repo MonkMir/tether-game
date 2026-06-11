@@ -20,7 +20,7 @@ var final_dir : Vector2
 func _ready():
 	super()
 	attack_power = 75
-	Dupe = load("res://scenes/dummies/parabolic_dummy.tscn")
+	Dupe = load("res://enemies/parabolic/parabolic_dummy.tscn")
 
 
 func _physics_process(delta: float):
@@ -45,12 +45,12 @@ func _physics_process(delta: float):
 				position = start_point.lerp(control_point, t).lerp(control_point.lerp(end_point, t), t)
 				final_dir = (end_point - control_point).normalized()
 			else:
-				var DupeNode := Dupe.instantiate()
-				DupeNode.state = State.REST
-				DupeNode.position = position
-				DupeNode.apply_central_impulse(final_dir * 1000)
-				DupeNode.angular_velocity = angular_velocity
-				get_parent().add_child(DupeNode)
+				var dupe_node := Dupe.instantiate()
+				dupe_node.state = State.REST
+				dupe_node.position = position
+				dupe_node.apply_central_impulse(final_dir * 1000)
+				dupe_node.angular_velocity = angular_velocity
+				get_parent().add_child(dupe_node)
 				queue_free()
 		State.REST:
 			angular_velocity = 25

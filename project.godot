@@ -21,7 +21,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameState="*res://scripts/other-scripts/game_state.gd"
+GameState="*res://systems/game_state.gd"
 
 [display]
 
@@ -30,19 +30,6 @@ window/size/viewport_height=1134
 window/size/always_on_top=true
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
-
-[file_customization]
-
-folder_colors={
-"res://scenes/": "teal",
-"res://scenes/dummies/": "blue",
-"res://scenes/enemies/": "red",
-"res://scenes/projectiles/": "green",
-"res://scripts/": "purple",
-"res://scripts/custom-classes/": "gray",
-"res://scripts/dummies/": "blue",
-"res://scripts/enemies/": "red"
-}
 
 [input]
 

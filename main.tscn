@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cispfyjhtrf2u"]
 
-[ext_resource type="PackedScene" uid="uid://34lp4apat21h" path="res://scenes/in_game_ui.tscn" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://34lp4apat21h" path="res://ui/in_game_ui.tscn" id="8_tipki"]
 
 [node name="Main" type="Node2D" unique_id=1762207710]
 metadata/_edit_lock_ = true

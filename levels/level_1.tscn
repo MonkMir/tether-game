@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://dasxgerg7vyai"]
 
-[ext_resource type="PackedScene" uid="uid://b0u1q6i5db5ou" path="res://scenes/player.tscn" id="1_j7kpp"]
-[ext_resource type="Script" uid="uid://ba40nwh8lu65b" path="res://scripts/other-scripts/enemy_spawner.gd" id="2_bjebc"]
-[ext_resource type="PackedScene" uid="uid://cdk16uvt8jqbb" path="res://scenes/enemies/arrow_enemy.tscn" id="3_5rr72"]
-[ext_resource type="PackedScene" uid="uid://dkq6ilqibkqvo" path="res://scenes/enemies/bomber_enemy.tscn" id="4_gyffv"]
-[ext_resource type="PackedScene" uid="uid://cm6ubd5en4t7e" path="res://scenes/enemies/parabolic_enemy.tscn" id="5_1pe0h"]
-[ext_resource type="Script" uid="uid://da7f2buhged70" path="res://scripts/other-scripts/score_label.gd" id="6_27bay"]
-[ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://scripts/other-scripts/game_over_label.gd" id="7_sof0w"]
+[ext_resource type="PackedScene" uid="uid://b0u1q6i5db5ou" path="res://player/player.tscn" id="1_gwceb"]
+[ext_resource type="Script" uid="uid://ba40nwh8lu65b" path="res://systems/enemy_spawner.gd" id="2_l53as"]
+[ext_resource type="PackedScene" uid="uid://cdk16uvt8jqbb" path="res://enemies/arrow/arrow_enemy.tscn" id="3_3sk1a"]
+[ext_resource type="PackedScene" uid="uid://dkq6ilqibkqvo" path="res://enemies/bomber/bomber_enemy.tscn" id="4_08mmt"]
+[ext_resource type="PackedScene" uid="uid://cm6ubd5en4t7e" path="res://enemies/parabolic/parabolic_enemy.tscn" id="5_5ot28"]
+[ext_resource type="Script" uid="uid://da7f2buhged70" path="res://ui/score_label.gd" id="6_aerfg"]
+[ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://ui/game_over_label.gd" id="7_nmsli"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_c5177"]
 font_size = 36
@@ -16,14 +16,14 @@ font_size = 100
 
 [node name="Level1" type="Node2D" unique_id=657166130]
 
-[node name="Player" parent="." unique_id=994072363 instance=ExtResource("1_j7kpp")]
+[node name="Player" parent="." unique_id=994072363 instance=ExtResource("1_gwceb")]
 position = Vector2(576, 320)
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=2100611888]
-script = ExtResource("2_bjebc")
-arrow_scene = ExtResource("3_5rr72")
-bomber_scene = ExtResource("4_gyffv")
-parabolic_scene = ExtResource("5_1pe0h")
+script = ExtResource("2_l53as")
+arrow_scene = ExtResource("3_3sk1a")
+bomber_scene = ExtResource("4_08mmt")
+parabolic_scene = ExtResource("5_5ot28")
 
 [node name="Timer" type="Timer" parent="EnemySpawner" unique_id=75497692]
 wait_time = 2.5
@@ -36,7 +36,7 @@ offset_right = 163.0
 offset_bottom = 117.0
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_c5177")
-script = ExtResource("6_27bay")
+script = ExtResource("6_aerfg")
 
 [node name="GameOverLabel" type="Label" parent="." unique_id=730832775]
 visible = false
@@ -46,7 +46,7 @@ text = "UR DOGWATER!"
 label_settings = SubResource("LabelSettings_qrb1h")
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("7_sof0w")
+script = ExtResource("7_nmsli")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1506603802]
 position = Vector2(576, 320)

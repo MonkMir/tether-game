@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cdk16uvt8jqbb"]
 
 [ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="1_67mp0"]
-[ext_resource type="Script" uid="uid://wfswoapio6a6" path="res://scripts/enemies/arrow_enemy.gd" id="1_up35x"]
-[ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://scenes/health_bar.tscn" id="3_ai1vl"]
+[ext_resource type="Script" uid="uid://wfswoapio6a6" path="res://enemies/arrow/arrow_enemy.gd" id="1_up35x"]
+[ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="3_ai1vl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0scfs"]
 size = Vector2(176, 53.25)
