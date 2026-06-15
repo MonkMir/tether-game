@@ -42,9 +42,10 @@ func _on_fuse_timer():
 
 
 func self_destruct():
-	var Explosion := explosion_scene.instantiate()
-	add_child(Explosion)
+	var explosion := explosion_scene.instantiate()
+	add_child(explosion)
 	# Who is parent?
-	Explosion.reparent(get_parent())
-	player.is_tethered = false
+	explosion.reparent(get_parent())
+	if player:
+		player.is_tethered = false
 	queue_free()

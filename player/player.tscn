@@ -10,11 +10,21 @@
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="7_yllr7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2ck4e"]
-radius = 40.012497
+radius = 26.019224
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rgyib"]
 radius = 4.0
 height = 12.0
+
+[sub_resource type="Gradient" id="Gradient_rgyib"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.00877193, 0.7653509)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hg6s5"]
+gradient = SubResource("Gradient_rgyib")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [node name="Player" type="CharacterBody2D" unique_id=994072363 groups=["player"]]
 script = ExtResource("1_boad6")
@@ -37,6 +47,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TetherRange" unique_id=956201445]
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_2ck4e")
 debug_color = Color(0.662399, 0.513404, 3.85046e-07, 0.42)
 
@@ -55,6 +66,13 @@ shape = SubResource("CapsuleShape2D_rgyib")
 [node name="TetherCooldown" type="Timer" parent="." unique_id=1620952528]
 wait_time = 1.5
 one_shot = true
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=453113546]
+position = Vector2(-0.06000024, -0.9400012)
+scale = Vector2(0.81062496, 0.81062496)
+energy = 0.35
+range_item_cull_mask = 2
+texture = SubResource("GradientTexture2D_hg6s5")
 
 [connection signal="area_entered" from="TetherRange" to="." method="_on_tether_range_area_entered"]
 [connection signal="area_exited" from="TetherRange" to="." method="_on_tether_range_area_exited"]
