@@ -10,7 +10,7 @@ var state := State.PASSIVE
 #const DEFAULT_SPEED_LIMIT : int = 2000 #1200
 #const MAX_SPEED_LIMIT : int = 2000
 #const MIN_SPEED_LIMIT : int = 1000
-var launch_speed : float = 3500 # minimum speed to oneshot
+var launch_speed : float = 1000 # minimum speed to oneshot
 #var direction := Vector2.ZERO
 var new_dir : Vector2 # TESTING
 
@@ -28,7 +28,7 @@ func _physics_process(delta: float):
 			#print("Arrow Dummy Speed: " + str(current_speed))
 			# This condition is important for enemy ragdoll upon player death
 			if player:
-				if player.is_tethered == false:
+				if not player.is_tethered:
 					state = State.SPECIAL
 		State.SPECIAL:
 			# built-in bool that disable's Godot's physics simulation

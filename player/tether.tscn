@@ -6,3 +6,6 @@
 script = ExtResource("1_wbd1m")
 
 [node name="LineTexture" type="Line2D" parent="." unique_id=705149266]
+z_index = -1
+width = 3.0
+default_color = Color(0.88, 0.84304, 0.51040006, 1)

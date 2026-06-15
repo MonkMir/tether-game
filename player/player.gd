@@ -15,7 +15,7 @@ var new_dummy : Node2D = null
 var health: int = 100
 var damage_calc: int = 20
 var enemies_in_range : int = 0
-var move_speed := 1000.0
+var move_speed := 300.0
 var is_tethered := false
 var targeted_enemy : Node2D = null
 var nearest_enemy : Node2D = null
@@ -28,6 +28,7 @@ var dummy_enemy_name : String
 @onready var health_bar := $HealthBarCanvas/HealthBar
 @onready var camera := $"../Camera2D"
 @onready var sprite := $PlayerSprite
+@onready var sprite_reverse := $PlayerSpriteReverse
 @onready var tether_cooldown : Timer = $TetherCooldown
 
 
@@ -39,15 +40,23 @@ func _physics_process(delta: float):
 	# PLAYER MOVEMENT
 	var input_direction = Input.get_vector("Stick Left", "Stick Right", "Stick Up", "Stick Down")
 	position += input_direction * move_speed * delta
+	if input_direction.x > 0:
+		sprite.show()
+		sprite_reverse.hide()
+	elif input_direction.x < 0:
+		sprite.hide()
+		sprite_reverse.show()
 	
 	var camera_rect = get_static_camera_rect()
 	position = position.clamp(camera_rect.position, camera_rect.end)
 	
 	# TETHER COOLDOWN
 	if tether_cooldown.time_left != 0.0:
-		sprite.modulate = Color(0.111, 0.111, 0.111, 0.502)
+		sprite.modulate = Color(0.11, 0.11, 0.11, 1.0)
+		sprite_reverse.modulate = Color(0.11, 0.11, 0.11, 1.0)
 	else:
 		sprite.modulate = Color(1, 1, 1, 1)
+		sprite_reverse.modulate = Color(1, 1, 1, 1)
 	
 	# GAME OVER LOGIC
 	if health <= 0:

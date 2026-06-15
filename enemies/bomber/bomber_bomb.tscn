@@ -1,12 +1,10 @@
 [gd_scene format=3 uid="uid://lmd53ytjfn6h"]
 
-[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="1_4mrfr"]
+[ext_resource type="Texture2D" uid="uid://dy4sexuru0k7f" path="res://enemies/bomber/bomber_bomb_tg.png" id="1_4mrfr"]
 [ext_resource type="Script" uid="uid://3pj5t8amfhgd" path="res://enemies/bomber/bomber_bomb.gd" id="2_2uqvm"]
 [ext_resource type="PackedScene" uid="uid://cwe22nj8xi87k" path="res://enemies/bomber/bomber_bomb_explosion.tscn" id="3_iti2y"]
 
 [node name="Bomber Bomb" type="Sprite2D" unique_id=1400447001]
-modulate = Color(0.225622, 2.03052e-07, 3.60981e-08, 1)
-scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_4mrfr")
 script = ExtResource("2_2uqvm")
 explosion_scene = ExtResource("3_iti2y")

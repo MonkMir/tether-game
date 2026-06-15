@@ -1,7 +1,7 @@
 extends Node2D
 
 
-@export var max_length : int = 120 #180 max if we use dynamic stretching
+@export var max_length : int = 10 #180 max if we use dynamic stretching
 @export var spring_stiffness : float = 1.125
 @export var counter_force_weight := 5.0
 

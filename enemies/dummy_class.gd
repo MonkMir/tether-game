@@ -4,7 +4,7 @@ class_name Dummy
 
 var attack_power : float
 var health : float = 50
-var speed_limit : int = 1850
+var speed_limit : int = 800
 var current_speed : float
 var time_out_of_bounds_seconds : float = 0.0
 var max_offscreen_time_seconds : float = 5.0
@@ -19,14 +19,14 @@ var max_offscreen_time_seconds : float = 5.0
 func _ready():
 	player = get_player()
 	area.area_entered.connect(_on_area_entered)
-	health_indicator_bar.size = Vector2(600, 90)
+	health_indicator_bar.size = Vector2(150, 25)
 	# replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
-	health_indicator_bar.position = Vector2(-health_indicator_bar.size.x / 2, -512)
+	health_indicator_bar.position = Vector2(-health_indicator_bar.size.x / 2, -128)
 	health_bar._init_health(health)
 
 
 func _physics_process(delta: float):
-	if !health_bar:
+	if not health_bar:
 		return
 	
 	# healthBar.health = health
@@ -50,6 +50,9 @@ func _physics_process(delta: float):
 
 
 func _on_area_entered(entered_area):
+	#if not is_instance_valid(self): # TEST if not self didn't work nor does this
+		#return
+	
 	if entered_area.is_in_group("enemies"):
 		entered_area.receive_dam_param(attack_power)
 	
@@ -65,6 +68,9 @@ func _on_area_entered(entered_area):
 
 
 func receive_dam_param(damage):
+	if not self: # TEST killing para sometimes caused crash
+		return
+		
 	health -= damage
 	health_bar.health = health
 

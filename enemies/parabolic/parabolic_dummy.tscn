@@ -1,17 +1,14 @@
 [gd_scene format=3 uid="uid://dbax4wv030pfo"]
 
 [ext_resource type="Script" uid="uid://cm1ci4a30bkbl" path="res://enemies/parabolic/parabolic_dummy.gd" id="1_57bc0"]
-[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="1_hj76a"]
+[ext_resource type="Texture2D" uid="uid://c0nc514ct82ix" path="res://enemies/parabolic/parabolic_sprite_tg.png" id="2_c2ok2"]
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="3_j0nak"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3yr54"]
-radius = 27.074
+radius = 5.2533283
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0scfs"]
-size = Vector2(88, 28)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cqygl"]
-size = Vector2(28, 88)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4nmu3"]
+size = Vector2(9.192389, 9.192389)
 
 [node name="ParabolicDummy" type="RigidBody2D" unique_id=1744293132 groups=["dummies"]]
 collision_layer = 2
@@ -20,6 +17,7 @@ mass = 0.5
 script = ExtResource("1_57bc0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1272671913]
+position = Vector2(-0.43554497, -0.5043144)
 shape = SubResource("CircleShape2D_3yr54")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1651849745]
@@ -27,22 +25,13 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=2020273873]
-modulate = Color(0.45098, 0, 1, 1)
-scale = Vector2(0.7, 0.225)
-texture = ExtResource("1_hj76a")
+texture = ExtResource("2_c2ok2")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Area2D" unique_id=1607491711]
-modulate = Color(0.45098, 0, 1, 1)
-position = Vector2(7.62939e-06, -2.28882e-05)
-rotation = 1.5708
-scale = Vector2(0.7, 0.225)
-texture = ExtResource("1_hj76a")
-
-[node name="Collision" type="CollisionShape2D" parent="Area2D" unique_id=1276150886]
-shape = SubResource("RectangleShape2D_0scfs")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=740834742]
-shape = SubResource("RectangleShape2D_cqygl")
+[node name="Collision" type="CollisionShape2D" parent="Area2D" unique_id=1160732786]
+position = Vector2(-0.4623947, -0.55010986)
+rotation = -0.7853982
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_4nmu3")
 
 [node name="HealthBar" parent="." unique_id=993042800 instance=ExtResource("3_j0nak")]
 

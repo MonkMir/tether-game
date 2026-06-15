@@ -5,7 +5,9 @@ const SCORE_REWARD := 10
 
 @export var bomb_scene : PackedScene
 
-@onready var circlingRange := $CirclingRange/CollisionShape
+# sprite declared in enemy class
+@onready var sprite_reverse := $SpriteReverse
+@onready var circling_range := $circling_range/CollisionShape
 @onready var timer := $BombTimer
 
 enum State{
@@ -40,8 +42,8 @@ var cardinalDirs := [
 
 
 var velocity := Vector2.ZERO
-var max_speed := 230
-var turn_sharpness := 1.3 # Adjust for sharper/smoother turns
+var max_speed := 170
+var turn_sharpness := 1.2 # Adjust for sharper/smoother turns
 
 var dotProdArray := []
 var repelArray:= []
@@ -67,6 +69,13 @@ func _process(delta):
 	
 	if player != null:
 		playerDir = Vector2(player.position - position).normalized()
+	
+	if velocity.x > 0:
+		sprite.hide()
+		sprite_reverse.show()
+	elif velocity.x < 0:
+		sprite.show()
+		sprite_reverse.hide()
 	
 	
 	match state:

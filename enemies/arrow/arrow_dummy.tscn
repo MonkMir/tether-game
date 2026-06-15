@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://c5ipjdvuqk2ci"]
 
-[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="1_6b3km"]
 [ext_resource type="Script" uid="uid://d4ht5o6c2k2ro" path="res://enemies/arrow/arrow_dummy.gd" id="1_c41mt"]
+[ext_resource type="Texture2D" uid="uid://cu4oa6v8nscgi" path="res://enemies/arrow/arrow_enemy_sprite_tg.png" id="2_2tmup"]
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="3_lf3dv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwnxe"]
-size = Vector2(84, 38)
+size = Vector2(14, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qlxjl"]
-size = Vector2(84, 38)
+size = Vector2(14, 3)
 
 [node name="ArrowDummy" type="RigidBody2D" unique_id=615306433 groups=["dummies"]]
 collision_layer = 4
@@ -17,11 +17,11 @@ mass = 0.5
 script = ExtResource("1_c41mt")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=262126794]
-position = Vector2(1.42109e-14, 7.15256e-07)
-scale = Vector2(0.6875, 0.3125)
-texture = ExtResource("1_6b3km")
+texture = ExtResource("2_2tmup")
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=981011974]
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_gwnxe")
 debug_color = Color(0.392157, 0.392157, 0.980392, 0.419608)
 
@@ -30,6 +30,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=239790728]
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_qlxjl")
 
 [node name="HealthBar" parent="." unique_id=993042800 instance=ExtResource("3_lf3dv")]

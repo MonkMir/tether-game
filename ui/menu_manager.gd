@@ -275,6 +275,7 @@ func _animate_scale(button: Button, targetScale: Vector2) -> void:
 func start_game():
 	while not _menu_stack.is_empty():
 		close_top_menu()
+	%TitleScreen.hide()
 	
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	GameState.is_pausable = true

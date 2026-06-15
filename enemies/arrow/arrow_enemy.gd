@@ -9,8 +9,8 @@ enum State {
 
 const SPEED_GROWTH := 500
 const BASE_SPEED := 100
-const DECELERATION := 1000
-const MAX_SPEED := 900
+const DECELERATION := 400
+const MAX_SPEED := 300
 
 var state = State.COOLDOWN
 var target_point := Vector2.INF

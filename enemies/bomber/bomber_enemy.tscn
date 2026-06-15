@@ -1,15 +1,17 @@
 [gd_scene format=3 uid="uid://dkq6ilqibkqvo"]
 
-[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="1_2erl4"]
 [ext_resource type="Script" uid="uid://d3x2be4rk2d5a" path="res://enemies/bomber/bomber_enemy.gd" id="1_138tr"]
 [ext_resource type="PackedScene" uid="uid://lmd53ytjfn6h" path="res://enemies/bomber/bomber_bomb.tscn" id="2_uaeju"]
+[ext_resource type="Texture2D" uid="uid://c27s8d4c0ybwl" path="res://enemies/bomber/bomber_sprite_tg.png" id="3_2l667"]
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="4_14nm2"]
+[ext_resource type="Texture2D" uid="uid://ct7ruwhxmskxn" path="res://enemies/bomber/bomber_reverse_tg.png" id="4_ygix8"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2it25"]
-radius = 33.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ygix8"]
+radius = 3.1565967
+height = 14.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8iqoc"]
-radius = 320.09998
+radius = 152.59424
 
 [node name="BomberEnemy" type="Area2D" unique_id=718487168 groups=["enemies"]]
 collision_layer = 2
@@ -17,13 +19,17 @@ collision_mask = 5
 script = ExtResource("1_138tr")
 bomb_scene = ExtResource("2_uaeju")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1998829578]
-modulate = Color(0.964706, 0, 0, 1)
-scale = Vector2(0.47, 0.47)
-texture = ExtResource("1_2erl4")
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1998829578]
+texture = ExtResource("3_2l667")
+
+[node name="SpriteReverse" type="Sprite2D" parent="." unique_id=404650304]
+visible = false
+texture = ExtResource("4_ygix8")
+flip_h = true
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=1853227656]
-shape = SubResource("CircleShape2D_2it25")
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_ygix8")
 
 [node name="RaycastManager" type="Node2D" parent="." unique_id=242428574]
 

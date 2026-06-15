@@ -6,18 +6,23 @@
 [ext_resource type="PackedScene" uid="uid://dkq6ilqibkqvo" path="res://enemies/bomber/bomber_enemy.tscn" id="4_08mmt"]
 [ext_resource type="PackedScene" uid="uid://cm6ubd5en4t7e" path="res://enemies/parabolic/parabolic_enemy.tscn" id="5_5ot28"]
 [ext_resource type="Script" uid="uid://da7f2buhged70" path="res://ui/score_label.gd" id="6_aerfg"]
+[ext_resource type="FontFile" uid="uid://bhe7lybmiijm6" path="res://components/EpsonPixeledRegular-0Py9.ttf" id="7_3sk1a"]
 [ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://ui/game_over_label.gd" id="7_nmsli"]
+[ext_resource type="Texture2D" uid="uid://do58e0257b0fx" path="res://levels/level1_background_tg.png" id="8_l53as"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_c5177"]
-font_size = 36
-
-[sub_resource type="LabelSettings" id="LabelSettings_qrb1h"]
-font_size = 100
+font_size = 8
 
 [node name="Level1" type="Node2D" unique_id=657166130]
 
+[node name="Background" type="Sprite2D" parent="." unique_id=1282791147]
+modulate = Color(1.5720325, 1.5720325, 1.5720325, 1)
+z_index = -128
+texture = ExtResource("8_l53as")
+centered = false
+
 [node name="Player" parent="." unique_id=994072363 instance=ExtResource("1_gwceb")]
-position = Vector2(576, 320)
+position = Vector2(160, 88)
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=2100611888]
 script = ExtResource("2_l53as")
@@ -30,26 +35,28 @@ wait_time = 2.5
 autostart = true
 
 [node name="ScoreLabel" type="Label" parent="." unique_id=448937885]
-offset_left = 26.0
-offset_top = 67.0
-offset_right = 163.0
-offset_bottom = 117.0
+offset_left = 8.0
+offset_top = 16.0
+offset_right = 40.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("7_3sk1a")
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_c5177")
 script = ExtResource("6_aerfg")
 
-[node name="GameOverLabel" type="Label" parent="." unique_id=730832775]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1576034869]
+custom_minimum_size = Vector2(320, 180)
+
+[node name="GameOverLabel" type="Label" parent="MarginContainer" unique_id=730832775]
 visible = false
-offset_right = 1156.0
-offset_bottom = 647.0
-text = "UR DOGWATER!"
-label_settings = SubResource("LabelSettings_qrb1h")
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_3sk1a")
+text = "ur trash give up"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("7_nmsli")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1506603802]
-position = Vector2(576, 320)
-zoom = Vector2(1.72, 1.72)
+position = Vector2(160, 90)
 
 [connection signal="timeout" from="EnemySpawner/Timer" to="EnemySpawner" method="spawn_enemy"]

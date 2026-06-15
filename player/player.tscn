@@ -5,14 +5,16 @@
 [ext_resource type="PackedScene" uid="uid://db0s0w2do4o4o" path="res://enemies/bomber/bomber_dummy.tscn" id="3_hg6s5"]
 [ext_resource type="PackedScene" uid="uid://dbax4wv030pfo" path="res://enemies/parabolic/parabolic_dummy.tscn" id="4_8t03j"]
 [ext_resource type="PackedScene" uid="uid://3s58x1bgjui4" path="res://player/tether.tscn" id="5_2ieo8"]
-[ext_resource type="Texture2D" uid="uid://y60tccnywvsf" path="res://assets/icon.svg" id="6_ebec5"]
+[ext_resource type="Texture2D" uid="uid://du4mwh15881nf" path="res://player/player_sprite_tg.png" id="6_boad6"]
+[ext_resource type="Texture2D" uid="uid://bclhsvgijdcpy" path="res://player/player_reverse_tg.png" id="7_rgyib"]
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="7_yllr7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2ck4e"]
-radius = 112.00446
+radius = 40.012497
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_fohr5"]
-radius = 24.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rgyib"]
+radius = 4.0
+height = 12.0
 
 [node name="Player" type="CharacterBody2D" unique_id=994072363 groups=["player"]]
 script = ExtResource("1_boad6")
@@ -22,15 +24,19 @@ parabolic_dummy_scene = ExtResource("4_8t03j")
 tether = ExtResource("5_2ieo8")
 
 [node name="PlayerSprite" type="Sprite2D" parent="." unique_id=1062684667]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("6_ebec5")
+texture = ExtResource("6_boad6")
+
+[node name="PlayerSpriteReverse" type="Sprite2D" parent="." unique_id=1950117919]
+visible = false
+position = Vector2(-2, 0)
+texture = ExtResource("7_rgyib")
+flip_h = true
 
 [node name="TetherRange" type="Area2D" parent="." unique_id=1682285353]
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TetherRange" unique_id=956201445]
-position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_2ck4e")
 debug_color = Color(0.662399, 0.513404, 3.85046e-07, 0.42)
 
@@ -38,8 +44,9 @@ debug_color = Color(0.662399, 0.513404, 3.85046e-07, 0.42)
 collision_mask = 2
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="Hurtbox" unique_id=2093795865]
-position = Vector2(0, -1)
-shape = SubResource("CircleShape2D_fohr5")
+position = Vector2(-1, 1)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_rgyib")
 
 [node name="HealthBarCanvas" type="CanvasLayer" parent="." unique_id=879228658]
 

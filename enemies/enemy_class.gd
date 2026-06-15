@@ -7,12 +7,12 @@ class_name Enemy
 var enemy_name : String
 var health : int = 100
 var attack_power : int = 0
-var score_reward : int = 10
+var score_reward : int = 1
 
 @onready var player : Node
 @onready var health_bar := $HealthBar
 @onready var health_indicator_bar := $HealthBar/HealthIndicatorBar
-@onready var sprite := $Sprite2D
+@onready var sprite := $Sprite
 @onready var collision := $CollisionShape2D
 @onready var camera := get_viewport().get_camera_2d()
 
@@ -21,14 +21,17 @@ func _ready():
 	player = get_player()
 	area_entered.connect(_on_area_entered)
 	health_bar._init_health(health)
-	health_indicator_bar.size = Vector2(600, 90)
+	health_indicator_bar.size = Vector2(150, 25)
 	#replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
-	health_indicator_bar.position = Vector2(-health_indicator_bar.size.x / 2, -512)
+	health_indicator_bar.position = Vector2(-health_indicator_bar.size.x / 2, -128)
 
 
 func _process(_delta):
 	if !player and get_despawn_rect().has_point(global_position) == false:
 		queue_free()
+	
+	if not health_bar:
+		return
 	
 	if health <= 0:
 		die()

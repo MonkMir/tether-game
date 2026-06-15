@@ -27,10 +27,10 @@ var reached_target_spin : bool = false
 var current_spin_deg_per_sec : float = INF
 var invert_shot_arc : int = 1
 
-const SPEED_GROWTH := 500
-const BASE_SPEED := 100
-const DECELERATION := 1000
-const MAX_SPEED := 1200
+const SPEED_GROWTH := 400
+const BASE_SPEED := 500
+const DECELERATION := 700
+const MAX_SPEED := 900
 
 @onready var shot_interval_timer := $ShotInterval
 @onready var shot_cluster_timer := $ShotCluster
@@ -126,7 +126,6 @@ func move_along_path():
 
 func enable_collision(is_enabled : bool) -> void:
 	collision1.set_deferred("disabled", !is_enabled)
-	collision2.set_deferred("disabled", !is_enabled)
 
 
 func spawn_dart():
