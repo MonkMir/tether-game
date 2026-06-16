@@ -59,8 +59,10 @@ func get_despawn_rect() -> Rect2:
 
 
 func receive_dam_param(damage):
+	if not health_bar:
+		return
 	health -= damage
-	health_bar.health = health
+	health_bar.health = health # hey you gotta fix this fr. freed health access error
 
 
 func die():

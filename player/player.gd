@@ -8,14 +8,17 @@ extends Node2D
 @export var parabolic_dummy_scene: PackedScene
 @export var tether: PackedScene
 
+@export var max_intensity: float = 24.0
+@export var fade_speed: float = 5.0
+
 const BASE_SPEED : int = 800
-const MAX_SPEED : int = 1000
+const MAX_SPEED : int = 800
 
 var new_dummy : Node2D = null
 var health: int = 100
 var damage_calc: int = 20
 var enemies_in_range : int = 0
-var move_speed := 300.0
+var move_speed := 250.0
 var is_tethered := false
 var targeted_enemy : Node2D = null
 var nearest_enemy : Node2D = null
@@ -23,12 +26,15 @@ var dummy_position : Vector2
 var dummy_rotation : float
 var dummy_health : float
 var dummy_enemy_name : String
+var last_direction_x: float = 0.0
 
 @onready var level := get_parent()
 @onready var health_bar := $HealthBarCanvas/HealthBar
 @onready var camera := $"../Camera2D"
 @onready var sprite := $PlayerSprite
 @onready var sprite_reverse := $PlayerSpriteReverse
+@onready var thruster_glow := $ThrusterGlow
+@onready var thruster_glow_reverse := $ThrusterGlowReverse
 @onready var tether_cooldown : Timer = $TetherCooldown
 
 
@@ -36,16 +42,29 @@ func _ready():
 	health_bar._init_health(health)
 
 
-func _physics_process(delta: float):
+func _physics_process(delta: float) -> void:
 	# PLAYER MOVEMENT
 	var input_direction = Input.get_vector("Stick Left", "Stick Right", "Stick Up", "Stick Down")
 	position += input_direction * move_speed * delta
-	if input_direction.x > 0:
-		sprite.show()
-		sprite_reverse.hide()
-	elif input_direction.x < 0:
-		sprite.hide()
-		sprite_reverse.show()
+	
+	var current_speed_x = abs(input_direction.x) * move_speed
+	var target_intensity = (current_speed_x / move_speed) * max_intensity
+	
+	var current_intensity = lerp(thruster_glow.modulate.r, target_intensity, fade_speed * delta)
+	var base_color = Color("ff4500")
+	
+	var target_color = base_color * current_intensity
+	target_color.a = base_color.a * (current_intensity / max_intensity)
+	
+	thruster_glow.modulate = target_color
+	thruster_glow_reverse.modulate = target_color
+
+
+
+	
+	if input_direction.x != 0 and sign(input_direction.x) != sign(last_direction_x):
+		_on_direction_flipped(sign(input_direction.x))
+		last_direction_x = input_direction.x
 	
 	var camera_rect = get_static_camera_rect()
 	position = position.clamp(camera_rect.position, camera_rect.end)
@@ -144,6 +163,21 @@ func get_static_camera_rect() -> Rect2:
 	var camera_corner_top_left := Vector2(camera.global_position - (camera_size / 2))
 	
 	return Rect2(camera_corner_top_left, camera_size)
+
+
+func _on_direction_flipped(dir_x: float) -> void:
+	if dir_x > 0:
+		sprite.show()
+		sprite_reverse.hide()
+		
+		thruster_glow.show()
+		thruster_glow_reverse.hide()
+	elif dir_x < 0:
+		sprite.hide()
+		sprite_reverse.show()
+		
+		thruster_glow.hide()
+		thruster_glow_reverse.show()
 
 
 func _on_tether_range_area_entered(_enemy_area):

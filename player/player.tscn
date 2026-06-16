@@ -19,12 +19,28 @@ height = 12.0
 [sub_resource type="Gradient" id="Gradient_rgyib"]
 interpolation_mode = 2
 offsets = PackedFloat32Array(0.00877193, 0.7653509)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+colors = PackedColorArray(0.85, 0.85, 0.85, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hg6s5"]
 gradient = SubResource("Gradient_rgyib")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rgyib"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_hg6s5"]
+offsets = PackedFloat32Array(0, 0.24122804, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.23026316, 0.23026316, 0.23026316, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8t03j"]
+gradient = SubResource("Gradient_hg6s5")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rgyib"]
+gradient = SubResource("Gradient_hg6s5")
 
 [node name="Player" type="CharacterBody2D" unique_id=994072363 groups=["player"]]
 script = ExtResource("1_boad6")
@@ -34,15 +50,19 @@ parabolic_dummy_scene = ExtResource("4_8t03j")
 tether = ExtResource("5_2ieo8")
 
 [node name="PlayerSprite" type="Sprite2D" parent="." unique_id=1062684667]
+light_mask = 5
+position = Vector2(1, 0)
 texture = ExtResource("6_boad6")
 
 [node name="PlayerSpriteReverse" type="Sprite2D" parent="." unique_id=1950117919]
 visible = false
-position = Vector2(-2, 0)
+light_mask = 5
+position = Vector2(-1, 0)
 texture = ExtResource("7_rgyib")
 flip_h = true
 
 [node name="TetherRange" type="Area2D" parent="." unique_id=1682285353]
+position = Vector2(1, 0)
 collision_layer = 0
 collision_mask = 2
 
@@ -52,6 +72,7 @@ shape = SubResource("CircleShape2D_2ck4e")
 debug_color = Color(0.662399, 0.513404, 3.85046e-07, 0.42)
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1128003117 groups=["player"]]
+position = Vector2(1, 0)
 collision_mask = 2
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="Hurtbox" unique_id=2093795865]
@@ -67,12 +88,28 @@ shape = SubResource("CapsuleShape2D_rgyib")
 wait_time = 1.5
 one_shot = true
 
-[node name="PointLight2D" type="PointLight2D" parent="." unique_id=453113546]
-position = Vector2(-0.06000024, -0.9400012)
-scale = Vector2(0.81062496, 0.81062496)
+[node name="PassiveGlow" type="PointLight2D" parent="." unique_id=453113546]
+position = Vector2(0.9999998, -1)
+scale = Vector2(0.961, 0.961)
 energy = 0.35
 range_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_hg6s5")
+
+[node name="ThrusterGlow" type="Sprite2D" parent="." unique_id=679896315]
+modulate = Color(0.012617188, 0.0073575065, 0.00010775553, 0.5686275)
+z_index = 10
+material = SubResource("CanvasItemMaterial_rgyib")
+position = Vector2(-6, 0)
+scale = Vector2(0.06250001, 0.03125)
+texture = SubResource("GradientTexture2D_8t03j")
+
+[node name="ThrusterGlowReverse" type="Sprite2D" parent="." unique_id=1413919533]
+modulate = Color(0.012617188, 0.0073575065, 0.00010775553, 0.5686275)
+z_index = 10
+material = SubResource("CanvasItemMaterial_rgyib")
+position = Vector2(6, 0)
+scale = Vector2(0.06250001, 0.03125)
+texture = SubResource("GradientTexture2D_rgyib")
 
 [connection signal="area_entered" from="TetherRange" to="." method="_on_tether_range_area_entered"]
 [connection signal="area_exited" from="TetherRange" to="." method="_on_tether_range_area_exited"]

@@ -2,10 +2,29 @@
 
 [ext_resource type="Script" uid="uid://c76w5mw4mgqrw" path="res://player/tether.gd" id="1_wbd1m"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1b0em"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_1b0em"]
+offsets = PackedFloat32Array(0, 0.375, 0.5, 0.625, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.41, 0.37638003, 0.073800005, 1, 0.9490196, 0.93333334, 0.6156863, 1, 0.4117647, 0.3764706, 0.07450981, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e7v3h"]
+gradient = SubResource("Gradient_1b0em")
+width = 16
+height = 16
+fill_from = Vector2(0.51452994, 1)
+fill_to = Vector2(0.51282054, 0.03076923)
+
 [node name="Tether" type="Node2D" unique_id=1948318608]
 script = ExtResource("1_wbd1m")
 
 [node name="LineTexture" type="Line2D" parent="." unique_id=705149266]
 z_index = -1
-width = 3.0
+texture_repeat = 2
+material = SubResource("CanvasItemMaterial_1b0em")
+width = 7.0
 default_color = Color(0.88, 0.84304, 0.51040006, 1)
+texture = SubResource("GradientTexture2D_e7v3h")
+texture_mode = 1

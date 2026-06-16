@@ -6,6 +6,16 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_1h8a8"]
 radius = 32.0
 
+[sub_resource type="Gradient" id="Gradient_pyvd4"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.7105263)
+colors = PackedColorArray(0.84, 0.64119995, 0.24360001, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n7y8w"]
+gradient = SubResource("Gradient_pyvd4")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="BomberBombExplosion" type="Area2D" unique_id=675522281]
 collision_layer = 2
 script = ExtResource("1_otirw")
@@ -18,6 +28,11 @@ shape = SubResource("CircleShape2D_1h8a8")
 
 [node name="Timer" type="Timer" parent="." unique_id=542641750]
 wait_time = 0.1
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=456908964]
+scale = Vector2(1.03, 1.03)
+energy = 2.95
+texture = SubResource("GradientTexture2D_n7y8w")
 
 [connection signal="area_entered" from="." to="." method="_on_player_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

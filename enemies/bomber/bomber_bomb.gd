@@ -7,7 +7,7 @@ const ACCELERATION := 3.5
 @export var explosion_scene : PackedScene
 
 var direction : Vector2
-var speed := 320.0
+var speed := 50.0
 
 @onready var player := get_tree().get_first_node_in_group("player")
 
@@ -24,8 +24,6 @@ func _process(delta: float):
 	else:
 		speed = 0
 		position += MIN_SPEED * direction * delta
-	
-	modulate = Color(3, 3, 3, .7)
 
 
 func explode():

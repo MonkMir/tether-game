@@ -81,7 +81,8 @@ custom_minimum_size = Vector2(320, 180)
 [node name="GameOverLabel" type="Label" parent="MarginContainer" unique_id=730832775]
 visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.17690001, 0.17690001, 0.61, 1)
+theme_override_colors/font_color = Color(0.261, 0.7509001, 0.9, 1)
+theme_override_colors/font_shadow_color = Color(0.18251993, 0.0936, 0.39, 0.99215686)
 theme_override_fonts/font = ExtResource("7_3sk1a")
 text = "ur trash give up"
 horizontal_alignment = 1

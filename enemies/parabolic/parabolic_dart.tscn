@@ -6,6 +6,16 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_c37ne"]
 radius = 2.43789
 
+[sub_resource type="Gradient" id="Gradient_lxl1a"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.7105263)
+colors = PackedColorArray(0.28427982, 0.11040002, 0.69, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_m7oun"]
+gradient = SubResource("Gradient_lxl1a")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="Parabolic Dart" type="Area2D" unique_id=1545782455]
 script = ExtResource("1_rp2uv")
 
@@ -16,5 +26,10 @@ texture = ExtResource("2_lxl1a")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1508892101]
 shape = SubResource("CircleShape2D_c37ne")
 metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=501810218]
+scale = Vector2(0.222, 0.218)
+energy = 2.95
+texture = SubResource("GradientTexture2D_m7oun")
 
 [connection signal="area_entered" from="." to="." method="_on_player_entered"]
