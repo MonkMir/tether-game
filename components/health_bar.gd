@@ -7,7 +7,7 @@ var is_dummy_health : bool
 
 @onready var timer = $HealthIndicatorBar/Timer
 @onready var health_indicator_bar = $HealthIndicatorBar
-@onready var damage_indicator_bar = $HealthIndicatorBar/DamageIndicatorBar
+@onready var trailing_bar = $HealthIndicatorBar/TrailingBar
 
 
 func _ready():
@@ -19,12 +19,11 @@ func _ready():
 	if evaluate_ancestry_for_group("dummies") == true:
 		is_dummy_health = true
 	
-	# Rename damage indicator to trailing bar or something
 	# IMPORTANT: health bar's default position is at the top of the screen rather than the player
 	# setting it's position manually.
 	# This is a really stupid way to do this but too lazy.
 	# The source of this bandaid likely has to do with the order of the dummy spawn code
-	is_player_health = false #yo i think this maybe shouldn't be here and is breaking da game
+	is_player_health = false
 	
 	if is_player_health == true or is_dummy_health == true:
 		show()
@@ -33,12 +32,6 @@ func _ready():
 
 
 func _process(_delta):
-	#if !is_player_health:
-		#global_position = get_parent().global_position
-		#scale = Vector2(.1, .1)
-	
-	# TESTING : a bug occurred here because the parent is sometimes a canvas item,
-	# so instead of checking for player health, check for canvas item as parent??
 	if get_parent() is not CanvasLayer:
 		global_position = get_parent().global_position
 		scale = Vector2(.1, .1)
@@ -55,23 +48,17 @@ func set_health(new_health):
 	if health < 100:
 		show()
 	
-	if health <= 0:
-		queue_free()
-	
 	if health < prev_health:
 		timer.start()
 	else:
-		damage_indicator_bar.value = health
+		trailing_bar.value = health
 
 
 # To be called in by the health bar's user
 func _init_health(_health):
 	health = _health
-	#healthIndicatorBar.max_value = health
-	# These lines are bad if you want to pass in a part full bar
 	health_indicator_bar.value = health
-	#damageIndicatorBar.max_value = health
-	damage_indicator_bar.value = health
+	trailing_bar.value = health
 
 
 func evaluate_ancestry_for_group(target_group: String) -> bool:
@@ -86,4 +73,4 @@ func evaluate_ancestry_for_group(target_group: String) -> bool:
 
 
 func _on_timer_timeout():
-	damage_indicator_bar.value = health
+	trailing_bar.value = health

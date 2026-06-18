@@ -42,7 +42,7 @@ value = 80.0
 show_percentage = false
 metadata/_edit_group_ = true
 
-[node name="DamageIndicatorBar" type="ProgressBar" parent="HealthIndicatorBar" unique_id=579317846]
+[node name="TrailingBar" type="ProgressBar" parent="HealthIndicatorBar" unique_id=579317846]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
