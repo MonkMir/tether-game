@@ -3,7 +3,7 @@ extends Node2D
 
 @export var max_length : int = 10 #180 max if we use dynamic stretching
 @export var spring_stiffness : float = 1.125
-@export var counter_force_weight := 5.0
+@export var friction_damping := 5.0
 
 var point_distance : float
 var current_max_length : float
@@ -51,7 +51,7 @@ func get_damping_force() -> Vector2:
 	var velocity_to_player : float = starting_vector.dot(rebound_direction)
 	
 	if velocity_to_player < 0.0:
-		return rebound_direction * (-velocity_to_player * counter_force_weight)
+		return rebound_direction * (-velocity_to_player * friction_damping)
 	else:
 		return Vector2.ZERO
 

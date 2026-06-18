@@ -3,14 +3,15 @@ class_name Dummy
 
 
 var attack_power : float
-var health : float = 50
-var speed_limit : int = 800
+var health : float = 100
+var speed_limit : int = 435
 var current_speed : float
 var time_out_of_bounds_seconds : float = 0.0
-var max_offscreen_time_seconds : float = 5.0
+var max_offscreen_time_seconds := 5.0
 
 @onready var player : Node
 @onready var area := $Area2D
+@onready var hitbox := $Area2D/CollisionShape2D
 @onready var camera := get_viewport().get_camera_2d()
 @onready var health_bar := $HealthBar
 @onready var health_indicator_bar := $HealthBar/HealthIndicatorBar
@@ -23,17 +24,19 @@ func _ready():
 	# replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
 	health_indicator_bar.position = Vector2(-health_indicator_bar.size.x / 2, -128)
 	health_bar._init_health(health)
+	gravity_scale = 0.4
 
 
 func _physics_process(delta: float):
-	if not health_bar:
+	if health <= 0:
+		die()
 		return
 	
 	# healthBar.health = health
 	# WARNING this might be a vestige from prior testing. test it
 	current_speed = linear_velocity.length()
 	
-	var speed_to_damage_divisor : int = 35
+	var speed_to_damage_divisor : int = 15
 	attack_power = linear_velocity.length() / speed_to_damage_divisor
 	
 	if get_despawn_rect().has_point(global_position):
@@ -44,9 +47,6 @@ func _physics_process(delta: float):
 	if time_out_of_bounds_seconds >= max_offscreen_time_seconds:
 		if !player or self != player.new_dummy:
 			queue_free()
-	
-	if health <= 0:
-		die()
 
 
 func _on_area_entered(entered_area):
@@ -59,7 +59,7 @@ func _on_area_entered(entered_area):
 	if self.state == self.State.SPECIAL:
 		return
 	
-	var max_self_damage: float = 12.5
+	var max_self_damage: float = 16
 	var self_damage: float
 	var to_max_speed_ratio : float = inverse_lerp(0, speed_limit, linear_velocity.length())
 	
@@ -68,9 +68,6 @@ func _on_area_entered(entered_area):
 
 
 func receive_dam_param(damage):
-	if not self: # TEST killing para sometimes caused crash
-		return
-		
 	health -= damage
 	health_bar.health = health
 

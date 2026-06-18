@@ -15,7 +15,7 @@ const BASE_SPEED : int = 800
 const MAX_SPEED : int = 800
 
 var new_dummy : Node2D = null
-var health: int = 100
+var health: int = 10000
 var damage_calc: int = 20
 var enemies_in_range : int = 0
 var move_speed := 250.0

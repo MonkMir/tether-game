@@ -16,8 +16,8 @@ collision_mask = 5
 mass = 0.5
 script = ExtResource("1_57bc0")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1272671913]
-position = Vector2(-0.43554497, -0.5043144)
+[node name="PhysicsShape" type="CollisionShape2D" parent="." unique_id=1272671913]
+position = Vector2(0.1, 0.25)
 shape = SubResource("CircleShape2D_3yr54")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1651849745]
@@ -25,12 +25,12 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D" unique_id=2020273873]
+position = Vector2(0.48536682, 0.4697094)
 texture = ExtResource("2_c2ok2")
 
 [node name="Collision" type="CollisionShape2D" parent="Area2D" unique_id=1160732786]
-position = Vector2(-0.4623947, -0.55010986)
 rotation = -0.7853982
-scale = Vector2(0.9999999, 0.9999999)
+scale = Vector2(1.275, 1.275)
 shape = SubResource("RectangleShape2D_4nmu3")
 
 [node name="HealthBar" parent="." unique_id=993042800 instance=ExtResource("3_j0nak")]

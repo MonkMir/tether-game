@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://cm6ubd5en4t7e" path="res://enemies/parabolic/parabolic_enemy.tscn" id="5_5ot28"]
 [ext_resource type="Script" uid="uid://da7f2buhged70" path="res://ui/score_label.gd" id="6_aerfg"]
 [ext_resource type="FontFile" uid="uid://bhe7lybmiijm6" path="res://components/EpsonPixeledRegular-0Py9.ttf" id="7_3sk1a"]
-[ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://ui/game_over_label.gd" id="7_nmsli"]
 [ext_resource type="Texture2D" uid="uid://do58e0257b0fx" path="res://levels/level1_background_tg.png" id="8_l53as"]
 
 [sub_resource type="Gradient" id="Gradient_5ot28"]
@@ -62,7 +61,7 @@ bomber_scene = ExtResource("4_08mmt")
 parabolic_scene = ExtResource("5_5ot28")
 
 [node name="Timer" type="Timer" parent="EnemySpawner" unique_id=75497692]
-wait_time = 2.5
+wait_time = 3.5
 autostart = true
 
 [node name="ScoreLabel" type="Label" parent="." unique_id=448937885]
@@ -74,20 +73,6 @@ theme_override_fonts/font = ExtResource("7_3sk1a")
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_c5177")
 script = ExtResource("6_aerfg")
-
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1576034869]
-custom_minimum_size = Vector2(320, 180)
-
-[node name="GameOverLabel" type="Label" parent="MarginContainer" unique_id=730832775]
-visible = false
-layout_mode = 2
-theme_override_colors/font_color = Color(0.261, 0.7509001, 0.9, 1)
-theme_override_colors/font_shadow_color = Color(0.18251993, 0.0936, 0.39, 0.99215686)
-theme_override_fonts/font = ExtResource("7_3sk1a")
-text = "ur trash give up"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("7_nmsli")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1506603802]
 position = Vector2(160, 90)

@@ -11,13 +11,14 @@ radius = 3.1565967
 height = 14.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8iqoc"]
-radius = 152.59424
+radius = 66.0303
 
 [node name="BomberEnemy" type="Area2D" unique_id=718487168 groups=["enemies"]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_138tr")
 bomb_scene = ExtResource("2_uaeju")
+max_speed = 50
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1998829578]
 texture = ExtResource("3_2l667")
@@ -34,42 +35,43 @@ shape = SubResource("CapsuleShape2D_ygix8")
 [node name="RaycastManager" type="Node2D" parent="." unique_id=242428574]
 
 [node name="RayRight" type="RayCast2D" parent="RaycastManager" unique_id=1336048189]
-target_position = Vector2(50, 0)
+target_position = Vector2(38, 0)
 collision_mask = 3
 collide_with_areas = true
 
 [node name="RayLowRight" type="RayCast2D" parent="RaycastManager" unique_id=734879251]
-target_position = Vector2(35, 35)
+target_position = Vector2(27, 27)
 collision_mask = 3
 collide_with_areas = true
 
 [node name="RayDown" type="RayCast2D" parent="RaycastManager" unique_id=251275376]
+target_position = Vector2(0, 39)
 collision_mask = 3
 collide_with_areas = true
 
 [node name="RayLowLeft" type="RayCast2D" parent="RaycastManager" unique_id=488025281]
-target_position = Vector2(-35, 35)
+target_position = Vector2(-27, 27)
 collision_mask = 3
 collide_with_areas = true
 
 [node name="RayLeft" type="RayCast2D" parent="RaycastManager" unique_id=1709568464]
-target_position = Vector2(-50, 0)
+target_position = Vector2(-38, 0)
 collision_mask = 3
 collide_with_areas = true
 
 [node name="RayHighLeft" type="RayCast2D" parent="RaycastManager" unique_id=1558029259]
-target_position = Vector2(-35, -35)
+target_position = Vector2(-27, -27)
 collision_mask = 3
 collide_with_areas = true
 
 [node name="RayUp" type="RayCast2D" parent="RaycastManager" unique_id=1724708728]
 position = Vector2(0, -1)
-target_position = Vector2(0, -50)
+target_position = Vector2(0, -37)
 collision_mask = 3
 collide_with_areas = true
 
 [node name="RayHighRight" type="RayCast2D" parent="RaycastManager" unique_id=234712564]
-target_position = Vector2(35, -35)
+target_position = Vector2(27, -27)
 collision_mask = 3
 collide_with_areas = true
 

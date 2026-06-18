@@ -1,5 +1,6 @@
 extends Node2D
 
+@export var is_disabled := false
 
 @export var arrow_scene: PackedScene
 @export var bomber_scene: PackedScene
@@ -11,10 +12,12 @@ var max_enemies : int = 15
 
 func _ready():
 	player = get_player()
-	spawn_enemy()
 
 
 func spawn_enemy():
+	if is_disabled:
+		return
+	
 	if !player:
 		return
 	
@@ -33,7 +36,7 @@ func spawn_enemy():
 	
 	#var difficultyFactor: int = (GameState.score / 10) #Randomized Spawn Location
 	var viewport_height = get_viewport_rect().size.y
-	var x = 1200
+	var x = 330
 	var rand_y: float = randf_range(0, viewport_height)
 	
 	var speed_increase = 20

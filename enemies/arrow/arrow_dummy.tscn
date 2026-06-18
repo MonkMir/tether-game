@@ -17,11 +17,12 @@ mass = 0.5
 script = ExtResource("1_c41mt")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=262126794]
+position = Vector2(-0.0082035065, 0.5146446)
 texture = ExtResource("2_2tmup")
 flip_h = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=981011974]
-position = Vector2(0, -0.5)
+[node name="PhysicsShape" type="CollisionShape2D" parent="." unique_id=981011974]
+position = Vector2(0.5, 0.1)
 shape = SubResource("RectangleShape2D_gwnxe")
 debug_color = Color(0.392157, 0.392157, 0.980392, 0.419608)
 
@@ -30,7 +31,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=239790728]
-position = Vector2(0, -0.5)
+scale = Vector2(1.1, 1.4)
 shape = SubResource("RectangleShape2D_qlxjl")
 
 [node name="HealthBar" parent="." unique_id=993042800 instance=ExtResource("3_lf3dv")]

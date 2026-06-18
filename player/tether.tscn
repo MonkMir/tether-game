@@ -19,6 +19,9 @@ fill_to = Vector2(0.51282054, 0.03076923)
 
 [node name="Tether" type="Node2D" unique_id=1948318608]
 script = ExtResource("1_wbd1m")
+max_length = 12
+spring_stiffness = 1.4
+friction_damping = 5.5
 
 [node name="LineTexture" type="Line2D" parent="." unique_id=705149266]
 z_index = -1

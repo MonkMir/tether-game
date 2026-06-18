@@ -10,7 +10,7 @@ enum State {
 var Dupe : PackedScene
 var state := State.PASSIVE
 var t : float
-var speed := 2.0
+var speed := 1.5
 var start_point : Vector2
 var control_point : Vector2
 var end_point : Vector2
@@ -48,7 +48,7 @@ func _physics_process(delta: float):
 				var dupe_node := Dupe.instantiate()
 				dupe_node.state = State.REST
 				dupe_node.position = position
-				dupe_node.apply_central_impulse(final_dir * 1000)
+				dupe_node.apply_central_impulse(final_dir * 300)
 				dupe_node.angular_velocity = angular_velocity
 				get_parent().add_child(dupe_node)
 				queue_free()

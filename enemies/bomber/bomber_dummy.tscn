@@ -20,7 +20,7 @@ explosion_scene = ExtResource("2_fl6hi")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1919040042]
 texture = ExtResource("3_oi10m")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1795609423]
+[node name="PhysicsShape" type="CollisionShape2D" parent="." unique_id=1795609423]
 position = Vector2(0, 0.50000024)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_oi10m")
@@ -30,7 +30,7 @@ debug_color = Color(0.392157, 0.392157, 0.980392, 0.447059)
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=1838623025]
+[node name="Collision" type="CollisionShape2D" parent="Area2D" unique_id=1838623025]
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_86wwi")
 
