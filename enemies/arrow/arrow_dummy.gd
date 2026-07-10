@@ -40,7 +40,7 @@ func _physics_process(delta: float):
 
 
 func _set_target():
-	var previous_move_direction = linear_velocity.normalized()
+	var previous_move_direction : Vector2 = linear_velocity.normalized()
 	linear_velocity = launch_speed * previous_move_direction
 			
 	var best_target : Node2D

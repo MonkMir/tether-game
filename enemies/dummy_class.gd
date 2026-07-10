@@ -3,6 +3,7 @@ class_name Dummy
 
 
 var attack_power : float
+var wrecking_ball_mode := true
 var health : float = 100
 var speed_limit : int = 435
 var current_speed : float
@@ -36,8 +37,9 @@ func _physics_process(delta: float):
 	# WARNING this might be a vestige from prior testing. test it
 	current_speed = linear_velocity.length()
 	
-	var speed_to_damage_divisor : int = 15
-	attack_power = linear_velocity.length() / speed_to_damage_divisor
+	if wrecking_ball_mode:
+		var speed_to_damage_divisor : int = 15
+		attack_power = linear_velocity.length() / speed_to_damage_divisor
 	
 	if get_despawn_rect().has_point(global_position):
 		time_out_of_bounds_seconds = 0.0

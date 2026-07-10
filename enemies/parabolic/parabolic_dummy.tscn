@@ -7,8 +7,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_3yr54"]
 radius = 5.2533283
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4nmu3"]
-size = Vector2(9.192389, 9.192389)
+[sub_resource type="CircleShape2D" id="CircleShape2D_c2ok2"]
+radius = 5.312614
 
 [node name="ParabolicDummy" type="RigidBody2D" unique_id=1744293132 groups=["dummies"]]
 collision_layer = 2
@@ -29,9 +29,8 @@ position = Vector2(0.48536682, 0.4697094)
 texture = ExtResource("2_c2ok2")
 
 [node name="Collision" type="CollisionShape2D" parent="Area2D" unique_id=1160732786]
-rotation = -0.7853982
-scale = Vector2(1.275, 1.275)
-shape = SubResource("RectangleShape2D_4nmu3")
+scale = Vector2(1.505, 1.505)
+shape = SubResource("CircleShape2D_c2ok2")
 
 [node name="HealthBar" parent="." unique_id=993042800 instance=ExtResource("3_j0nak")]
 

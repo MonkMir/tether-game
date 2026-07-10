@@ -7,20 +7,19 @@ enum State {
 	REST
 }
 
-var Dupe : PackedScene
-var state := State.PASSIVE
-var t : float
-var speed := 1.5
-var start_point : Vector2
-var control_point : Vector2
-var end_point : Vector2
-var final_vel : Vector2
-var final_dir : Vector2
+@export var rebound_force : int = 350
+
+var state := State.PASSIVE:
+	set(new_state):
+		state = new_state
+		if state == State.SPECIAL:
+			_init_special_state()
+
+var _rebound_direction : Vector2
 
 func _ready():
 	super()
 	attack_power = 75
-	Dupe = load("res://enemies/parabolic/parabolic_dummy.tscn")
 
 
 func _physics_process(delta: float):
@@ -33,25 +32,28 @@ func _physics_process(delta: float):
 			
 			if player:
 				if player.is_tethered == false:
-					start_point = position
-					control_point = player.position + Vector2(0, start_point.y)
-					end_point = Vector2(((player.position - start_point) + player.position).x, start_point.y)
 					state = State.SPECIAL
 		State.SPECIAL:
-			angular_velocity = 30
-			
-			if t < 1:
-				t = move_toward(t, 1, speed * delta)
-				position = start_point.lerp(control_point, t).lerp(control_point.lerp(end_point, t), t)
-				final_dir = (end_point - control_point).normalized()
-			else:
-				var dupe_node := Dupe.instantiate()
-				dupe_node.state = State.REST
-				dupe_node.position = position
-				dupe_node.apply_central_impulse(final_dir * 300)
-				dupe_node.angular_velocity = angular_velocity
-				get_parent().add_child(dupe_node)
-				queue_free()
-		State.REST:
-			angular_velocity = 25
-			attack_power = 100
+			apply_central_force(rebound_force * _rebound_direction)
+			angular_velocity = 20
+
+	
+	
+func _init_special_state():
+	var previous_move_direction : Vector2 = linear_velocity.normalized()
+	_rebound_direction = - (get_closest_axis(previous_move_direction))
+	
+	gravity_scale = 0.0
+	wrecking_ball_mode = false
+	attack_power = 100
+
+
+
+func get_closest_axis(velocity: Vector2) -> Vector2:
+	if velocity == Vector2.ZERO:
+		return Vector2.ZERO
+		
+	if abs(velocity.x) > abs(velocity.y):
+		return Vector2.RIGHT if velocity.x > 0 else Vector2.LEFT
+	else:
+		return Vector2.DOWN if velocity.y > 0 else Vector2.UP

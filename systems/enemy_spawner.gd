@@ -8,7 +8,7 @@ extends Node2D
 
 var new_enemy
 var player : Node
-var max_enemies : int = 15
+var max_enemies : int = 9
 
 func _ready():
 	player = get_player()
