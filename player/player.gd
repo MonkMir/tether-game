@@ -15,7 +15,7 @@ const BASE_SPEED : int = 800
 const MAX_SPEED : int = 800
 
 var new_dummy : Node2D = null
-var health: int = 10000
+var health: int = 100
 var damage_calc: int = 20
 var enemies_in_range : int = 0
 var move_speed := 250.0
@@ -58,9 +58,6 @@ func _physics_process(delta: float) -> void:
 	
 	thruster_glow.modulate = target_color
 	thruster_glow_reverse.modulate = target_color
-
-
-
 	
 	if input_direction.x != 0 and sign(input_direction.x) != sign(last_direction_x):
 		_on_direction_flipped(sign(input_direction.x))
