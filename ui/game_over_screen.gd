@@ -1,4 +1,4 @@
-extends Label
+extends MarginContainer
 
 func _process(_delta):
 	if GameState.is_game_over:
