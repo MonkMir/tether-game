@@ -52,11 +52,9 @@ func _physics_process(delta: float):
 
 
 func _on_area_entered(entered_area):
-	#if not is_instance_valid(self): # TEST if not self didn't work nor does this
-		#return
-	
 	if entered_area.is_in_group("enemies"):
 		entered_area.receive_dam_param(attack_power)
+		SignalBus.enemy_hit.emit(global_position, entered_area.global_position)
 	
 	if self.state == self.State.SPECIAL:
 		return

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dt7c8232do51"]
+
+[sub_resource type="Curve" id="Curve_pbce7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.05447471, 0.9923023), 0.0, 0.0, 0, 0, Vector2(0.5097276, 0), -4.491029, 0.0, 0, 0]
+point_count = 3
+
+[node name="SparksEffect" type="CPUParticles2D" unique_id=1249739465]
+emitting = false
+amount = 4
+lifetime = 0.83
+one_shot = true
+speed_scale = 0.5
+explosiveness = 0.89
+initial_velocity_min = 139.19
+initial_velocity_max = 164.82
+scale_amount_curve = SubResource("Curve_pbce7")

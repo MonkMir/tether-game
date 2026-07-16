@@ -1,7 +1,8 @@
 extends Node2D
 
 
-# GAME START INITIALIZATIONS
+const BASE_SPEED : int = 800
+const MAX_SPEED : int = 800
 
 @export var arrow_dummy_scene: PackedScene
 @export var bomber_dummy_scene: PackedScene
@@ -10,9 +11,6 @@ extends Node2D
 
 @export var max_intensity: float = 24.0
 @export var fade_speed: float = 5.0
-
-const BASE_SPEED : int = 800
-const MAX_SPEED : int = 800
 
 var new_dummy : Node2D = null
 var health: int = 100

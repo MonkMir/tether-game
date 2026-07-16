@@ -41,6 +41,8 @@ func _process(_delta):
 func _on_area_entered(area):
 	if area.is_in_group("player"):
 		player.receive_dam_param(attack_power)
+		
+		SignalBus.player_hit.emit(player.global_position, position)
 
 
 func get_player() -> Node:
