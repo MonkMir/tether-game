@@ -1,16 +1,29 @@
 extends Node
 
 signal pause_toggled(is_paused : bool)
+
 const MAX_COMBO : int = 24
+
 var is_pausable : bool = false
-var is_game_over : bool = false
+var is_game_over : bool = false:
+	set(new_bool):
+		if new_bool == true and is_game_over == false:
+			is_game_over = new_bool
+			_update_leaderboard()
+		else: is_game_over = new_bool
+
+var combo_counter : int = 0
 var last_pause_toggle_frame: int = 0
 var score : int = 0
-var combo_counter : int = 0
+var leaderboard: Array = []
+var _max_score_entries : int = 10
 
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	leaderboard.resize(_max_score_entries)
+	leaderboard.fill(0)
 
 
 func _input(event):
@@ -18,6 +31,17 @@ func _input(event):
 		toggle_pause()
 
 
+func _update_leaderboard():
+	leaderboard.append(score)
+	leaderboard.sort()
+	leaderboard.reverse()
+	if leaderboard.size() > _max_score_entries:
+		leaderboard.pop_back()
+	
+	SaveManager.save_game_data()
+
+
+# rename to "reset_game_state"?
 func game_over_reset():
 	score = 0 
 	is_game_over = false
