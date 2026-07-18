@@ -252,6 +252,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
 text = "QUIT"
 
 [node name="GameOverScreen" type="MarginContainer" parent="MenuManager" unique_id=704737577]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -287,7 +288,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_left = 7
-theme_override_constants/margin_top = 4
+theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 7
 theme_override_constants/margin_bottom = 4
 

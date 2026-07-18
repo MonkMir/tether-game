@@ -2,8 +2,16 @@ extends RigidBody2D
 class_name Dummy
 
 
+var wrecking_ball_mode := true:
+	set(new_bool):
+		if new_bool == false and wrecking_ball_mode == true:
+			invincible_mode = true
+			health_bar.hide()
+			wrecking_ball_mode = new_bool
+
+var invincible_mode := false
+
 var attack_power : float
-var wrecking_ball_mode := true
 var health : float = 100
 var speed_limit : int = 435
 var current_speed : float
@@ -33,13 +41,17 @@ func _physics_process(delta: float):
 		die()
 		return
 	
-	# healthBar.health = health
+	
 	# WARNING this might be a vestige from prior testing. test it
 	current_speed = linear_velocity.length()
+	
+	if self.state == self.State.SPECIAL:
+		wrecking_ball_mode = false
 	
 	if wrecking_ball_mode:
 		var speed_to_damage_divisor : int = 15
 		attack_power = linear_velocity.length() / speed_to_damage_divisor
+	
 	
 	if get_despawn_rect().has_point(global_position):
 		time_out_of_bounds_seconds = 0.0
@@ -56,9 +68,6 @@ func _on_area_entered(entered_area):
 		entered_area.receive_dam_param(attack_power)
 		SignalBus.enemy_hit.emit(global_position, entered_area.global_position)
 	
-	if self.state == self.State.SPECIAL:
-		return
-	
 	var max_self_damage: float = 16
 	var self_damage: float
 	var to_max_speed_ratio : float = inverse_lerp(0, speed_limit, linear_velocity.length())
@@ -68,6 +77,9 @@ func _on_area_entered(entered_area):
 
 
 func receive_dam_param(damage):
+	if invincible_mode == true:
+		return
+	
 	health -= damage
 	health_bar.health = health
 

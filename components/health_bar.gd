@@ -25,7 +25,7 @@ func _ready():
 	# The source of this bandaid likely has to do with the order of the dummy spawn code
 	is_player_health = false
 	
-	if is_player_health == true or is_dummy_health == true:
+	if is_player_health == true:
 		show()
 	else:
 		hide()

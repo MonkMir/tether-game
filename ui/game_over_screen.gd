@@ -26,7 +26,7 @@ func _initialize_header() -> void:
 	if score_placement == -1: # no placement
 		header.text = "ur trash give up. your performance offends me like irl"
 	elif score_placement == 0: # highest score
-		header.text = "Woah Buster, don't get too quirky! or I'LL BUST!! :D"
+		header.text = "Nice one buddy! Now try getting a job or gf maybe :D"
 	else: # general leaderboard placement
 		header.text = "I painterd yours yellow so you don't get lost : )"
 
