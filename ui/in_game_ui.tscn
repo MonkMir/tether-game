@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://do58e0257b0fx" path="res://levels/level1_background_tg.png" id="1_mp7fp"]
 [ext_resource type="Script" uid="uid://6o4txy54pcjf" path="res://ui/main_menu.gd" id="2_a45jx"]
 [ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://ui/game_over_screen.gd" id="6_lu04y"]
+[ext_resource type="Theme" uid="uid://dhm80kv80ja5w" path="res://components/plain_label.tres" id="7_2dwke"]
 
 [sub_resource type="Theme" id="Theme_lu04y"]
 default_font = ExtResource("1_iakjd")
@@ -19,7 +20,7 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fqvwy"]
-bg_color = Color(0.7372549, 0.7490196, 0.3882353, 1)
+bg_color = Color(0.737, 0.749, 0.388, 1)
 skew = Vector2(0.28, 0)
 corner_radius_top_left = 5
 corner_radius_top_right = 3
@@ -251,7 +252,6 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
 text = "QUIT"
 
 [node name="GameOverScreen" type="MarginContainer" parent="MenuManager" unique_id=704737577]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -260,12 +260,48 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_lu04y")
 
-[node name="Label" type="Label" parent="MenuManager/GameOverScreen" unique_id=2056501418]
+[node name="MainVBox" type="VBoxContainer" parent="MenuManager/GameOverScreen" unique_id=727522974]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_colors/font_shadow_color = Color(0.050980393, 0.22745098, 0.29803923, 1)
-theme_override_font_sizes/font_size = 18
-text = "ur trash give up"
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+
+[node name="Header" type="Label" parent="MenuManager/GameOverScreen/MainVBox" unique_id=2056501418]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("7_2dwke")
+theme_override_font_sizes/font_size = 7
+text = "Your text here :O"
+
+[node name="PanelContainer" type="MarginContainer" parent="MenuManager/GameOverScreen/MainVBox" unique_id=1494128120]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Texture" type="ColorRect" parent="MenuManager/GameOverScreen/MainVBox/PanelContainer" unique_id=1763792595]
+layout_mode = 2
+color = Color(0.40392157, 0.59607846, 0.6666667, 1)
+
+[node name="Leaderboard" type="MarginContainer" parent="MenuManager/GameOverScreen/MainVBox/PanelContainer" unique_id=249462209]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 4
+
+[node name="ScoresBox" type="VBoxContainer" parent="MenuManager/GameOverScreen/MainVBox/PanelContainer/Leaderboard" unique_id=1811271269]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="ScoreTemplate" type="Label" parent="MenuManager/GameOverScreen/MainVBox/PanelContainer/Leaderboard/ScoresBox" unique_id=2034885292]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme = ExtResource("7_2dwke")
+theme_override_font_sizes/font_size = 10
 
 [connection signal="timeout" from="MenuManager/DelayUntilRepeat" to="MenuManager" method="_on_delay_until_repeat_timeout"]
 [connection signal="timeout" from="MenuManager/RepeatInterval" to="MenuManager" method="_on_repeat_interval_timeout"]

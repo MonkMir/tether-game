@@ -37,6 +37,7 @@ var _initial_tilt_direction_vector := Vector2.ZERO
 
 func _ready():
 	GameState.pause_toggled.connect(_on_pause_toggled)
+	SignalBus.game_over.connect(_on_game_over)
 	
 	dot_tilt_tolerance = cos(deg_to_rad(tolerance_angle_degrees))
 	
@@ -100,7 +101,7 @@ func _input(event: InputEvent):
 #endregion
 
 # Split this region further
-#region HELPER FUNCTIONS 
+#region MANAGER FUNCTIONS 
 # MENU TOGGLING
 
 
@@ -307,6 +308,10 @@ func _on_pause_toggled(is_paused: bool):
 		while $PauseMenu in _menu_stack:
 			close_top_menu()
 
+
+func _on_game_over():
+	open_menu($GameOverScreen)
+	$GameOverScreen.initialize_game_over_screen()
 #endregion
 
 # TIMEOUT CALLBACKS

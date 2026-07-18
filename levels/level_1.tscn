@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dkq6ilqibkqvo" path="res://enemies/bomber/bomber_enemy.tscn" id="4_08mmt"]
 [ext_resource type="PackedScene" uid="uid://cm6ubd5en4t7e" path="res://enemies/parabolic/parabolic_enemy.tscn" id="5_5ot28"]
 [ext_resource type="Script" uid="uid://da7f2buhged70" path="res://ui/score_label.gd" id="6_aerfg"]
-[ext_resource type="FontFile" uid="uid://bhe7lybmiijm6" path="res://components/EpsonPixeledRegular-0Py9.ttf" id="7_3sk1a"]
+[ext_resource type="Theme" uid="uid://dhm80kv80ja5w" path="res://components/plain_label.tres" id="8_aerfg"]
 [ext_resource type="Texture2D" uid="uid://do58e0257b0fx" path="res://levels/level1_background_tg.png" id="8_l53as"]
 [ext_resource type="Script" uid="uid://b6tcem6xojnym" path="res://levels/particle_system/particle_spawner.gd" id="10_08mmt"]
 [ext_resource type="PackedScene" uid="uid://dt7c8232do51" path="res://levels/particle_system/sparks_effect.tscn" id="11_5ot28"]
@@ -23,9 +23,6 @@ width = 128
 height = 128
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-
-[sub_resource type="LabelSettings" id="LabelSettings_c5177"]
-font_size = 8
 
 [node name="Level1" type="Node2D" unique_id=657166130]
 
@@ -71,9 +68,8 @@ offset_left = 8.0
 offset_top = 16.0
 offset_right = 40.0
 offset_bottom = 28.0
-theme_override_fonts/font = ExtResource("7_3sk1a")
+theme = ExtResource("8_aerfg")
 text = "Score: 0"
-label_settings = SubResource("LabelSettings_c5177")
 script = ExtResource("6_aerfg")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1506603802]

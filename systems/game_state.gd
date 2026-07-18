@@ -10,13 +10,14 @@ var is_game_over : bool = false:
 		if new_bool == true and is_game_over == false:
 			is_game_over = new_bool
 			_update_leaderboard()
+			SignalBus.game_over.emit()
 		else: is_game_over = new_bool
 
 var combo_counter : int = 0
 var last_pause_toggle_frame: int = 0
 var score : int = 0
 var leaderboard: Array = []
-var _max_score_entries : int = 10
+var _max_score_entries : int = 5
 
 
 func _ready():
@@ -36,7 +37,7 @@ func _update_leaderboard():
 	leaderboard.sort()
 	leaderboard.reverse()
 	if leaderboard.size() > _max_score_entries:
-		leaderboard.pop_back()
+		leaderboard.resize(_max_score_entries)
 	
 	SaveManager.save_game_data()
 
