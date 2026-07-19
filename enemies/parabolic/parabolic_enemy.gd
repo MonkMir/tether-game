@@ -2,18 +2,21 @@ extends Enemy
 
 
 # BUG enemy sometimes gets stuck. in this case, previousState = null which suggests
-# that it never leaves GO_TO_PATH
-#
-# BUG clear shot interval code. I like how it works
+# that it never leaves GO_TO_PATH. edit: remote tab says it's stuck in REPOSITION
 #
 # BUG make spin_and_transition use time based transition rather than rate based.
-# maybe add an optional lerp variation?
+# maybe add an optional lerp variation? Also maybe use a tween instead
 
 enum State {
 	GO_TO_PATH,
 	ATTACK,
 	REPOSITION
 }
+
+const SPEED_GROWTH := 400
+const BASE_SPEED := 500
+const DECELERATION := 700
+const MAX_SPEED := 900
 
 @export var dart_scene : PackedScene
 
@@ -25,12 +28,8 @@ var target_path_progress : float
 var target_point_on_path := Vector2(INF, INF) # should be generated at the end of state during transition
 var reached_target_spin : bool = false
 var current_spin_deg_per_sec : float = INF
-var invert_shot_arc : int = 1
 
-const SPEED_GROWTH := 400
-const BASE_SPEED := 500
-const DECELERATION := 700
-const MAX_SPEED := 900
+
 
 @onready var shot_interval_timer := $ShotInterval
 @onready var shot_cluster_timer := $ShotCluster
@@ -129,10 +128,11 @@ func enable_collision(is_enabled : bool) -> void:
 
 
 func spawn_dart():
-	var NewDart := dart_scene.instantiate()
-	NewDart.position = position
-	NewDart.plus_or_minus *= invert_shot_arc
-	get_parent().add_child(NewDart)
+	var new_dart := dart_scene.instantiate()
+	new_dart.position = position
+	
+	# where are we adding this?
+	get_parent().add_child(new_dart)
 
 
 func generate_path_progress() -> float:
@@ -154,16 +154,4 @@ func generate_new_path_target() -> Vector2:
 
 
 func _on_shot_interval_timeout():
-	var shots_remaining : int = 3
-	invert_shot_arc *= -1
-	
-	if shots_remaining == 0:
-		pass
-	else:
-		for shot in shots_remaining:
-			shot_cluster_timer.start()
-			await shot_cluster_timer.timeout
-
-
-func _on_shot_cluster_timeout():
 	spawn_dart()
