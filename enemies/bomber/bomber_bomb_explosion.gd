@@ -20,4 +20,4 @@ func _on_timer_timeout():
 
 func _on_player_entered(hurtbox):
 	if hurtbox.is_in_group("player"):
-		_player.receive_dam_param(ATTACK_POWER)
+		_player.receive_damage(ATTACK_POWER)

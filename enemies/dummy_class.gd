@@ -8,7 +8,6 @@ var wrecking_ball_mode := true:
 			invincible_mode = true
 			health_bar.hide()
 			wrecking_ball_mode = new_bool
-
 var invincible_mode := false
 
 var attack_power : float
@@ -59,13 +58,13 @@ func _physics_process(delta: float):
 		time_out_of_bounds_seconds += delta
 	
 	if time_out_of_bounds_seconds >= max_offscreen_time_seconds:
-		if !player or self != player.new_dummy:
+		if not player or self != player.new_dummy:
 			queue_free()
 
 
 func _on_area_entered(entered_area):
 	if entered_area.is_in_group("enemies"):
-		entered_area.receive_dam_param(attack_power)
+		entered_area.receive_damage(attack_power)
 		SignalBus.enemy_hit.emit(global_position, entered_area.global_position)
 	
 	var max_self_damage: float = 16
@@ -73,10 +72,10 @@ func _on_area_entered(entered_area):
 	var to_max_speed_ratio : float = inverse_lerp(0, speed_limit, linear_velocity.length())
 	
 	self_damage = max_self_damage * to_max_speed_ratio
-	receive_dam_param(self_damage)
+	recieve_damage(self_damage)
 
 
-func receive_dam_param(damage):
+func recieve_damage(damage):
 	if invincible_mode == true:
 		return
 	

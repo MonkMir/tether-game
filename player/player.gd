@@ -99,7 +99,7 @@ func _input(event):
 
 
 # PLAYER HURT CALACULATION
-func receive_dam_param(damage):
+func receive_damage(damage):
 	health -= damage
 	health_bar.health = health
 	GameState.combo_counter /= 2

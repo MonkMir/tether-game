@@ -40,7 +40,7 @@ func _process(_delta):
 # Deal damage
 func _on_area_entered(area):
 	if area.is_in_group("player"):
-		player.receive_dam_param(attack_power)
+		player.receive_damage(attack_power)
 		
 		SignalBus.player_hit.emit(player.global_position, position)
 
@@ -60,7 +60,7 @@ func get_despawn_rect() -> Rect2:
 	return get_static_camera_rect().grow(100)
 
 
-func receive_dam_param(damage):
+func receive_damage(damage):
 	if not health_bar:
 		return
 	health -= damage

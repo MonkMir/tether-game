@@ -21,4 +21,4 @@ func _process(delta: float):
 
 func _on_player_entered(hurtbox):
 	if hurtbox.is_in_group("player"):
-		player.receive_dam_param(ATTACK_POWER)
+		player.receive_damage(ATTACK_POWER)

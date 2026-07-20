@@ -10,6 +10,17 @@ radius = 5.2533283
 [sub_resource type="CircleShape2D" id="CircleShape2D_c2ok2"]
 radius = 5.312614
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_4nmu3"]
+radius = 17.104815
+
+[sub_resource type="Curve" id="Curve_c2ok2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.4377432, 0.99180746), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.5548275, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_c2ok2"]
+offsets = PackedFloat32Array(0, 0.91255605, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.0627451, 0, 0.44313726, 1, 0.0627451, 0, 0.44313726, 0)
+
 [node name="ParabolicDummy" type="RigidBody2D" unique_id=1744293132 groups=["dummies"]]
 collision_layer = 2
 collision_mask = 5
@@ -28,10 +39,36 @@ collision_mask = 2
 position = Vector2(0.48536682, 0.4697094)
 texture = ExtResource("2_c2ok2")
 
-[node name="Collision" type="CollisionShape2D" parent="Area2D" unique_id=1160732786]
+[node name="HitboxDefault" type="CollisionShape2D" parent="Area2D" unique_id=1160732786]
 scale = Vector2(1.505, 1.505)
 shape = SubResource("CircleShape2D_c2ok2")
 
+[node name="HitboxExcited" type="CollisionShape2D" parent="Area2D" unique_id=346139641]
+shape = SubResource("CircleShape2D_4nmu3")
+disabled = true
+
 [node name="HealthBar" parent="." unique_id=993042800 instance=ExtResource("3_j0nak")]
 
+[node name="ExcitedParticles" type="CPUParticles2D" parent="." unique_id=1673316065]
+emitting = false
+amount = 64
+emission_shape = 6
+emission_ring_inner_radius = 16.0
+emission_ring_radius = 0.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 2.0
+radial_accel_min = -12.0
+radial_accel_max = -12.0
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_c2ok2")
+color = Color(1, 0, 1, 1)
+color_ramp = SubResource("Gradient_c2ok2")
+
+[node name="MultihitTimer" type="Timer" parent="." unique_id=1153569093]
+wait_time = 0.2
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_entered"]
+[connection signal="timeout" from="MultihitTimer" to="." method="_on_multihit_timer_timeout"]

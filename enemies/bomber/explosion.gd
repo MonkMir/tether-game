@@ -15,9 +15,9 @@ func _process(delta):
 	_sprite.scale += Vector2(7, 7) * delta
 
 
-func _on_area_entered(hurtbox):
-	if hurtbox.is_in_group("enemies"):
-		hurtbox.receive_dam_param(ATTACK_POWER)
+func _on_area_entered(_area):
+	if _area.is_in_group("enemies"):
+		_area.receive_damage(ATTACK_POWER)
 
 
 func _on_timer_timeout():
