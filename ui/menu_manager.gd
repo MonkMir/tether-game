@@ -289,6 +289,7 @@ func start_game():
 func reload_level():
 	var root_node : Node2D = get_tree().current_scene
 	var old_level : Node2D = root_node.get_node("Level1") # Hard coded thumbs down 
+	GameState.score = 0
 	
 	if old_level:
 		old_level.queue_free()
