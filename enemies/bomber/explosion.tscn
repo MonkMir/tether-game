@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bwyixsvsqpqt" path="res://enemies/bomber/big_explosion_tg.png" id="2_2n748"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1h8a8"]
-radius = 32.0
+radius = 48.0
 
 [sub_resource type="Gradient" id="Gradient_2n748"]
 interpolation_mode = 2
@@ -16,24 +16,96 @@ gradient = SubResource("Gradient_2n748")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="Curve" id="Curve_a2k0q"]
+_data = [Vector2(0, 0.51172173), 0.0, 0.0, 0, 0, Vector2(0.8638132, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.24628186), -15.370116, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_4iwql"]
+offsets = PackedFloat32Array(0.060538117, 0.20852017, 0.46860987, 0.8789238, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.59607846, 0.22352941, 0.21960784, 0.62352943, 0.35686275, 0.18039216, 0.2784314, 0.5647059, 0.35686275, 0.18039216, 0.2784314, 0.5647059, 0.35686275, 0.18039216, 0.2784314, 0)
+
+[sub_resource type="Curve" id="Curve_mxe7t"]
+_limits = [-2.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1.4399999), 0.0, -1.62388, 0, 0, Vector2(0.96, 0.35999995), -0.09580613, 0.0, 0, 0]
+point_count = 2
+metadata/_snap_enabled = true
+metadata/_snap_count = 100
+
+[sub_resource type="Curve" id="Curve_cr7eh"]
+_limits = [0.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(0.7315175, 37.244766), 170.54514, 170.54514, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_bai4v"]
+_data = [Vector2(0.017509721, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_mxe7t"]
+offsets = PackedFloat32Array(0, 0.23542601, 0.5493274, 0.8901345, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.34117648, 0, 1, 0.35686275, 0.18039216, 0.2784314, 1, 0.35686275, 0.18039216, 0.2784314, 1, 0.35686275, 0.18039216, 0.2784314, 0)
+
 [node name="Explosion" type="Area2D" unique_id=1431074492]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_d88ag")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=601367712]
+visible = false
+position = Vector2(-80, -8)
 texture = ExtResource("2_2n748")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1924089520]
+[node name="Hitbox" type="CollisionShape2D" parent="." unique_id=1924089520]
 shape = SubResource("CircleShape2D_1h8a8")
 
 [node name="Timer" type="Timer" parent="." unique_id=1402510047]
-wait_time = 0.13
+wait_time = 0.3
 
-[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2037442532]
+[node name="LightFlash" type="PointLight2D" parent="." unique_id=2037442532]
 scale = Vector2(1.03, 1.03)
 energy = 2.95
 texture = SubResource("GradientTexture2D_a2k0q")
 
+[node name="SmokeParticles" type="CPUParticles2D" parent="." unique_id=117755961]
+emitting = false
+amount = 16
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.64
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, -128)
+initial_velocity_min = 32.0
+initial_velocity_max = 96.0
+damping_min = 85.348
+damping_max = 85.348
+scale_amount_min = 24.0
+scale_amount_max = 32.0
+scale_amount_curve = SubResource("Curve_a2k0q")
+color = Color(0.6745098, 0.5294118, 0.23529412, 1)
+color_ramp = SubResource("Gradient_4iwql")
+
+[node name="EmberParticles" type="CPUParticles2D" parent="." unique_id=258785262]
+emitting = false
+amount = 64
+one_shot = true
+explosiveness = 0.7
+randomness = 1.0
+emission_shape = 6
+emission_ring_inner_radius = 0.0
+emission_ring_radius = 48.0
+gravity = Vector2(0, 0)
+orbit_velocity_min = 0.2
+orbit_velocity_max = 1.0
+orbit_velocity_curve = SubResource("Curve_mxe7t")
+damping_min = 100.0
+damping_max = 100.0
+damping_curve = SubResource("Curve_cr7eh")
+scale_amount_min = 2.5
+scale_amount_max = 2.5
+scale_amount_curve = SubResource("Curve_bai4v")
+color = Color(1, 1, 0, 1)
+color_ramp = SubResource("Gradient_mxe7t")
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="finished" from="SmokeParticles" to="." method="_on_smoke_particles_finished"]
