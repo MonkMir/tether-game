@@ -40,8 +40,10 @@ func _process(delta: float):
 			if timer.time_left == 0:
 				timer.start() # clean up with await
 			
+			%ThrusterParticles.emitting = false
 			position += (direction * resting_speed) * delta
 		State.ATTACK:
+			%ThrusterParticles.emitting = true
 			_distance_to_target = position.distance_to(_target_point)
 			unspin()
 			

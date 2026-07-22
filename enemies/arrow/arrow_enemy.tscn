@@ -4,6 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://cu4oa6v8nscgi" path="res://enemies/arrow/arrow_enemy_sprite_tg.png" id="2_ankb1"]
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="3_ai1vl"]
 
+[sub_resource type="Curve" id="Curve_sn3xj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0scfs"]
 size = Vector2(13.754074, 2.999834)
 
@@ -17,6 +21,19 @@ modulate = Color(0.98, 0.98, 0.98, 1)
 position = Vector2(1.90735e-06, -1.90735e-06)
 texture = ExtResource("2_ankb1")
 flip_h = true
+
+[node name="ThrusterParticles" type="CPUParticles2D" parent="Sprite" unique_id=1837001937]
+unique_name_in_owner = true
+position = Vector2(-7, -0.5)
+amount = 6
+lifetime = 0.09999999999999999
+direction = Vector2(-1, 0)
+spread = 12.0
+gravity = Vector2(0, 0)
+scale_amount_min = 2.5
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_sn3xj")
+color = Color(0.9843137, 0.31764707, 0.44313726, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1239614300]
 position = Vector2(-0.12296295, -0.50008297)
