@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dbd4nfgtdauq8"]
 
 [ext_resource type="Script" uid="uid://b1uny31w4pb81" path="res://enemies/parabolic/parabolic_dart.gd" id="1_rp2uv"]
-[ext_resource type="Texture2D" uid="uid://b2n75vo2xukaw" path="res://enemies/parabolic/parabolic_dart_tg.png" id="2_lxl1a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c37ne"]
 radius = 2.43789
@@ -16,20 +15,42 @@ gradient = SubResource("Gradient_lxl1a")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="Curve" id="Curve_lxl1a"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.4377432, 0.99180746), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.5548275, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_m7oun"]
+offsets = PackedFloat32Array(0, 0.56726456, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.0627451, 0, 0.44313726, 0.8117647, 0.0627451, 0, 0.44313726, 0)
+
 [node name="Parabolic Dart" type="Area2D" unique_id=1545782455]
 script = ExtResource("1_rp2uv")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=8059440]
-position = Vector2(-0.50851727, -0.49206257)
-texture = ExtResource("2_lxl1a")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1508892101]
 shape = SubResource("CircleShape2D_c37ne")
-metadata/_edit_group_ = true
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=501810218]
 scale = Vector2(0.222, 0.218)
 energy = 2.95
 texture = SubResource("GradientTexture2D_m7oun")
+
+[node name="ExcitedParticles" type="CPUParticles2D" parent="." unique_id=1969751801]
+z_index = -3
+amount = 16
+lifetime = 0.4
+emission_shape = 6
+emission_ring_inner_radius = 2.0
+emission_ring_radius = 0.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 2.0
+radial_accel_min = -12.0
+radial_accel_max = -12.0
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_lxl1a")
+color = Color(1, 0, 1, 1)
+color_ramp = SubResource("Gradient_m7oun")
 
 [connection signal="area_entered" from="." to="." method="_on_player_entered"]

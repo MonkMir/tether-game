@@ -29,7 +29,7 @@ fill_from = Vector2(0.5, 0.5)
 [node name="BackgroundOcclusionLayer" type="Sprite2D" parent="." unique_id=618632529]
 modulate = Color(0.66, 0.66, 0.66, 1)
 light_mask = 2
-z_index = -2
+z_index = -127
 texture = ExtResource("1_08mmt")
 centered = false
 

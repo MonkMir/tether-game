@@ -1,7 +1,7 @@
 extends Projectile
 
 
-const ATTACK_POWER := 5
+const ATTACK_POWER := 10
 
 var _speed := 1.5
 var _direction : Vector2
@@ -14,7 +14,6 @@ func _ready():
 
 func _process(delta: float):
 	super(delta)
-	rotation += 20 * delta
 	
 	position += _speed * _direction
 
