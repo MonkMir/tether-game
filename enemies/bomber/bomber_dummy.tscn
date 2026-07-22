@@ -12,6 +12,9 @@ size = Vector2(7.0000005, 14)
 radius = 3.0
 height = 14.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_oi10m"]
+radius = 22.022715
+
 [node name="BomberDummy" type="RigidBody2D" unique_id=416578855 groups=["dummies"]]
 mass = 0.5
 script = ExtResource("1_v4dsp")
@@ -30,14 +33,23 @@ debug_color = Color(0.392157, 0.392157, 0.980392, 0.447059)
 collision_layer = 4
 collision_mask = 2
 
-[node name="Collision" type="CollisionShape2D" parent="Area2D" unique_id=1838623025]
+[node name="Hitbox" type="CollisionShape2D" parent="Area2D" unique_id=1838623025]
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_86wwi")
 
+[node name="Trigger" type="Area2D" parent="." unique_id=1004770147]
+collision_layer = 0
+collision_mask = 2
+
+[node name="TriggerZone" type="CollisionShape2D" parent="Trigger" unique_id=2034478773]
+shape = SubResource("CircleShape2D_oi10m")
+disabled = true
+debug_color = Color(1, 1, 0, 0.09803922)
+
 [node name="Timer" type="Timer" parent="." unique_id=2107764547]
-wait_time = 0.5
+wait_time = 0.8
 
 [node name="HealthBar" parent="." unique_id=993042800 instance=ExtResource("4_4qf5x")]
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_in_trigger_range"]
+[connection signal="area_entered" from="Trigger" to="." method="_on_trigger_zone_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_fuse_timer"]

@@ -69,7 +69,7 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TetherRange" unique_id=956201445]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_2ck4e")
-debug_color = Color(0.662399, 0.513404, 3.85046e-07, 0.42)
+debug_color = Color(1, 1, 0, 0.08235294)
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1128003117 groups=["player"]]
 position = Vector2(1, 0)

@@ -19,7 +19,6 @@ var max_offscreen_time_seconds := 5.0
 
 @onready var player : Node
 @onready var area := $Area2D
-@onready var hitbox := $Area2D/CollisionShape2D
 @onready var camera := get_viewport().get_camera_2d()
 @onready var health_bar := $HealthBar
 @onready var health_indicator_bar := $HealthBar/HealthIndicatorBar
