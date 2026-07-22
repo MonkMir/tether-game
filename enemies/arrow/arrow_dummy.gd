@@ -6,20 +6,23 @@ enum State {
 	SPECIAL
 }
 
+
+@onready var _thruster_particles = %ThrusterParticles
+
 var state := State.PASSIVE:
 	set(new_state):
 		state = new_state
 		if state == State.SPECIAL:
+			_thruster_particles.show()
 			_set_target()
 #const DEFAULT_SPEED_LIMIT : int = 2000 #1200
 #const MAX_SPEED_LIMIT : int = 2000
 #const MIN_SPEED_LIMIT : int = 1000
 var launch_speed : float = 1000 # minimum speed to oneshot
-#var direction := Vector2.ZERO
-var new_dir : Vector2 # TESTING
 
 func _ready():
 	super()
+	_thruster_particles.hide()
 
 
 func _physics_process(delta: float):
@@ -36,6 +39,7 @@ func _physics_process(delta: float):
 					state = State.SPECIAL
 		State.SPECIAL:
 				rotation = linear_velocity.angle()
+				
 
 
 

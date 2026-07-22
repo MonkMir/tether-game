@@ -4,11 +4,19 @@
 [ext_resource type="Texture2D" uid="uid://cu4oa6v8nscgi" path="res://enemies/arrow/arrow_enemy_sprite_tg.png" id="2_2tmup"]
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="3_lf3dv"]
 
+[sub_resource type="Curve" id="Curve_2tmup"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_t7q7f"]
+offsets = PackedFloat32Array(0, 0.038116593)
+colors = PackedColorArray(1, 1, 1, 1, 0.9843137, 0.31764707, 0.44313726, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwnxe"]
 size = Vector2(14, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qlxjl"]
-size = Vector2(14, 3)
+size = Vector2(14, 3.6199195)
 
 [node name="ArrowDummy" type="RigidBody2D" unique_id=615306433 groups=["dummies"]]
 collision_layer = 4
@@ -20,6 +28,20 @@ script = ExtResource("1_c41mt")
 position = Vector2(-0.0082035065, 0.5146446)
 texture = ExtResource("2_2tmup")
 flip_h = true
+
+[node name="ThrusterParticles" type="CPUParticles2D" parent="Sprite2D" unique_id=736395378]
+unique_name_in_owner = true
+position = Vector2(-8, -0.5)
+amount = 64
+lifetime = 0.25
+direction = Vector2(-1, 0)
+spread = 12.0
+gravity = Vector2(0, 0)
+scale_amount_min = 3.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_2tmup")
+color = Color(1, 1, 0, 1)
+color_ramp = SubResource("Gradient_t7q7f")
 
 [node name="PhysicsShape" type="CollisionShape2D" parent="." unique_id=981011974]
 position = Vector2(0.5, 0.1)
