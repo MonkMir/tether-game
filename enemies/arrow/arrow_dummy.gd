@@ -38,23 +38,29 @@ func _physics_process(delta: float):
 				if not player.is_tethered:
 					state = State.SPECIAL
 		State.SPECIAL:
-				rotation = linear_velocity.angle()
-				
+			attack_power = 75
+			rotation = linear_velocity.angle()
+			
 
 
 
-func _set_target():
+func _set_target() -> void:
 	var previous_move_direction : Vector2 = linear_velocity.normalized()
 	linear_velocity = launch_speed * previous_move_direction
-			
+	
 	var best_target : Node2D
 	var best_alignment : float = -INF
-	var auto_alignment_threshold := 0.8
+	var auto_alignment_threshold := 0.75
 	
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		if previous_move_direction.dot(enemy.global_position) >= best_alignment:
+		var enemy_position: Vector2 = enemy.global_position
+		if not get_static_camera_rect().has_point(enemy_position):
+			continue 
+		
+		if previous_move_direction.dot(enemy_position) >= best_alignment:
 			best_target = enemy
-			best_alignment = previous_move_direction.dot(enemy.global_position)
+			best_alignment = previous_move_direction.dot(enemy_position)
+	
 	if best_alignment >= auto_alignment_threshold:
 		var target_direction : Vector2 = global_position.direction_to(best_target.global_position)
 		linear_velocity = launch_speed * target_direction

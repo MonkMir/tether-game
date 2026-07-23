@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="7_yllr7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2ck4e"]
-radius = 26.019224
+radius = 31.016125
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rgyib"]
 radius = 4.0
