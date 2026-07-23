@@ -60,7 +60,7 @@ func _physics_process(delta: float):
 
 func _enter_special_state():
 	gravity_scale = 0.0
-	attack_power = 100
+	attack_power = 50
 	
 	if linear_velocity.y >= 0:
 		_rebound_direction = Vector2.UP
@@ -69,6 +69,8 @@ func _enter_special_state():
 
 
 func _enter_excited_state():
+	attack_power = 100
+	
 	_hitbox_default.disabled = true
 	_hitbox_excited.disabled = false
 	_excited_particles.emitting = true
