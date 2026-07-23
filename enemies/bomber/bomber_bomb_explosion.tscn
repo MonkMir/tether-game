@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cdg4tbo0u80ti" path="res://enemies/bomber/bomber_bomb_explosion.gd" id="1_otirw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1h8a8"]
-radius = 30.016663
+radius = 26.019224
 
 [sub_resource type="Gradient" id="Gradient_pyvd4"]
 interpolation_mode = 2
@@ -51,7 +51,7 @@ script = ExtResource("1_otirw")
 shape = SubResource("CircleShape2D_1h8a8")
 
 [node name="Timer" type="Timer" parent="." unique_id=542641750]
-wait_time = 0.2
+wait_time = 0.1
 
 [node name="LightFlash" type="PointLight2D" parent="." unique_id=456908964]
 z_index = -3

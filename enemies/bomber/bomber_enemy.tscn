@@ -80,7 +80,7 @@ collision_layer = 0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="CirclingRange" unique_id=1744727171]
 shape = SubResource("CircleShape2D_8iqoc")
-debug_color = Color(0.639885, 0.520378, 0.194966, 0.42)
+debug_color = Color(0.6392157, 0, 0.19607843, 0.039215688)
 
 [node name="BombTimer" type="Timer" parent="." unique_id=1547855069]
 wait_time = 3.75
