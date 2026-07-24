@@ -2,14 +2,14 @@ extends Dummy
 
 
 enum State {
-	PASSIVE,
+	WRECKING_BALL,
 	SPECIAL
 }
 
 
 @onready var _thruster_particles = %ThrusterParticles
 
-var state := State.PASSIVE:
+var state := State.WRECKING_BALL:
 	set(new_state):
 		state = new_state
 		if state == State.SPECIAL:
@@ -29,18 +29,16 @@ func _physics_process(delta: float):
 	super(delta)
 	
 	match state:
-		State.PASSIVE:
+		
+		State.WRECKING_BALL:
 			if current_speed > speed_limit:
 				linear_velocity = linear_velocity.normalized() * speed_limit
-			#print("Arrow Dummy Speed: " + str(current_speed))
-			# This condition is important for enemy ragdoll upon player death
-			if player:
-				if not player.is_tethered:
-					state = State.SPECIAL
+			try_special_transition()
+		
 		State.SPECIAL:
 			attack_power = 75
 			rotation = linear_velocity.angle()
-			
+
 
 
 

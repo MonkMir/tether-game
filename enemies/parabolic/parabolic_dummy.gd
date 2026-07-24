@@ -42,10 +42,8 @@ func _physics_process(delta: float):
 		State.PASSIVE:
 			if current_speed > speed_limit:
 				linear_velocity = linear_velocity.normalized() * speed_limit
+			try_special_transition()
 			
-			if player:
-				if player.is_tethered == false:
-					state = State.SPECIAL
 		State.SPECIAL:
 			apply_central_force(rebound_force * _rebound_direction)
 			angular_velocity = _rotation_speed

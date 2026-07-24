@@ -24,10 +24,8 @@ func _physics_process(delta: float):
 		State.PASSIVE:
 			if current_speed > speed_limit:
 				linear_velocity = linear_velocity.normalized() * speed_limit
-			
-			if player:
-				if player.is_tethered == false:
-					state = State.SPECIAL
+			try_special_transition()
+		
 		State.SPECIAL:
 			_trigger_zone.set_deferred("disabled", false)
 			if self_destruct_timer.time_left == 0:
@@ -39,8 +37,6 @@ func self_destruct():
 	add_child(explosion)
 	# Who is parent?
 	explosion.reparent(get_parent())
-	if player:
-		player.is_tethered = false
 	queue_free()
 
 

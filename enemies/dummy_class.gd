@@ -2,13 +2,15 @@ extends RigidBody2D
 class_name Dummy
 
 
-var wrecking_ball_mode := true:
+var is_wrecking_ball := true:
 	set(new_bool):
-		if new_bool == false and wrecking_ball_mode == true:
-			invincible_mode = true
+		if new_bool == false and is_wrecking_ball:
+			_is_invincible_mode = true
 			health_bar.hide()
-			wrecking_ball_mode = new_bool
-var invincible_mode := false
+			is_wrecking_ball = new_bool
+			
+var _is_invincible_mode := false
+
 
 var attack_power : float
 var health : float = 100
@@ -31,7 +33,10 @@ func _ready():
 	# replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
 	health_indicator_bar.position = Vector2(-health_indicator_bar.size.x / 2, -128)
 	health_bar._init_health(health)
+	
 	gravity_scale = 0.4
+	
+	SignalBus.tether_toggled.connect(_on_tether_toggled)
 
 
 func _physics_process(delta: float):
@@ -44,9 +49,9 @@ func _physics_process(delta: float):
 	current_speed = linear_velocity.length()
 	
 	if self.state == self.State.SPECIAL:
-		wrecking_ball_mode = false
+		is_wrecking_ball = false
 	
-	if wrecking_ball_mode:
+	if is_wrecking_ball:
 		var speed_to_damage_divisor : int = 15
 		attack_power = linear_velocity.length() / speed_to_damage_divisor
 	
@@ -59,6 +64,12 @@ func _physics_process(delta: float):
 	if time_out_of_bounds_seconds >= max_offscreen_time_seconds:
 		if not player or self != player.new_dummy:
 			queue_free()
+
+# This check allows the dummy to ragdoll if player dies
+func try_special_transition() -> void:
+	if player:
+		if not is_wrecking_ball:
+			self.state = self.State.SPECIAL
 
 
 func _on_area_entered(entered_area):
@@ -75,7 +86,7 @@ func _on_area_entered(entered_area):
 
 
 func recieve_damage(damage):
-	if invincible_mode == true:
+	if _is_invincible_mode == true:
 		return
 	
 	health -= damage
@@ -99,3 +110,9 @@ func get_despawn_rect() -> Rect2:
 
 func die():
 	queue_free()
+
+func _on_tether_toggled(_state: bool):
+	if _state == true:
+		is_wrecking_ball = true
+	elif _state == false:
+		is_wrecking_ball = false

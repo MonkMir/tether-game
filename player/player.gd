@@ -1,5 +1,11 @@
 extends Node2D
 
+enum State {
+	Inactive,
+	Charging,
+	Charged,
+	Tethered,
+}
 
 const BASE_SPEED : int = 800
 const MAX_SPEED : int = 800
@@ -12,12 +18,30 @@ const MAX_SPEED : int = 800
 @export var max_intensity: float = 24.0
 @export var fade_speed: float = 5.0
 
+
+@onready var level := get_parent()
+@onready var health_bar := $HealthBarCanvas/HealthBar
+@onready var camera := get_viewport().get_camera_2d()
+@onready var sprite := %PlayerSprite
+@onready var sprite_reverse := %PlayerSpriteReverse
+@onready var thruster_glow := %ThrusterGlow
+@onready var thruster_glow_reverse := %ThrusterGlowReverse
+@onready var charge_particles := %ChargeParticles
+
+# This is the single source of truth for the tether state
+var state := State.Inactive:
+	set(new_state):
+		state = new_state
+		if state == State.Tethered:
+			SignalBus.tether_toggled.emit(true)
+		elif state == State.Inactive:
+			SignalBus.tether_toggled.emit(false)
+
 var new_dummy : Node2D = null
 var health: int = 100
 var damage_calc: int = 20
-var enemies_in_range : int = 0
+var enemies_in_range: int = 0
 var move_speed := 250.0
-var is_tethered := false
 var targeted_enemy : Node2D = null
 var nearest_enemy : Node2D = null
 var dummy_position : Vector2
@@ -26,21 +50,32 @@ var dummy_health : float
 var dummy_enemy_name : String
 var last_direction_x: float = 0.0
 
-@onready var level := get_parent()
-@onready var health_bar := $HealthBarCanvas/HealthBar
-@onready var camera := $"../Camera2D"
-@onready var sprite := $PlayerSprite
-@onready var sprite_reverse := $PlayerSpriteReverse
-@onready var thruster_glow := $ThrusterGlow
-@onready var thruster_glow_reverse := $ThrusterGlowReverse
-@onready var tether_cooldown : Timer = $TetherCooldown
+@onready var _default_damping_min: float = %ChargeParticles.damping_min
+@onready var _default_damping_max: float = %ChargeParticles.damping_max
+var _early_damping_: int = 150
+
 
 
 func _ready():
 	health_bar._init_health(health)
+	
+	#SignalBus.tether_toggled.connect(func(boolean): if boolean == false: state = State.Inactive)
 
+# TODO tether particle system and charge states
+#func _unhandled_input(event: InputEvent) -> void:
+	#if event.is_action_pressed("Tether"):
+		#if not charge_particles.emitting and not state == State.Tethered:
+			#charge_particles.damping_min = _default_damping_min
+			#charge_particles.damping_max = _default_damping_max
+			#charge_particles.emitting = true
+	#
+	#elif event.is_action_released("Tether"):
+		#if charge_particles.emitting:
+			#charge_particles.emitting = false
+			#charge_particles.damping_min = _early_damping
 
 func _physics_process(delta: float) -> void:
+	
 	# PLAYER MOVEMENT
 	var input_direction = Input.get_vector("Stick Left", "Stick Right", "Stick Up", "Stick Down")
 	position += input_direction * move_speed * delta
@@ -64,13 +99,6 @@ func _physics_process(delta: float) -> void:
 	var camera_rect = get_static_camera_rect()
 	position = position.clamp(camera_rect.position, camera_rect.end)
 	
-	# TETHER COOLDOWN
-	if tether_cooldown.time_left != 0.0:
-		sprite.modulate = Color(0.11, 0.11, 0.11, 1.0)
-		sprite_reverse.modulate = Color(0.11, 0.11, 0.11, 1.0)
-	else:
-		sprite.modulate = Color(1, 1, 1, 1)
-		sprite_reverse.modulate = Color(1, 1, 1, 1)
 	
 	# GAME OVER LOGIC
 	if health <= 0:
@@ -80,22 +108,19 @@ func _physics_process(delta: float) -> void:
 
 # USER INPUTS
 func _input(event):
-	if event.is_action_pressed("Tether") and is_tethered:
+	if event.is_action_pressed("Tether") and state == State.Tethered:
 		new_dummy = null
-		is_tethered = false
+		state = State.Inactive
 	elif (
 			event.is_action_pressed("Tether") 
 			and enemies_in_range > 0 
-			and tether_cooldown.time_left == 0.0
 	):
-		init_target()
-		tether_cooldown.start()
+		_get_target()
 	elif (
 			event.is_action_pressed("Tether") 
-			and tether_cooldown.time_left == 0.0 
-			and not is_tethered
+			#and not is_tethered
 	):
-		tether_cooldown.start()
+		pass
 
 
 # PLAYER HURT CALACULATION
@@ -106,7 +131,7 @@ func receive_damage(damage):
 
 
 # PLAYER'S END TETHERING SCRIPT
-func init_target():
+func _get_target():
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	var nearest_distance = INF
 	
@@ -145,13 +170,14 @@ func swap_and_tether(pos: Vector2, rot: float, enemy_health: float, enemy_name: 
 	
 	add_child(new_dummy)
 	new_dummy.reparent(level)
-	is_tethered = true
+	
 	targeted_enemy.queue_free()
 	
 	var new_tether = tether.instantiate()
 	new_tether.tether_origin_node = self
 	level.add_child(new_tether)
-
+	
+	state = State.Tethered
 
 func get_static_camera_rect() -> Rect2:
 	var camera_size = get_viewport_rect().size / camera.zoom
@@ -159,6 +185,9 @@ func get_static_camera_rect() -> Rect2:
 	
 	return Rect2(camera_corner_top_left, camera_size)
 
+
+func sever_tether_externally():
+	state = State.Inactive
 
 func _on_direction_flipped(dir_x: float) -> void:
 	if dir_x > 0:
@@ -181,3 +210,7 @@ func _on_tether_range_area_entered(_enemy_area):
 
 func _on_tether_range_area_exited(_enemy_area):
 	enemies_in_range -= 1
+
+
+func _on_charge_particles_finished():
+	state = State.Charged
