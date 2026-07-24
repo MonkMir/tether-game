@@ -42,6 +42,27 @@ fill_to = Vector2(0, 0)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_rgyib"]
 gradient = SubResource("Gradient_hg6s5")
 
+[sub_resource type="Curve" id="Curve_rgyib"]
+_limits = [-6.0, 6.0, 0.0, 1.0]
+_data = [Vector2(0, 1.0254602), 0.0, -0.14036553, 0, 0, Vector2(0.19066146, -0.44920588), 0.0, 0.0, 0, 0, Vector2(0.7315175, -5.0305014), 0.2535075, 0.2535075, 0, 0, Vector2(1, -2.5727253), -4.1310735, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_8t03j"]
+offsets = PackedFloat32Array(0, 0.45067266, 0.79820627, 0.9529148)
+colors = PackedColorArray(1, 0.7490196, 0.16470589, 0.5254902, 1, 1, 0, 0.5019608, 1, 1, 0.44313726, 1, 1, 1, 0, 0)
+
+[sub_resource type="Curve" id="Curve_hg6s5"]
+_limits = [0.0, 8.0, 0.0, 1.0]
+_data = [Vector2(0, 6.676078), 0.0, 0.13635589, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_2ieo8"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.8627451, 0.8627451, 0, 0.6313726, 0.35686275, 0.18039216, 0.2784314, 0.43137255, 0.35686275, 0.18039216, 0.2784314, 0)
+
+[sub_resource type="Gradient" id="Gradient_ebec5"]
+colors = PackedColorArray(1, 0.7490196, 0.16470589, 0.8352941, 1, 1, 0.67058825, 0)
+
 [node name="Player" type="CharacterBody2D" unique_id=994072363 groups=["player"]]
 script = ExtResource("1_boad6")
 arrow_dummy_scene = ExtResource("2_rgyib")
@@ -49,19 +70,8 @@ bomber_dummy_scene = ExtResource("3_hg6s5")
 parabolic_dummy_scene = ExtResource("4_8t03j")
 tether = ExtResource("5_2ieo8")
 
-[node name="PlayerSprite" type="Sprite2D" parent="." unique_id=1062684667]
-light_mask = 5
-position = Vector2(1, 0)
-texture = ExtResource("6_boad6")
-
-[node name="PlayerSpriteReverse" type="Sprite2D" parent="." unique_id=1950117919]
-visible = false
-light_mask = 5
-position = Vector2(-1, 0)
-texture = ExtResource("7_rgyib")
-flip_h = true
-
 [node name="TetherRange" type="Area2D" parent="." unique_id=1682285353]
+visible = false
 position = Vector2(1, 0)
 collision_layer = 0
 collision_mask = 2
@@ -72,6 +82,7 @@ shape = SubResource("CircleShape2D_2ck4e")
 debug_color = Color(1, 1, 0, 0.08235294)
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1128003117 groups=["player"]]
+visible = false
 position = Vector2(1, 0)
 collision_mask = 2
 
@@ -84,10 +95,6 @@ shape = SubResource("CapsuleShape2D_rgyib")
 
 [node name="HealthBar" parent="HealthBarCanvas" unique_id=993042800 instance=ExtResource("7_yllr7")]
 
-[node name="TetherCooldown" type="Timer" parent="." unique_id=1620952528]
-wait_time = 1.5
-one_shot = true
-
 [node name="PassiveGlow" type="PointLight2D" parent="." unique_id=453113546]
 position = Vector2(0.9999998, -1)
 scale = Vector2(0.961, 0.961)
@@ -95,7 +102,24 @@ energy = 0.35
 range_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_hg6s5")
 
-[node name="ThrusterGlow" type="Sprite2D" parent="." unique_id=679896315]
+[node name="PlayerSprites" type="Node2D" parent="." unique_id=423159013]
+
+[node name="PlayerSprite" type="Sprite2D" parent="PlayerSprites" unique_id=1062684667]
+unique_name_in_owner = true
+light_mask = 5
+position = Vector2(1, 0)
+texture = ExtResource("6_boad6")
+
+[node name="PlayerSpriteReverse" type="Sprite2D" parent="PlayerSprites" unique_id=1950117919]
+unique_name_in_owner = true
+visible = false
+light_mask = 5
+position = Vector2(-1, 0)
+texture = ExtResource("7_rgyib")
+flip_h = true
+
+[node name="ThrusterGlow" type="Sprite2D" parent="PlayerSprites" unique_id=679896315]
+unique_name_in_owner = true
 modulate = Color(0.012617188, 0.0073575065, 0.00010775553, 0.5686275)
 z_index = 10
 material = SubResource("CanvasItemMaterial_rgyib")
@@ -103,7 +127,8 @@ position = Vector2(-6, 0)
 scale = Vector2(0.06250001, 0.03125)
 texture = SubResource("GradientTexture2D_8t03j")
 
-[node name="ThrusterGlowReverse" type="Sprite2D" parent="." unique_id=1413919533]
+[node name="ThrusterGlowReverse" type="Sprite2D" parent="PlayerSprites" unique_id=1413919533]
+unique_name_in_owner = true
 modulate = Color(0.012617188, 0.0073575065, 0.00010775553, 0.5686275)
 z_index = 10
 material = SubResource("CanvasItemMaterial_rgyib")
@@ -111,6 +136,56 @@ position = Vector2(6, 0)
 scale = Vector2(0.06250001, 0.03125)
 texture = SubResource("GradientTexture2D_rgyib")
 
+[node name="TetherParticles" type="Node2D" parent="." unique_id=1069187889]
+
+[node name="ChargeParticles" type="CPUParticles2D" parent="TetherParticles" unique_id=341598958]
+unique_name_in_owner = true
+emitting = false
+amount = 48
+one_shot = true
+explosiveness = 0.7
+local_coords = true
+emission_shape = 6
+emission_ring_inner_radius = 16.0
+emission_ring_radius = 20.0
+gravity = Vector2(0, 0)
+radial_accel_min = 20.0
+radial_accel_max = 20.0
+radial_accel_curve = SubResource("Curve_rgyib")
+color_ramp = SubResource("Gradient_8t03j")
+
+[node name="FailTetherParticles" type="CPUParticles2D" parent="TetherParticles" unique_id=1861847069]
+unique_name_in_owner = true
+emitting = false
+amount = 20
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.9
+randomness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 128.0
+initial_velocity_max = 128.0
+damping_min = 64.0
+damping_max = 64.0
+damping_curve = SubResource("Curve_hg6s5")
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+color_ramp = SubResource("Gradient_2ieo8")
+
+[node name="TetherParticles" type="CPUParticles2D" parent="TetherParticles" unique_id=873029742]
+unique_name_in_owner = true
+emitting = false
+amount = 16
+one_shot = true
+explosiveness = 0.85
+spread = 16.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 64.0
+initial_velocity_max = 128.0
+color_ramp = SubResource("Gradient_ebec5")
+
 [connection signal="area_entered" from="TetherRange" to="." method="_on_tether_range_area_entered"]
 [connection signal="area_exited" from="TetherRange" to="." method="_on_tether_range_area_exited"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="finished" from="TetherParticles/ChargeParticles" to="." method="_on_charge_particles_finished"]
