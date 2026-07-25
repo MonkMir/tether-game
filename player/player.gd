@@ -132,6 +132,10 @@ func _physics_process(delta: float) -> void:
 		_on_direction_flipped(sign(velocity.x))
 		last_direction_x = velocity.x
 	
+	
+	# HOW TO KRILL MYSELF
+	
+	
 	if health <= 0:
 		self.queue_free()
 		GameState.is_game_over = true
