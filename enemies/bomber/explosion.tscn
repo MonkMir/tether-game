@@ -21,7 +21,7 @@ point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_4iwql"]
 offsets = PackedFloat32Array(0.060538117, 0.20852017, 0.46860987, 0.8789238, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.59607846, 0.22352941, 0.21960784, 0.62352943, 0.35686275, 0.18039216, 0.2784314, 0.5647059, 0.35686275, 0.18039216, 0.2784314, 0.5647059, 0.35686275, 0.18039216, 0.2784314, 0)
+colors = PackedColorArray(0.6745098, 0.5294118, 0.23529412, 1, 0.59607846, 0.22352941, 0.21960784, 0.62352943, 0.35686275, 0.18039216, 0.2784314, 0.5647059, 0.35686275, 0.18039216, 0.2784314, 0.5647059, 0.35686275, 0.18039216, 0.2784314, 0)
 
 [sub_resource type="Curve" id="Curve_mxe7t"]
 _limits = [-2.0, 2.0, 0.0, 1.0]
@@ -55,6 +55,7 @@ shape = SubResource("CircleShape2D_1h8a8")
 wait_time = 0.3
 
 [node name="LightFlash" type="PointLight2D" parent="." unique_id=2037442532]
+visible = false
 energy = 3.0
 texture = SubResource("GradientTexture2D_a2k0q")
 
@@ -74,7 +75,6 @@ damping_max = 85.348
 scale_amount_min = 24.0
 scale_amount_max = 32.0
 scale_amount_curve = SubResource("Curve_a2k0q")
-color = Color(0.6745098, 0.5294118, 0.23529412, 1)
 color_ramp = SubResource("Gradient_4iwql")
 
 [node name="EmberParticles" type="CPUParticles2D" parent="." unique_id=258785262]

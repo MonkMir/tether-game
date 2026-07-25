@@ -41,7 +41,7 @@ point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_64s2b"]
 offsets = PackedFloat32Array(0.060538117, 0.20852017, 0.46860987, 0.8789238, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.59607846, 0.22352941, 0.21960784, 0.62352943, 0.35686275, 0.18039216, 0.2784314, 0.5647059, 0.35686275, 0.18039216, 0.2784314, 0.5647059, 0.35686275, 0.18039216, 0.2784314, 0)
+colors = PackedColorArray(0.6745098, 0.5294118, 0.23529412, 1, 0.59607846, 0.22352941, 0.21960784, 0.62352943, 0.35686275, 0.18039216, 0.2784314, 0.5647059, 0.35686275, 0.18039216, 0.2784314, 0.5647059, 0.35686275, 0.18039216, 0.2784314, 0)
 
 [node name="BomberBombExplosion" type="Area2D" unique_id=675522281]
 collision_layer = 2
@@ -97,7 +97,6 @@ damping_max = 85.348
 scale_amount_min = 16.0
 scale_amount_max = 24.0
 scale_amount_curve = SubResource("Curve_octjr")
-color = Color(0.6745098, 0.5294118, 0.23529412, 1)
 color_ramp = SubResource("Gradient_64s2b")
 
 [connection signal="area_entered" from="." to="." method="_on_player_entered"]
