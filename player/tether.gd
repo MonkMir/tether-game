@@ -21,8 +21,11 @@ func _ready():
 
 
 func _physics_process(_delta):
-	if not tether_origin_node or not dummy:
+	if not dummy:
 		tether_origin_node.sever_tether_externally()
+		return
+	elif not tether_origin_node:
+		queue_free() # This is the only place to queue_free without tether_toggled
 		return
 	
 	line.clear_points()

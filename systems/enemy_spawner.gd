@@ -18,7 +18,7 @@ func spawn_enemy():
 	if is_disabled:
 		return
 	
-	if !player:
+	if not player:
 		return
 	
 	if get_tree().get_nodes_in_group("enemies").size() >= max_enemies:

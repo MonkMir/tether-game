@@ -1,10 +1,10 @@
 extends Node2D
 
 enum State {
-	Inactive,
-	Charging,
-	Charged,
-	Tethered,
+	IDLE,
+	CHARGING,
+	CHARGED,
+	TETHERED,
 }
 
 const BASE_SPEED : int = 800
@@ -26,15 +26,19 @@ const MAX_SPEED : int = 800
 @onready var sprite_reverse := %PlayerSpriteReverse
 @onready var thruster_glow := %ThrusterGlow
 @onready var thruster_glow_reverse := %ThrusterGlowReverse
+
 @onready var charge_particles := %ChargeParticles
+@onready var fail_particles := %FailParticles
+@onready var tether_particles := %TetherParticles
 
 # This is the single source of truth for the tether state
-var state := State.Inactive:
+var state := State.IDLE:
 	set(new_state):
 		state = new_state
-		if state == State.Tethered:
+		print(state)
+		if state == State.TETHERED:
 			SignalBus.tether_toggled.emit(true)
-		elif state == State.Inactive:
+		elif state == State.IDLE:
 			SignalBus.tether_toggled.emit(false)
 
 var new_dummy : Node2D = null
@@ -52,27 +56,46 @@ var last_direction_x: float = 0.0
 
 @onready var _default_damping_min: float = %ChargeParticles.damping_min
 @onready var _default_damping_max: float = %ChargeParticles.damping_max
-var _early_damping_: int = 150
+var _early_damping_value: int = 150
 
 
 
 func _ready():
 	health_bar._init_health(health)
-	
-	#SignalBus.tether_toggled.connect(func(boolean): if boolean == false: state = State.Inactive)
 
-# TODO tether particle system and charge states
-#func _unhandled_input(event: InputEvent) -> void:
-	#if event.is_action_pressed("Tether"):
-		#if not charge_particles.emitting and not state == State.Tethered:
-			#charge_particles.damping_min = _default_damping_min
-			#charge_particles.damping_max = _default_damping_max
-			#charge_particles.emitting = true
-	#
-	#elif event.is_action_released("Tether"):
-		#if charge_particles.emitting:
-			#charge_particles.emitting = false
-			#charge_particles.damping_min = _early_damping
+
+func _unhandled_input(event: InputEvent) -> void:
+	match state:
+		State.IDLE:
+			if event.is_action_pressed("Tether"):
+				_charge_tether()
+				state = State.CHARGING
+			if event.is_action_released("Tether"):
+				_exit_charge()
+
+		State.CHARGING:
+			if event.is_action_released("Tether"):
+				_exit_charge()
+				state = State.IDLE
+
+# CHARGED transition happens in _on_charge_particles_finished()
+		State.CHARGED:
+			if event.is_action_released("Tether"):
+				if enemies_in_range == 0:
+					fail_particles.restart()
+					state = State.IDLE
+				else:
+					_deploy_tether()
+					tether_particles.global_position = new_dummy.global_position
+					tether_particles.look_at(global_position)
+					tether_particles.restart()
+					state = State.TETHERED
+
+		State.TETHERED:
+			if event.is_action_pressed("Tether"):
+				_charge_tether()
+				state = State.IDLE
+
 
 func _physics_process(delta: float) -> void:
 	
@@ -106,32 +129,19 @@ func _physics_process(delta: float) -> void:
 		GameState.is_game_over = true
 
 
-# USER INPUTS
-func _input(event):
-	if event.is_action_pressed("Tether") and state == State.Tethered:
-		new_dummy = null
-		state = State.Inactive
-	elif (
-			event.is_action_pressed("Tether") 
-			and enemies_in_range > 0 
-	):
-		_get_target()
-	elif (
-			event.is_action_pressed("Tether") 
-			#and not is_tethered
-	):
-		pass
-
-
 # PLAYER HURT CALACULATION
+
+
 func receive_damage(damage):
 	health -= damage
 	health_bar.health = health
 	GameState.combo_counter /= 2
 
 
-# PLAYER'S END TETHERING SCRIPT
-func _get_target():
+# TARGET AND SPAWN TETHER
+
+
+func _deploy_tether():
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	var nearest_distance = INF
 	
@@ -143,7 +153,6 @@ func _get_target():
 	
 	if nearest_enemy != null:
 		targeted_enemy = nearest_enemy
-		# next step in enemy script (could we keep it in player with targetedEnemy.[data]??)
 		swap_and_tether(
 				targeted_enemy.position,
 				targeted_enemy.rotation,
@@ -177,7 +186,8 @@ func swap_and_tether(pos: Vector2, rot: float, enemy_health: float, enemy_name: 
 	new_tether.tether_origin_node = self
 	level.add_child(new_tether)
 	
-	state = State.Tethered
+	state = State.TETHERED
+
 
 func get_static_camera_rect() -> Rect2:
 	var camera_size = get_viewport_rect().size / camera.zoom
@@ -187,21 +197,39 @@ func get_static_camera_rect() -> Rect2:
 
 
 func sever_tether_externally():
-	state = State.Inactive
+	state = State.IDLE
 
-func _on_direction_flipped(dir_x: float) -> void:
-	if dir_x > 0:
+
+func _charge_tether():
+	charge_particles.damping_min = _default_damping_min
+	charge_particles.damping_max = _default_damping_max
+	charge_particles.restart()
+
+
+func _exit_charge():
+	charge_particles.emitting = false
+	charge_particles.damping_min = _early_damping_value
+
+
+# SPRITE ANIMATION
+ 
+
+func _on_direction_flipped(x_direction: float) -> void:
+	if x_direction > 0:
 		sprite.show()
 		sprite_reverse.hide()
 		
 		thruster_glow.show()
 		thruster_glow_reverse.hide()
-	elif dir_x < 0:
+	elif x_direction < 0:
 		sprite.hide()
 		sprite_reverse.show()
 		
 		thruster_glow.hide()
 		thruster_glow_reverse.show()
+
+
+# SIGNAL CALLBACKS
 
 
 func _on_tether_range_area_entered(_enemy_area):
@@ -213,4 +241,11 @@ func _on_tether_range_area_exited(_enemy_area):
 
 
 func _on_charge_particles_finished():
-	state = State.Charged
+	if charge_particles.damping_min == _early_damping_value:
+		return
+	
+	var flash_tween = create_tween()
+	$PlayerSprites.modulate = Color(10, 10, 10, 1)
+	flash_tween.tween_property($PlayerSprites, "modulate", Color.WHITE, 0.3)
+	
+	state = State.CHARGED

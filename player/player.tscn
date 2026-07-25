@@ -61,7 +61,7 @@ offsets = PackedFloat32Array(0, 0.5, 1)
 colors = PackedColorArray(0.8627451, 0.8627451, 0, 0.6313726, 0.35686275, 0.18039216, 0.2784314, 0.43137255, 0.35686275, 0.18039216, 0.2784314, 0)
 
 [sub_resource type="Gradient" id="Gradient_ebec5"]
-colors = PackedColorArray(1, 0.7490196, 0.16470589, 0.8352941, 1, 1, 0.67058825, 0)
+colors = PackedColorArray(1, 0.7490196, 0.16470589, 1, 1, 1, 0.67058825, 0)
 
 [node name="Player" type="CharacterBody2D" unique_id=994072363 groups=["player"]]
 script = ExtResource("1_boad6")
@@ -154,7 +154,7 @@ radial_accel_max = 20.0
 radial_accel_curve = SubResource("Curve_rgyib")
 color_ramp = SubResource("Gradient_8t03j")
 
-[node name="FailTetherParticles" type="CPUParticles2D" parent="TetherParticles" unique_id=1861847069]
+[node name="FailParticles" type="CPUParticles2D" parent="TetherParticles" unique_id=1861847069]
 unique_name_in_owner = true
 emitting = false
 amount = 20
@@ -176,13 +176,14 @@ color_ramp = SubResource("Gradient_2ieo8")
 [node name="TetherParticles" type="CPUParticles2D" parent="TetherParticles" unique_id=873029742]
 unique_name_in_owner = true
 emitting = false
-amount = 16
+amount = 10
+lifetime = 0.5
 one_shot = true
 explosiveness = 0.85
-spread = 16.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 64.0
-initial_velocity_max = 128.0
+spread = 60.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
 color_ramp = SubResource("Gradient_ebec5")
 
 [connection signal="area_entered" from="TetherRange" to="." method="_on_tether_range_area_entered"]
