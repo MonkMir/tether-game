@@ -32,12 +32,14 @@ const MAX_SPEED : int = 800
 
 var state := State.IDLE:
 	set(new_state):
-		state = new_state
-		print(state)
-		if state == State.TETHERED:
+		print(new_state)
+		if new_state == State.TETHERED:
 			SignalBus.tether_toggled.emit(true)
-		elif state == State.IDLE:
+		elif new_state == State.IDLE:
 			SignalBus.tether_toggled.emit(false)
+		elif state == State.TETHERED and new_state != State.TETHERED:
+			SignalBus.tether_toggled.emit(false)
+		state = new_state
 
 var velocity := Vector2.ZERO
 var new_dummy : Node2D = null
@@ -56,12 +58,17 @@ var last_direction_x: float = 0.0
 @onready var _default_damping_min: float = %ChargeParticles.damping_min
 @onready var _default_damping_max: float = %ChargeParticles.damping_max
 var _early_damping_value: int = 150
-
+var charge_timer: Timer = null
 
 
 
 func _ready():
 	health_bar._init_health(health)
+	
+	charge_timer = Timer.new()
+	charge_timer.one_shot = true
+	add_child(charge_timer)
+	charge_timer.timeout.connect(_on_charge_timer_timeout)
 
 func _unhandled_input(event: InputEvent) -> void:
 	match state:
@@ -88,7 +95,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		State.TETHERED:
 			if event.is_action_pressed("Tether"):
 				_charge_tether()
-				state = State.IDLE
+				state = State.CHARGING
 
 func _physics_process(delta: float) -> void:
 	
@@ -170,7 +177,6 @@ func swap_and_tether(pos: Vector2, rot: float, enemy_health: float, enemy_name: 
 	var new_tether = tether.instantiate()
 	new_tether.tether_origin_node = self
 	level.add_child(new_tether)
-	state = State.TETHERED
 
 func get_static_camera_rect() -> Rect2:
 	var camera_size = get_viewport_rect().size / camera.zoom
@@ -184,10 +190,12 @@ func _charge_tether():
 	charge_particles.damping_min = _default_damping_min
 	charge_particles.damping_max = _default_damping_max
 	charge_particles.restart()
+	charge_timer.start(charge_particles.lifetime)
 
 func _exit_charge():
 	charge_particles.emitting = false
 	charge_particles.damping_min = _early_damping_value
+	charge_timer.stop()
 
 # SPRITE ANIMATION
 func _on_direction_flipped(x_direction: float) -> void:
@@ -209,7 +217,8 @@ func _on_tether_range_area_entered(_enemy_area):
 func _on_tether_range_area_exited(_enemy_area):
 	enemies_in_range -= 1
 
-func _on_charge_particles_finished():
+
+func _on_charge_timer_timeout():
 	if state != State.CHARGING:
 		return
 		
