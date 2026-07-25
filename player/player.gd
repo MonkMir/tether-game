@@ -23,6 +23,9 @@ enum State {
 @export var _flame_max_intensity: float = 24.0
 @export var flame_fade_speed: float = 5.0
 
+@export_group("Flags")
+@export var is_invincible := false
+
 # CORE STATE ENGINE
 var state := State.IDLE:
 	set(new_state):
@@ -40,16 +43,18 @@ var state := State.IDLE:
 @onready var health_bar := $HealthBarCanvas/HealthBar
 @onready var camera := get_viewport().get_camera_2d()
 @onready var sprite := %PlayerSprite
+@onready var player_sprites = $PlayerSprites
 @onready var sprite_reverse := %PlayerSpriteReverse
 @onready var thruster_glow := %ThrusterGlow
 @onready var thruster_glow_reverse := %ThrusterGlowReverse
+@onready var i_frame_timer := %"I-FrameTimer"
+
 @onready var charge_particles := %ChargeParticles
 @onready var fail_particles := %FailParticles
 @onready var tether_particles := %TetherParticles
 
 # PLAYER AND MOVEMENT DATA
 var health: int = 100
-var damage_calc: int = 20
 var _velocity := Vector2.ZERO
 var _last_direction_x: float = 0.0
 
@@ -66,6 +71,7 @@ var new_dummy : Node2D = null
 @onready var _default_damping_max: float = %ChargeParticles.damping_max
 var _early_damping_value: int = 150
 var _charge_timer: Timer = null
+var _blink_tween: Tween = null
 
 
 func _ready():
@@ -134,15 +140,35 @@ func _physics_process(delta: float) -> void:
 		
 	# GAME OVER LOGIC
 	if health <= 0:
-		self.queue_free()
-		GameState.is_game_over = true
+		_im_gonna_kill_myself()
 
+
+# PLAYER DAMAGE MECHANICS
 
 func receive_damage(damage):
+	if is_invincible:
+		return
+	
+	is_invincible = true
+	i_frame_timer.start()
+	
 	health -= damage
 	health_bar.health = health
 	GameState.combo_counter /= 2
+	
+	_blink_tween = create_tween().set_loops()
+	_blink_tween.tween_property(player_sprites, "modulate:a", 0.2, 0.01)
+	_blink_tween.tween_interval(0.09)
+	_blink_tween.tween_property(player_sprites, "modulate:a", 1.0, 0.01)
+	_blink_tween.tween_interval(0.09)
 
+
+func _im_gonna_kill_myself():
+	self.queue_free()
+	GameState.is_game_over = true
+
+
+# TETHER MEHCANICS
 
 func _deploy_tether():
 	var enemies = get_tree().get_nodes_in_group("enemies")
@@ -160,6 +186,7 @@ func _deploy_tether():
 			_targeted_enemy.health,
 			_targeted_enemy.enemy_name,
 		)
+
 
 func swap_and_tether(
 		enemy_position: Vector2,
@@ -185,12 +212,6 @@ func swap_and_tether(
 	var new_tether = tether.instantiate()
 	new_tether.tether_origin_node = self
 	level.add_child(new_tether)
-
-
-func get_static_camera_rect() -> Rect2:
-	var camera_size = get_viewport_rect().size / camera.zoom
-	var camera_corner_top_left := Vector2(camera.global_position - (camera_size / 2))
-	return Rect2(camera_corner_top_left, camera_size)
 
 
 func sever_tether_externally():
@@ -224,11 +245,27 @@ func _on_direction_flipped(x_direction: float) -> void:
 		thruster_glow_reverse.show()
 
 
+# MISC
+func get_static_camera_rect() -> Rect2:
+	var camera_size = get_viewport_rect().size / camera.zoom
+	var camera_corner_top_left := Vector2(camera.global_position - (camera_size / 2))
+	return Rect2(camera_corner_top_left, camera_size)
+
+
 # SIGNAL CALLBACKS
 func _on_charge_timer_timeout():
 	if state != State.CHARGING:
 		return
 	var flash_tween = create_tween()
-	$PlayerSprites.modulate = Color(10, 10, 10, 1)
-	flash_tween.tween_property($PlayerSprites, "modulate", Color.WHITE, 0.3)
+	player_sprites.modulate = Color(10, 10, 10, 1)
+	flash_tween.tween_property(player_sprites, "modulate", Color.WHITE, 0.3)
 	state = State.CHARGED
+
+
+func _on_i_frame_timer_timeout():
+	is_invincible = false
+	
+	if _blink_tween and _blink_tween.is_valid():
+		_blink_tween.kill()
+		
+	player_sprites.modulate.a = 1.0

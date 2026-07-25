@@ -186,7 +186,13 @@ initial_velocity_min = 100.0
 initial_velocity_max = 100.0
 color_ramp = SubResource("Gradient_ebec5")
 
+[node name="I-FrameTimer" type="Timer" parent="." unique_id=1798002410]
+unique_name_in_owner = true
+wait_time = 1.5
+one_shot = true
+
 [connection signal="area_entered" from="TetherRangeArea" to="." method="_on_tether_range_area_entered"]
 [connection signal="area_exited" from="TetherRangeArea" to="." method="_on_tether_range_area_exited"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="finished" from="TetherParticles/ChargeParticles" to="." method="_on_charge_particles_finished"]
+[connection signal="timeout" from="I-FrameTimer" to="." method="_on_i_frame_timer_timeout"]
