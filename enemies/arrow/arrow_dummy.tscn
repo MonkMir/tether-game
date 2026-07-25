@@ -16,7 +16,7 @@ colors = PackedColorArray(1, 1, 1, 1, 0.9843137, 0.31764707, 0.44313726, 1)
 size = Vector2(14, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qlxjl"]
-size = Vector2(14, 3.6199195)
+size = Vector2(16.074274, 6.310298)
 
 [node name="ArrowDummy" type="RigidBody2D" unique_id=615306433 groups=["dummies"]]
 collision_layer = 4
@@ -49,11 +49,11 @@ shape = SubResource("RectangleShape2D_gwnxe")
 debug_color = Color(0.392157, 0.392157, 0.980392, 0.419608)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1574035858]
+position = Vector2(0.5, 0)
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=239790728]
-scale = Vector2(1.1, 1.4)
 shape = SubResource("RectangleShape2D_qlxjl")
 
 [node name="HealthBar" parent="." unique_id=993042800 instance=ExtResource("3_lf3dv")]
