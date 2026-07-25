@@ -70,13 +70,13 @@ bomber_dummy_scene = ExtResource("3_hg6s5")
 parabolic_dummy_scene = ExtResource("4_8t03j")
 tether = ExtResource("5_2ieo8")
 
-[node name="TetherRange" type="Area2D" parent="." unique_id=1682285353]
+[node name="TetherRangeArea" type="Area2D" parent="." unique_id=1682285353]
 visible = false
 position = Vector2(1, 0)
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TetherRange" unique_id=956201445]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TetherRangeArea" unique_id=956201445]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_2ck4e")
 debug_color = Color(1, 1, 0, 0.08235294)
@@ -186,7 +186,7 @@ initial_velocity_min = 100.0
 initial_velocity_max = 100.0
 color_ramp = SubResource("Gradient_ebec5")
 
-[connection signal="area_entered" from="TetherRange" to="." method="_on_tether_range_area_entered"]
-[connection signal="area_exited" from="TetherRange" to="." method="_on_tether_range_area_exited"]
+[connection signal="area_entered" from="TetherRangeArea" to="." method="_on_tether_range_area_entered"]
+[connection signal="area_exited" from="TetherRangeArea" to="." method="_on_tether_range_area_exited"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="finished" from="TetherParticles/ChargeParticles" to="." method="_on_charge_particles_finished"]
