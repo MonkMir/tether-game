@@ -6,6 +6,7 @@ extends MarginContainer
 
 @onready var scores_vbox: BoxContainer = %ScoresBox
 @onready var score_template: Label = %ScoreTemplate
+@onready var input_guard_timer := $InputGuardTimer
 
 @onready var header: Label = $MainVBox/Header
 
@@ -14,7 +15,11 @@ func _process(_delta):
 		self.visible = true 
 		GameState.is_pausable = false
 	
-	if Input.is_action_just_pressed("ui_accept") and GameState.is_game_over:
+	if (
+			Input.is_action_just_pressed("ui_accept")
+			and GameState.is_game_over
+			and input_guard_timer.time_left == 0.0
+		):
 		get_tree().reload_current_scene()
 		# Make sure to update is_pausable if it reloads the level
 		GameState.game_over_reset()
@@ -34,6 +39,7 @@ func _initialize_header() -> void:
 
 func initialize_game_over_screen() -> void:
 	_initialize_header()
+	input_guard_timer.start()
 	
 	for child in scores_vbox.get_children():
 		if child != score_template:
@@ -43,7 +49,7 @@ func initialize_game_over_screen() -> void:
 		var index_score: int = GameState.leaderboard[index]
 		
 		var new_display: Label = score_template.duplicate()
-		new_display.text = str(index + 1) + ".   " + str(index_score)
+		new_display.text = "#" + str(index + 1) + "   " + str(index_score)
 		new_display.visible = true
 		scores_vbox.add_child(new_display)
 		

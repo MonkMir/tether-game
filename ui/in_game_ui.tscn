@@ -5,93 +5,14 @@
 [ext_resource type="Script" uid="uid://cf2kds67t7h0b" path="res://ui/pause_menu.gd" id="1_kplmn"]
 [ext_resource type="Texture2D" uid="uid://do58e0257b0fx" path="res://levels/level1_background_tg.png" id="1_mp7fp"]
 [ext_resource type="Script" uid="uid://6o4txy54pcjf" path="res://ui/main_menu.gd" id="2_a45jx"]
+[ext_resource type="Theme" uid="uid://yr7ou155sk5m" path="res://ui/default_button.tres" id="5_6rrfl"]
 [ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://ui/game_over_screen.gd" id="6_lu04y"]
 [ext_resource type="Theme" uid="uid://dhm80kv80ja5w" path="res://components/plain_label.tres" id="7_2dwke"]
+[ext_resource type="Texture2D" uid="uid://cd8g6waq1ng2" path="res://ui/ui_sprite_sheet_tg.png" id="9_smnxo"]
 
 [sub_resource type="Theme" id="Theme_lu04y"]
 default_font = ExtResource("1_iakjd")
 default_font_size = 12
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qinws"]
-bg_color = Color(0.13439998, 0.40512, 0.48, 1)
-skew = Vector2(0.28, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 3
-corner_radius_bottom_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fqvwy"]
-bg_color = Color(0.737, 0.749, 0.388, 1)
-skew = Vector2(0.28, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 3
-corner_radius_bottom_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ria60"]
-bg_color = Color(0.73800004, 0.75, 0.39, 1)
-skew = Vector2(0.28, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 3
-corner_radius_bottom_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6qwj3"]
-content_margin_left = 8.0
-content_margin_right = 8.0
-bg_color = Color(0.7372549, 0.7490196, 0.3882353, 1)
-skew = Vector2(0.28, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 3
-corner_radius_bottom_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kplmn"]
-bg_color = Color(0.13333334, 0.40392157, 0.47843137, 1)
-skew = Vector2(0.28, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 3
-corner_radius_bottom_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a45jx"]
-bg_color = Color(0.7372549, 0.7490196, 0.3882353, 1)
-skew = Vector2(0.28, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 3
-corner_radius_bottom_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fnge6"]
-bg_color = Color(0.7372549, 0.7490196, 0.3882353, 1)
-skew = Vector2(0.28, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 3
-corner_radius_bottom_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_276nr"]
-bg_color = Color(0.7372549, 0.7490196, 0.3882353, 1)
-skew = Vector2(0.28, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 3
-corner_radius_bottom_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_04xgm"]
-bg_color = Color(0.7372549, 0.7490196, 0.3882353, 1)
-skew = Vector2(0.28, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 3
-corner_radius_bottom_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_huati"]
-bg_color = Color(0.13333334, 0.40392157, 0.47843137, 1)
-skew = Vector2(0.28, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 3
-corner_radius_bottom_right = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jlb72"]
-content_margin_left = 8.0
-content_margin_right = 8.0
-bg_color = Color(0.13333334, 0.40392157, 0.47843137, 1)
-skew = Vector2(0.28, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 3
-corner_radius_bottom_right = 5
 
 [node name="InGameUI" type="CanvasLayer" unique_id=1644306105]
 
@@ -156,26 +77,17 @@ size_flags_vertical = 4
 [node name="ResumeButton" type="Button" parent="MenuManager/PauseMenu/VBoxContainer" unique_id=375980014]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_qinws")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
-theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+theme = ExtResource("5_6rrfl")
 text = "RESUME"
 
 [node name="RestartButton" type="Button" parent="MenuManager/PauseMenu/VBoxContainer" unique_id=258593913]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_kplmn")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_a45jx")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fnge6")
-theme_override_styles/focus = SubResource("StyleBoxFlat_276nr")
+theme = ExtResource("5_6rrfl")
 text = "RESTART"
 
 [node name="QuitButton" type="Button" parent="MenuManager/PauseMenu/VBoxContainer" unique_id=729818849]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_kplmn")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_a45jx")
-theme_override_styles/hover = SubResource("StyleBoxFlat_fnge6")
-theme_override_styles/focus = SubResource("StyleBoxFlat_04xgm")
+theme = ExtResource("5_6rrfl")
 text = "QUIT"
 
 [node name="MainMenu" type="MarginContainer" parent="MenuManager" unique_id=13769595 node_paths=PackedStringArray("default_focus_object")]
@@ -216,43 +128,37 @@ custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_constants/separation = 11
 alignment = 2
 
 [node name="PlayButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer" unique_id=942504903]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_huati")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
-theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+theme = ExtResource("5_6rrfl")
+theme_override_font_sizes/font_size = 12
 text = "PLAY"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MenuManager/MainMenu/VBoxContainer" unique_id=648869905]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/separation = 8
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="SettingsButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer/HBoxContainer" unique_id=2055075532]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_jlb72")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
-theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+theme = ExtResource("5_6rrfl")
+theme_override_font_sizes/font_size = 12
 text = "SETTINGS"
 
 [node name="QuitButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer/HBoxContainer" unique_id=1645163010]
 layout_mode = 2
 focus_neighbor_left = NodePath("../SettingsButton")
-theme_override_styles/normal = SubResource("StyleBoxFlat_jlb72")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_fqvwy")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ria60")
-theme_override_styles/focus = SubResource("StyleBoxFlat_6qwj3")
+theme = ExtResource("5_6rrfl")
+theme_override_font_sizes/font_size = 12
 text = "QUIT"
 
 [node name="GameOverScreen" type="MarginContainer" parent="MenuManager" unique_id=704737577]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -264,33 +170,31 @@ script = ExtResource("6_lu04y")
 [node name="MainVBox" type="VBoxContainer" parent="MenuManager/GameOverScreen" unique_id=727522974]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/separation = 8
-
-[node name="Header" type="Label" parent="MenuManager/GameOverScreen/MainVBox" unique_id=2056501418]
-layout_mode = 2
-size_flags_horizontal = 4
-theme = ExtResource("7_2dwke")
-theme_override_font_sizes/font_size = 7
-text = "Your text here :O"
+size_flags_vertical = 8
+theme_override_constants/separation = 11
 
 [node name="PanelContainer" type="MarginContainer" parent="MenuManager/GameOverScreen/MainVBox" unique_id=1494128120]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Texture" type="ColorRect" parent="MenuManager/GameOverScreen/MainVBox/PanelContainer" unique_id=1763792595]
+[node name="Texture" type="NinePatchRect" parent="MenuManager/GameOverScreen/MainVBox/PanelContainer" unique_id=934750718]
 layout_mode = 2
-color = Color(0.40392157, 0.59607846, 0.6666667, 1)
+texture = ExtResource("9_smnxo")
+region_rect = Rect2(5, 33, 20, 20)
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
 
 [node name="Leaderboard" type="MarginContainer" parent="MenuManager/GameOverScreen/MainVBox/PanelContainer" unique_id=249462209]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/margin_left = 7
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_right = 7
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 11
+theme_override_constants/margin_bottom = 7
 
 [node name="ScoresBox" type="VBoxContainer" parent="MenuManager/GameOverScreen/MainVBox/PanelContainer/Leaderboard" unique_id=1811271269]
 unique_name_in_owner = true
@@ -303,6 +207,20 @@ visible = false
 layout_mode = 2
 theme = ExtResource("7_2dwke")
 theme_override_font_sizes/font_size = 10
+
+[node name="Header" type="Label" parent="MenuManager/GameOverScreen/MainVBox" unique_id=2056501418]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("7_2dwke")
+theme_override_font_sizes/font_size = 7
+text = "Your text here :O"
+
+[node name="Spacer" type="Control" parent="MenuManager/GameOverScreen/MainVBox" unique_id=545415025]
+layout_mode = 2
+
+[node name="InputGuardTimer" type="Timer" parent="MenuManager/GameOverScreen" unique_id=833903203]
+wait_time = 1.25
+one_shot = true
 
 [connection signal="timeout" from="MenuManager/DelayUntilRepeat" to="MenuManager" method="_on_delay_until_repeat_timeout"]
 [connection signal="timeout" from="MenuManager/RepeatInterval" to="MenuManager" method="_on_repeat_interval_timeout"]
