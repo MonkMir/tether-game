@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://ui/game_over_screen.gd" id="6_lu04y"]
 [ext_resource type="Theme" uid="uid://dhm80kv80ja5w" path="res://components/plain_label.tres" id="7_2dwke"]
 [ext_resource type="Texture2D" uid="uid://cd8g6waq1ng2" path="res://ui/ui_sprite_sheet_tg.png" id="9_smnxo"]
+[ext_resource type="AudioStream" uid="uid://cqoe643ngmx0q" path="res://assets/title_screen_ost.ogg" id="10_oqbvt"]
 
 [sub_resource type="Theme" id="Theme_lu04y"]
 default_font = ExtResource("1_iakjd")
@@ -100,6 +101,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_a45jx")
 default_focus_object = NodePath("VBoxContainer/PlayButton")
+
+[node name="BGM" type="AudioStreamPlayer" parent="MenuManager/MainMenu" unique_id=1274614436]
+stream = ExtResource("10_oqbvt")
+autoplay = true
 
 [node name="TextContainer" type="VBoxContainer" parent="MenuManager/MainMenu" unique_id=391319121]
 custom_minimum_size = Vector2(0, 100)

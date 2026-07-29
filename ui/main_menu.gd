@@ -7,6 +7,7 @@ extends MarginContainer
 
 func _on_play_button_pressed():
 	_manager.start_game()
+	$BGM.stop()
 
 
 func _on_settings_button_pressed():
