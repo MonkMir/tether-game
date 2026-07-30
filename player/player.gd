@@ -146,7 +146,7 @@ func _physics_process(delta: float) -> void:
 # PLAYER DAMAGE MECHANICS
 
 func receive_damage(damage):
-	if is_invincible:
+	if is_invincible or damage == 0:
 		return
 	
 	is_invincible = true
