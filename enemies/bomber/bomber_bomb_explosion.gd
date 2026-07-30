@@ -23,6 +23,8 @@ func _on_timer_timeout():
 func _on_player_entered(hurtbox):
 	if hurtbox.is_in_group("player"):
 		_player.receive_damage(ATTACK_POWER)
+	
+	SignalBus.player_hit.emit(_player.global_position, position)
 
 
 func _on_smoke_particles_finished():

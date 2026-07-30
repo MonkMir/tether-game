@@ -21,3 +21,5 @@ func _process(delta: float):
 func _on_player_entered(hurtbox):
 	if hurtbox.is_in_group("player"):
 		player.receive_damage(ATTACK_POWER)
+	
+	SignalBus.player_hit.emit(player.global_position, position)
