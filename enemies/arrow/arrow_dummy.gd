@@ -5,9 +5,9 @@ enum State {
 	WRECKING_BALL,
 	SPECIAL
 }
-
-
-@onready var _thruster_particles = %ThrusterParticles
+#const DEFAULT_SPEED_LIMIT : int = 2000 #1200
+#const MAX_SPEED_LIMIT : int = 2000
+#const MIN_SPEED_LIMIT : int = 1000
 
 var state := State.WRECKING_BALL:
 	set(new_state):
@@ -15,13 +15,15 @@ var state := State.WRECKING_BALL:
 		if state == State.SPECIAL:
 			_thruster_particles.show()
 			_set_target()
-#const DEFAULT_SPEED_LIMIT : int = 2000 #1200
-#const MAX_SPEED_LIMIT : int = 2000
-#const MIN_SPEED_LIMIT : int = 1000
-var launch_speed : float = 1000 # minimum speed to oneshot
+
+var launch_speed : float = 1000
+
+@onready var _thruster_particles = %ThrusterParticles
+
 
 func _ready():
 	super()
+	enemy_name = "arrow"
 	_thruster_particles.hide()
 
 
@@ -38,8 +40,6 @@ func _physics_process(delta: float):
 		State.SPECIAL:
 			attack_power = 75
 			rotation = linear_velocity.angle()
-
-
 
 
 func _set_target() -> void:

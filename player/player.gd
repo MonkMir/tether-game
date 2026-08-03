@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 enum State {
 	IDLE,
@@ -32,10 +32,9 @@ var state := State.IDLE:
 		#print(new_state)
 		if new_state == State.TETHERED:
 			SignalBus.tether_toggled.emit(true)
-		elif new_state == State.IDLE:
-			SignalBus.tether_toggled.emit(false)
 		elif state == State.TETHERED and new_state != State.TETHERED:
 			SignalBus.tether_toggled.emit(false)
+		#print("tether state: " + str(new_state))
 		state = new_state
 
 # NODE REFERENCES
@@ -48,7 +47,6 @@ var state := State.IDLE:
 @onready var thruster_glow := %ThrusterGlow
 @onready var thruster_glow_reverse := %ThrusterGlowReverse
 @onready var i_frame_timer := %"I-FrameTimer"
-
 @onready var charge_particles := %ChargeParticles
 @onready var fail_particles := %FailParticles
 @onready var tether_particles := %TetherParticles
@@ -58,20 +56,19 @@ var health: int = 100
 var _velocity := Vector2.ZERO
 var _last_direction_x: float = 0.0
 
-# COMBAT AND TARGETING DATA
+var new_dummy : Node2D = null
 var _enemies_in_range: int = 0
 var _targeted_enemy : Node2D = null
 var _nearest_enemy : Node2D = null
 
-# SPAWNING AND TETHER DUMMY DATA
-var new_dummy : Node2D = null
-
 # PARTICLE AND SYSTEM DATA
-@onready var _default_damping_min: float = %ChargeParticles.damping_min
-@onready var _default_damping_max: float = %ChargeParticles.damping_max
+
 var _early_damping_value: int = 150
 var _charge_timer: Timer = null
 var _blink_tween: Tween = null
+
+@onready var _default_damping_min: float = %ChargeParticles.damping_min
+@onready var _default_damping_max: float = %ChargeParticles.damping_max
 
 
 func _ready():
@@ -81,7 +78,6 @@ func _ready():
 	add_child(_charge_timer)
 	_charge_timer.timeout.connect(_on_charge_timer_timeout)
 	
-	# COMPACT SIGNAL LAMBDAS
 	$TetherRangeArea.area_entered.connect(func(_area): _enemies_in_range += 1)
 	$TetherRangeArea.area_exited.connect(func(_area): _enemies_in_range -= 1)
 

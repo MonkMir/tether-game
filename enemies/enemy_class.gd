@@ -4,10 +4,11 @@ class_name Enemy
 
 @export var speed : float
 
+# a constant?
 var enemy_name : String
 var health : int = 100
 var attack_power : int = 0
-var score_reward : int = 1
+var attacker
 
 @onready var player : Node
 @onready var health_bar := $HealthBar
@@ -27,7 +28,7 @@ func _ready():
 
 
 func _process(_delta):
-	if !player and get_despawn_rect().has_point(global_position) == false:
+	if not player and get_despawn_rect().has_point(global_position) == false:
 		queue_free()
 	
 	if not health_bar:
@@ -60,13 +61,13 @@ func get_despawn_rect() -> Rect2:
 	return get_static_camera_rect().grow(100)
 
 
-func receive_damage(damage):
+func receive_damage(damage: int):
 	if not health_bar:
 		return
 	health -= damage
-	health_bar.health = health # hey you gotta fix this fr. freed health access error
+	health_bar.health = health
 
 
 func die():
-	GameState.score += score_reward
+	SignalBus.enemy_died.emit(self.get_instance_id())
 	queue_free()

@@ -1,7 +1,9 @@
 extends Projectile
 
+
 const ATTACK_POWER : int = 50
-#const PLAYER_DAMAGE : int = 20 # make sure this isn't needed before delete
+
+
 @onready var _timer := $Timer
 @onready var _hitbox = $Hitbox
 @onready var _smoke_particles := $SmokeParticles
@@ -15,13 +17,25 @@ func _ready():
 
 
 func _on_area_entered(_area):
+#if is_queued_for_deletion(): # see if this is a real issue before enabling
+		#return
+	
 	if _area.is_in_group("enemies"):
+		
+		var victim_id : int = _area.get_instance_id()
+		GameState.hit_transaction_registry[victim_id] = {
+		"attacker_type" : "bomber",
+		"is_tethered" : false,
+		"victim_position" : _area.global_position,
+		}
+		
 		_area.receive_damage(ATTACK_POWER)
+		SignalBus.enemy_hit.emit(self.global_position, _area.global_position)
 
 
 func _on_timer_timeout():
 	$LightFlash.hide()
-	_hitbox.disabled = true
+	_hitbox.set_deferred("disabled", true)
 
 
 func _on_smoke_particles_finished():

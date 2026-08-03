@@ -8,14 +8,6 @@ enum State {
 }
 
 
-
-
-
-@onready var _hitbox_default := $Area2D/HitboxDefault
-@onready var _hitbox_excited := $Area2D/HitboxExcited
-@onready var _excited_particles := $ExcitedParticles
-@onready var _multihit_timer := $MultihitTimer
-
 @export var rebound_force: int = 320
 
 var state := State.PASSIVE:
@@ -30,9 +22,15 @@ var _rebound_direction: Vector2
 var _rotation_speed: int = 20
 var _is_arc_crested := false
 
+@onready var _hitbox_default := $Area2D/HitboxDefault
+@onready var _hitbox_excited := $Area2D/HitboxExcited
+@onready var _excited_particles := $ExcitedParticles
+#@onready var _multihit_timer := $MultihitTimer
+
+
 func _ready():
 	super()
-	attack_power = 75
+	enemy_name = "parabolic"
 
 
 func _physics_process(delta: float):
@@ -43,7 +41,7 @@ func _physics_process(delta: float):
 			if current_speed > speed_limit:
 				linear_velocity = linear_velocity.normalized() * speed_limit
 			try_special_transition()
-			
+
 		State.SPECIAL:
 			apply_central_force(rebound_force * _rebound_direction)
 			angular_velocity = _rotation_speed
@@ -51,6 +49,7 @@ func _physics_process(delta: float):
 			if not _is_arc_crested and linear_velocity.dot(_rebound_direction) > 0:
 				_is_arc_crested = true
 				state = State.EXCITED
+
 		State.EXCITED:
 			apply_central_force(rebound_force * _rebound_direction)
 			angular_velocity = _rotation_speed
@@ -73,6 +72,7 @@ func _enter_excited_state():
 	_hitbox_excited.disabled = false
 	_excited_particles.emitting = true
 
+
 # uncomment to turn on multihit code
 #func _on_area_entered(entered_area):
 	#super(entered_area)
@@ -80,6 +80,7 @@ func _enter_excited_state():
 	#if state == State.EXCITED and entered_area.is_in_group("enemies"):
 		#_hitbox_excited.set_deferred("disabled", true)
 		#_multihit_timer.start()
+
 
 func _on_multihit_timer_timeout():
 	_hitbox_excited.disabled = false

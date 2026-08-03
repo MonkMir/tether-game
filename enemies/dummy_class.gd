@@ -1,6 +1,9 @@
 extends RigidBody2D
 class_name Dummy
 
+# this should be constant?
+var enemy_name: String
+var dummy_id: int = self.get_instance_id()
 
 var is_wrecking_ball := true:
 	set(new_bool):
@@ -8,9 +11,6 @@ var is_wrecking_ball := true:
 			_is_invincible_mode = true
 			health_bar.hide()
 			is_wrecking_ball = new_bool
-			
-var _is_invincible_mode := false
-
 
 var attack_power : float
 var health : float = 100
@@ -18,8 +18,9 @@ var speed_limit : int = 435
 var current_speed : float
 var time_out_of_bounds_seconds : float = 0.0
 var max_offscreen_time_seconds := 5.0
+var _is_invincible_mode := false
 
-@onready var player : Node
+@onready var player : Node2D
 @onready var area := $Area2D
 @onready var camera := get_viewport().get_camera_2d()
 @onready var health_bar := $HealthBar
@@ -29,6 +30,7 @@ var max_offscreen_time_seconds := 5.0
 func _ready():
 	player = get_player()
 	area.area_entered.connect(_on_area_entered)
+	
 	health_indicator_bar.size = Vector2(150, 25)
 	# replace position.y value with a less magical number. sprite.get_rect().size.y + headroom
 	health_indicator_bar.position = Vector2(-health_indicator_bar.size.x / 2, -128)
@@ -44,7 +46,6 @@ func _physics_process(delta: float):
 		die()
 		return
 	
-	
 	# WARNING this might be a vestige from prior testing. test it
 	current_speed = linear_velocity.length()
 	
@@ -55,7 +56,6 @@ func _physics_process(delta: float):
 		var speed_to_damage_divisor : int = 15
 		attack_power = linear_velocity.length() / speed_to_damage_divisor
 	
-	
 	if get_despawn_rect().has_point(global_position):
 		time_out_of_bounds_seconds = 0.0
 	else:
@@ -65,6 +65,7 @@ func _physics_process(delta: float):
 		if not player or self != player.new_dummy:
 			queue_free()
 
+
 # This check allows the dummy to ragdoll if player dies
 func try_special_transition() -> void:
 	if player:
@@ -72,12 +73,23 @@ func try_special_transition() -> void:
 			self.state = self.State.SPECIAL
 
 
-func _on_area_entered(entered_area):
-	if entered_area.is_in_group("enemies"):
-		entered_area.receive_damage(attack_power)
-		SignalBus.enemy_hit.emit(global_position, entered_area.global_position)
+func _on_area_entered(_area: Area2D):
+	#if is_queued_for_deletion(): # see if this is a real issue before enabling
+		#return #ALSO check explosion.gd for this block
 	
-	var max_self_damage: float = 16
+	if _area.is_in_group("enemies"):
+		
+		var victim_id : int = _area.get_instance_id()
+		GameState.hit_transaction_registry[victim_id] = {
+		"attacker_type" : enemy_name,
+		"is_tethered" : is_wrecking_ball,
+		"victim_position" : _area.global_position,
+		}
+		
+		_area.receive_damage(attack_power)
+		SignalBus.enemy_hit.emit(self.global_position, _area.global_position)
+	
+	var max_self_damage: float = 16.0
 	var self_damage: float
 	var to_max_speed_ratio : float = inverse_lerp(0, speed_limit, linear_velocity.length())
 	
@@ -109,7 +121,10 @@ func get_despawn_rect() -> Rect2:
 
 
 func die():
-	queue_free()
+	# to give score calculation time to ingest data
+	self.hide()
+	call_deferred("queue_free") 
+
 
 func _on_tether_toggled(_state: bool):
 	if _state == true:

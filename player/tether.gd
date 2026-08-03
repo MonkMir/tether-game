@@ -1,7 +1,7 @@
 extends Node2D
 
 
-@export var max_length : int = 10 #180 max if we use dynamic stretching
+@export var max_length : int = 10
 @export var spring_stiffness : float = 1.125
 @export var friction_damping := 5.0
 
@@ -17,7 +17,10 @@ func _ready():
 	if tether_origin_node.new_dummy != null:
 		dummy = tether_origin_node.new_dummy
 	
-	SignalBus.tether_toggled.connect(func(boolean): if boolean == false: queue_free())
+	SignalBus.tether_toggled.connect(func(boolean):
+		if boolean == false:
+			queue_free()
+	)
 
 
 func _physics_process(_delta):

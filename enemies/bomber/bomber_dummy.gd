@@ -6,16 +6,19 @@ enum State {
 	SPECIAL
 }
 
+
 @export var explosion_scene : PackedScene
+
+var state := State.PASSIVE
 
 @onready var self_destruct_timer := $Timer
 @onready var _trigger_zone := $Trigger/TriggerZone
 
 
-var state := State.PASSIVE
-
 func _ready():
+	enemy_name = "bomber"
 	super()
+
 
 func _physics_process(delta: float):
 	super(delta)
