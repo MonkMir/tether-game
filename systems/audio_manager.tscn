@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://ckqsp5evdsth8"]
+
+[ext_resource type="Script" uid="uid://bb00jtgtsbf35" path="res://systems/audio_manager.gd" id="1_jisk1"]
+
+[node name="AudioManager" type="Node" unique_id=1426971206]
+script = ExtResource("1_jisk1")
+
+[node name="SFXPool" type="Node" parent="." unique_id=367651731]
+
+[node name="SFXPlayer1" type="AudioStreamPlayer" parent="SFXPool" unique_id=608599776]
+
+[node name="SFXPlayer2" type="AudioStreamPlayer" parent="SFXPool" unique_id=551786607]
+
+[node name="SFXPlayer3" type="AudioStreamPlayer" parent="SFXPool" unique_id=511621745]
+
+[node name="SFXPlayer4" type="AudioStreamPlayer" parent="SFXPool" unique_id=1533748456]
+
+[node name="SFXPlayer5" type="AudioStreamPlayer" parent="SFXPool" unique_id=525693808]
+
+[node name="SFXPlayer6" type="AudioStreamPlayer" parent="SFXPool" unique_id=1714097142]
+
+[node name="SFXPlayer7" type="AudioStreamPlayer" parent="SFXPool" unique_id=711769019]
+
+[node name="SFXPlayer8" type="AudioStreamPlayer" parent="SFXPool" unique_id=1203784653]
+
+[node name="SFXPlayer9" type="AudioStreamPlayer" parent="SFXPool" unique_id=2103390729]
+
+[node name="SFXPlayer10" type="AudioStreamPlayer" parent="SFXPool" unique_id=1987059008]
+
+[node name="SFXPlayer11" type="AudioStreamPlayer" parent="SFXPool" unique_id=478227110]
+
+[node name="SFXPlayer12" type="AudioStreamPlayer" parent="SFXPool" unique_id=179008795]
+
+[node name="SFXPlayer13" type="AudioStreamPlayer" parent="SFXPool" unique_id=2126160753]
+
+[node name="SFXPlayer14" type="AudioStreamPlayer" parent="SFXPool" unique_id=2044792220]
+
+[node name="SFXPlayer15" type="AudioStreamPlayer" parent="SFXPool" unique_id=1160374456]
+
+[node name="SFXPlayer16" type="AudioStreamPlayer" parent="SFXPool" unique_id=889727104]
+
+[node name="SFXPlayer17" type="AudioStreamPlayer" parent="SFXPool" unique_id=642268525]
+
+[node name="SFXPlayer18" type="AudioStreamPlayer" parent="SFXPool" unique_id=481178935]
+
+[node name="SFXPlayer19" type="AudioStreamPlayer" parent="SFXPool" unique_id=952877663]
+
+[node name="SFXPlayer20" type="AudioStreamPlayer" parent="SFXPool" unique_id=605200634]

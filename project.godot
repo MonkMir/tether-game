@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 GameState="*res://systems/game_state.gd"
 SignalBus="*uid://cvvaqhqy03ib8"
 SaveManager="*uid://bf5k714cng8y0"
+AudioManager="*uid://ckqsp5evdsth8"
 
 [debug]
 
