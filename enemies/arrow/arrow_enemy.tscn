@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://wfswoapio6a6" path="res://enemies/arrow/arrow_enemy.gd" id="1_up35x"]
 [ext_resource type="Texture2D" uid="uid://cu4oa6v8nscgi" path="res://enemies/arrow/arrow_enemy_sprite_tg.png" id="2_ankb1"]
+[ext_resource type="AudioStream" uid="uid://c5vs6jt8wepyn" path="res://assets/sound_effects/arrow_fly_hum.wav" id="2_e0mdi"]
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="3_ai1vl"]
+[ext_resource type="AudioStream" uid="uid://21taxqykrmhq" path="res://assets/sound_effects/disengage_machine.wav" id="3_e0mdi"]
 
 [sub_resource type="Curve" id="Curve_sn3xj"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -15,6 +17,8 @@ size = Vector2(13.754074, 2.999834)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_up35x")
+thruster_sfx = ExtResource("2_e0mdi")
+disengage_machine = ExtResource("3_e0mdi")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1576356666]
 modulate = Color(0.98, 0.98, 0.98, 1)

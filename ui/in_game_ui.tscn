@@ -5,6 +5,9 @@
 [ext_resource type="Script" uid="uid://cf2kds67t7h0b" path="res://ui/pause_menu.gd" id="1_kplmn"]
 [ext_resource type="Texture2D" uid="uid://do58e0257b0fx" path="res://levels/level1_background_tg.png" id="1_mp7fp"]
 [ext_resource type="Script" uid="uid://6o4txy54pcjf" path="res://ui/main_menu.gd" id="2_a45jx"]
+[ext_resource type="AudioStream" uid="uid://osi0lq4wtcxj" path="res://assets/sound_effects/menu_nav.wav" id="3_bgedx"]
+[ext_resource type="AudioStream" uid="uid://n00pnkeblpf6" path="res://assets/sound_effects/menu_select.wav" id="3_ro737"]
+[ext_resource type="AudioStream" uid="uid://5lyxj4p1j1t1" path="res://assets/sound_effects/menu_close.wav" id="4_oqbvt"]
 [ext_resource type="Theme" uid="uid://yr7ou155sk5m" path="res://ui/default_button.tres" id="5_6rrfl"]
 [ext_resource type="Script" uid="uid://dyg3c4hhurma1" path="res://ui/game_over_screen.gd" id="6_lu04y"]
 [ext_resource type="Theme" uid="uid://dhm80kv80ja5w" path="res://components/plain_label.tres" id="7_2dwke"]
@@ -28,6 +31,9 @@ grow_vertical = 2
 theme = SubResource("Theme_lu04y")
 script = ExtResource("1_fqvwy")
 onready_menu = NodePath("MainMenu")
+open_sfx = ExtResource("3_ro737")
+close_sfx = ExtResource("4_oqbvt")
+navigate_sfx = ExtResource("3_bgedx")
 
 [node name="TitleScreen" type="Sprite2D" parent="MenuManager" unique_id=830007877]
 unique_name_in_owner = true

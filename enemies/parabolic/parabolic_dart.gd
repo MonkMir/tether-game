@@ -3,6 +3,9 @@ extends Projectile
 
 const ATTACK_POWER := 10
 
+
+@export var purple_shot : AudioStream
+
 var _speed := 1.5
 var _direction : Vector2
 
@@ -10,6 +13,7 @@ var _direction : Vector2
 func _ready():
 	if player:
 		_direction = global_position.direction_to(player.global_position)
+		AudioManager.play_sound(purple_shot, -5.0)
 
 
 func _process(delta: float):

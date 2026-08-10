@@ -17,6 +17,10 @@ const KEYBOARD_AND_JOYPAD_EVENTS : Array[String] = [
 
 @export var onready_menu : Control
 
+@export var open_sfx : AudioStream
+@export var close_sfx : AudioStream
+@export var navigate_sfx : AudioStream
+
 var default_focus : Control
 var mouse_reset_data ## Dynamic to accept Nodes and Vector2
 
@@ -106,6 +110,9 @@ func _input(event: InputEvent):
 
 
 func open_menu(new_menu: Node) -> void:
+	if new_menu != onready_menu:
+		AudioManager.play_sound(open_sfx)
+	
 	var is_first_opened := false
 	if _menu_stack.is_empty():
 		is_first_opened = true
@@ -118,15 +125,21 @@ func open_menu(new_menu: Node) -> void:
 		_guarded_mouse_reset()
 
 
+
 # Should this be moved into child utilites?
 func close_top_menu() -> void:
+	if _menu_stack.back() != onready_menu:
+		AudioManager.play_sound(close_sfx)
+	elif _menu_stack.back() == onready_menu:
+		AudioManager.play_sound(open_sfx)
+	
 	if _menu_stack.is_empty():
 		return
 	
 	_menu_stack.back().hide()
 	_menu_stack.pop_back()
 	
-	#the start game while loop would crash w/o this btw
+	# the start_game while loop would crash w/o this btw
 	if not _menu_stack.is_empty(): 
 		_menu_stack.back().show()
 	else:
@@ -211,6 +224,7 @@ func _navigate_by_vector(input_vector: Vector2) -> void:
 				
 	if best_candidate_button:
 		best_candidate_button.grab_focus()
+		AudioManager.play_sound(navigate_sfx)
 
 
 func _clear_navigation_focus():

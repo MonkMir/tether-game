@@ -12,7 +12,17 @@ const BASE_SPEED := 100
 const DECELERATION := 400
 const MAX_SPEED := 300
 
-var state = State.COOLDOWN
+@export var thruster_sfx : AudioStream
+@export var disengage_machine : AudioStream
+
+var state = State.COOLDOWN:
+	set(new_state):
+		if new_state == State.ATTACK:
+			AudioManager.play_sound(thruster_sfx, -8.0, self, true)
+		elif new_state == State.DECELERATE:
+			AudioManager.stop_sound(thruster_sfx, self)
+			AudioManager.play_sound(disengage_machine, -20.0, self, true)
+		state = new_state
 var _is_in_bounds := false
 var _target_point := Vector2.INF
 var _distance_to_target : float = -INF

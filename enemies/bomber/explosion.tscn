@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bicsicm0jambh"]
 
 [ext_resource type="Script" uid="uid://ddt6k33dqf1yk" path="res://enemies/bomber/explosion.gd" id="1_d88ag"]
+[ext_resource type="AudioStream" uid="uid://basni2nm73sqw" path="res://assets/sound_effects/large_explosion.wav" id="2_2n748"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1h8a8"]
 radius = 56.0
@@ -47,6 +48,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 0.34117648, 0, 1, 0.35686275, 0.1803921
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_d88ag")
+large_explosion_sfx = ExtResource("2_2n748")
 
 [node name="Hitbox" type="CollisionShape2D" parent="." unique_id=1924089520]
 shape = SubResource("CircleShape2D_1h8a8")

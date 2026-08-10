@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dbd4nfgtdauq8"]
 
 [ext_resource type="Script" uid="uid://b1uny31w4pb81" path="res://enemies/parabolic/parabolic_dart.gd" id="1_rp2uv"]
+[ext_resource type="AudioStream" uid="uid://c3wo71t5tvuxo" path="res://assets/sound_effects/parabolic_shot.wav" id="2_lxl1a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c37ne"]
 radius = 2.43789
@@ -25,6 +26,7 @@ colors = PackedColorArray(1, 1, 1, 1, 0.0627451, 0, 0.44313726, 0.8117647, 0.062
 
 [node name="Parabolic Dart" type="Area2D" unique_id=1545782455]
 script = ExtResource("1_rp2uv")
+purple_shot = ExtResource("2_lxl1a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1508892101]
 shape = SubResource("CircleShape2D_c37ne")

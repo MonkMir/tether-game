@@ -9,6 +9,7 @@ enum State {
 
 
 @export var rebound_force: int = 320
+@export var parabolic_special_sfx : AudioStream
 
 var state := State.PASSIVE:
 	set(new_state):
@@ -66,6 +67,7 @@ func _enter_special_state():
 
 
 func _enter_excited_state():
+	AudioManager.play_sound(parabolic_special_sfx, -5.0, self, true)
 	attack_power = 100
 	
 	_hitbox_default.disabled = true

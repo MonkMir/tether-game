@@ -9,16 +9,21 @@ enum State {
 #const MAX_SPEED_LIMIT : int = 2000
 #const MIN_SPEED_LIMIT : int = 1000
 
+@export var arrow_special_sfx : AudioStream
+@export var thruster_sfx : AudioStream
+
 var state := State.WRECKING_BALL:
 	set(new_state):
 		state = new_state
 		if state == State.SPECIAL:
 			_thruster_particles.show()
+			AudioManager.play_sound(arrow_special_sfx, 0.0)
+			AudioManager.play_sound(thruster_sfx, 1.0, self, true)
 			_set_target()
 
 var launch_speed : float = 1000
 
-@onready var _thruster_particles = %ThrusterParticles
+@onready var _thruster_particles := %ThrusterParticles
 
 
 func _ready():

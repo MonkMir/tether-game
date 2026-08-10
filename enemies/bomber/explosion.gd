@@ -4,6 +4,8 @@ extends Projectile
 const ATTACK_POWER : int = 50
 
 
+@export var large_explosion_sfx : AudioStream
+
 @onready var _timer := $Timer
 @onready var _hitbox = $Hitbox
 @onready var _smoke_particles := $SmokeParticles
@@ -14,6 +16,7 @@ func _ready():
 	_timer.start()
 	_smoke_particles.emitting = true
 	_ember_particles.emitting = true
+	AudioManager.play_sound(large_explosion_sfx, -2.0)
 
 
 func _on_area_entered(_area):

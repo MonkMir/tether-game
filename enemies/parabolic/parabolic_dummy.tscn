@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dbax4wv030pfo"]
 
 [ext_resource type="Script" uid="uid://cm1ci4a30bkbl" path="res://enemies/parabolic/parabolic_dummy.gd" id="1_57bc0"]
+[ext_resource type="AudioStream" uid="uid://xb2psh2utc3e" path="res://assets/sound_effects/parabolic_special_loop.wav" id="2_4nmu3"]
 [ext_resource type="Texture2D" uid="uid://c0nc514ct82ix" path="res://enemies/parabolic/parabolic_sprite_tg.png" id="2_c2ok2"]
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="3_j0nak"]
 
@@ -26,6 +27,7 @@ collision_layer = 2
 collision_mask = 5
 mass = 0.5
 script = ExtResource("1_57bc0")
+parabolic_special_sfx = ExtResource("2_4nmu3")
 
 [node name="PhysicsShape" type="CollisionShape2D" parent="." unique_id=1272671913]
 position = Vector2(0.1, 0.25)

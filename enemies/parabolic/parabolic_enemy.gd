@@ -6,6 +6,9 @@ enum State {
 	REPOSITION,
 }
 
+@export_group("Sound Effects")
+@export var disengage_maching_sfx : AudioStream
+
 @export_group("Movement Constants")
 @export var SPEED_GROWTH := 400
 @export var MAX_SPEED := 900
@@ -22,7 +25,11 @@ enum State {
 
 @export var dart_scene : PackedScene
 
-var state = State.GO_TO_PATH
+var state = State.GO_TO_PATH:
+	set(new_state):
+		if new_state == State.ATTACK:
+			AudioManager.play_sound(disengage_maching_sfx, -20.0)
+		state = new_state
 var previous_state = null
 
 var target_point_on_path := Vector2(INF, INF)

@@ -14,6 +14,16 @@ enum State {
 @export var parabolic_dummy_scene: PackedScene
 @export var tether: PackedScene
 
+@export_group("Sound Effects")
+@export var tether_charge_sfx: AudioStream
+@export var tether_ready_sfx: AudioStream
+@export var tether_fail_sfx: AudioStream
+@export var tether_latch_sfx: AudioStream
+@export var light_hit_sfx: AudioStream
+@export var heavy_hit_sfx: AudioStream
+@export var electric_crackle_sfx: AudioStream
+
+
 @export_group("Movement Physics")
 @export var move_speed := 250.0
 @export var acceleration: float = 12.0
@@ -30,11 +40,23 @@ enum State {
 var state := State.IDLE:
 	set(new_state):
 		#print(new_state)
-		if new_state == State.TETHERED:
-			SignalBus.tether_toggled.emit(true)
-		elif state == State.TETHERED and new_state != State.TETHERED:
+		
+		if state == State.TETHERED and new_state != State.TETHERED:
 			SignalBus.tether_toggled.emit(false)
-		#print("tether state: " + str(new_state))
+			
+		elif state == State.CHARGED and new_state == State.IDLE:
+			AudioManager.play_sound(tether_fail_sfx)
+
+		if new_state == State.CHARGING:
+			AudioManager.play_sound(tether_charge_sfx, -6.0)
+			
+		elif new_state == State.TETHERED:
+			SignalBus.tether_toggled.emit(true)
+			AudioManager.play_sound(tether_latch_sfx)
+			
+		elif new_state == State.CHARGED:
+			AudioManager.play_sound(tether_ready_sfx, 0.0, self, false)
+			
 		state = new_state
 
 # NODE REFERENCES
@@ -145,6 +167,10 @@ func receive_damage(damage):
 	if is_invincible or damage == 0:
 		return
 	
+	AudioManager.play_sound(light_hit_sfx, 2.0)
+	AudioManager.play_sound(heavy_hit_sfx, 4.0)
+	AudioManager.play_sound(electric_crackle_sfx, 4.0)
+	
 	is_invincible = true
 	i_frame_timer.start()
 	
@@ -222,6 +248,7 @@ func _charge_tether():
 
 
 func _exit_charge():
+	AudioManager.stop_sound(tether_charge_sfx)
 	charge_particles.emitting = false
 	charge_particles.damping_min = _early_damping_value
 	_charge_timer.stop()

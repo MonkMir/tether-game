@@ -6,8 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://dbax4wv030pfo" path="res://enemies/parabolic/parabolic_dummy.tscn" id="4_8t03j"]
 [ext_resource type="PackedScene" uid="uid://3s58x1bgjui4" path="res://player/tether.tscn" id="5_2ieo8"]
 [ext_resource type="Texture2D" uid="uid://du4mwh15881nf" path="res://player/player_sprite_tg.png" id="6_boad6"]
+[ext_resource type="AudioStream" uid="uid://bqoivdj8t6mpk" path="res://assets/sound_effects/tether_charge.wav" id="6_ebec5"]
+[ext_resource type="AudioStream" uid="uid://cok64moud0iit" path="res://assets/sound_effects/tether_ready_flash.wav" id="7_kb6p2"]
 [ext_resource type="Texture2D" uid="uid://bclhsvgijdcpy" path="res://player/player_reverse_tg.png" id="7_rgyib"]
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="7_yllr7"]
+[ext_resource type="AudioStream" uid="uid://c28wu4eteiff5" path="res://assets/sound_effects/tether_fail.wav" id="8_wodsf"]
+[ext_resource type="AudioStream" uid="uid://by1x51pbas0e6" path="res://assets/sound_effects/tether_latch.wav" id="9_32hag"]
+[ext_resource type="AudioStream" uid="uid://cu30lo4gpqrmc" path="res://assets/sound_effects/light_hit.wav" id="10_wodsf"]
+[ext_resource type="AudioStream" uid="uid://dxam8lku1pkav" path="res://assets/sound_effects/heavy_hit.wav" id="10_yllr7"]
+[ext_resource type="AudioStream" uid="uid://bylsd3s2cstvt" path="res://assets/sound_effects/electric_crackle.wav" id="11_kb6p2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2ck4e"]
 radius = 31.016125
@@ -70,6 +77,13 @@ arrow_dummy_scene = ExtResource("2_rgyib")
 bomber_dummy_scene = ExtResource("3_hg6s5")
 parabolic_dummy_scene = ExtResource("4_8t03j")
 tether = ExtResource("5_2ieo8")
+tether_charge_sfx = ExtResource("6_ebec5")
+tether_ready_sfx = ExtResource("7_kb6p2")
+tether_fail_sfx = ExtResource("8_wodsf")
+tether_latch_sfx = ExtResource("9_32hag")
+light_hit_sfx = ExtResource("10_wodsf")
+heavy_hit_sfx = ExtResource("10_yllr7")
+electric_crackle_sfx = ExtResource("11_kb6p2")
 
 [node name="TetherRangeArea" type="Area2D" parent="." unique_id=1682285353]
 visible = false

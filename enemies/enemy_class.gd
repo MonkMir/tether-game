@@ -4,6 +4,9 @@ class_name Enemy
 
 @export var speed : float
 
+var light_hit_sfx : AudioStream = preload("res://assets/sound_effects/light_hit.wav")
+var heavy_hit_sfx : AudioStream = preload("res://assets/sound_effects/heavy_hit.wav")
+
 # a constant?
 var enemy_name : String
 var health : int = 100
@@ -64,10 +67,12 @@ func get_despawn_rect() -> Rect2:
 func receive_damage(damage: int):
 	if not health_bar:
 		return
+	AudioManager.play_sound(light_hit_sfx, 4.0)
 	health -= damage
 	health_bar.health = health
 
 
 func die():
+	AudioManager.play_sound(heavy_hit_sfx, 2.0)
 	SignalBus.enemy_died.emit(self.get_instance_id())
 	queue_free()

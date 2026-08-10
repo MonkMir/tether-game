@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://d4ht5o6c2k2ro" path="res://enemies/arrow/arrow_dummy.gd" id="1_c41mt"]
 [ext_resource type="Texture2D" uid="uid://cu4oa6v8nscgi" path="res://enemies/arrow/arrow_enemy_sprite_tg.png" id="2_2tmup"]
+[ext_resource type="AudioStream" uid="uid://dkivdsxdksxfp" path="res://assets/sound_effects/arrow_special.wav" id="2_t7q7f"]
+[ext_resource type="AudioStream" uid="uid://c5vs6jt8wepyn" path="res://assets/sound_effects/arrow_fly_hum.wav" id="3_8ea8r"]
 [ext_resource type="PackedScene" uid="uid://ce7vb62j3bjsi" path="res://components/health_bar.tscn" id="3_lf3dv"]
 
 [sub_resource type="Curve" id="Curve_2tmup"]
@@ -23,6 +25,8 @@ collision_layer = 4
 collision_mask = 4
 mass = 0.5
 script = ExtResource("1_c41mt")
+arrow_special_sfx = ExtResource("2_t7q7f")
+thruster_sfx = ExtResource("3_8ea8r")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=262126794]
 position = Vector2(-0.0082035065, 0.5146446)
