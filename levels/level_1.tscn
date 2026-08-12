@@ -54,7 +54,6 @@ texture = SubResource("GradientTexture2D_aerfg")
 light_mask = 0
 position = Vector2(160, 88)
 slide_on_ceiling = true
-is_invincible = true
 
 [node name="EnemySpawner" type="Node2D" parent="." unique_id=2100611888]
 script = ExtResource("2_l53as")

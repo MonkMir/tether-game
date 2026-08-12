@@ -6,7 +6,7 @@ const ATTACK_POWER := 13
 
 @export var purple_shot : AudioStream
 
-var _speed := 1.5
+var _speed := 60
 var _direction : Vector2
 
 
@@ -19,7 +19,7 @@ func _ready():
 func _process(delta: float):
 	super(delta)
 	
-	position += _speed * _direction
+	position += _speed * _direction * delta
 
 
 func _on_player_entered(hurtbox):
