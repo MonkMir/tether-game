@@ -34,17 +34,6 @@ func explode():
 	queue_free()
 
 
-func evaluate_ancestry_for_group(target_group: String) -> bool:
-	var ancestor_node = get_parent()
-	
-	while ancestor_node != null:
-		if ancestor_node.is_in_group(target_group):
-			return true
-		ancestor_node = ancestor_node.get_parent()
-	
-	return false
-
-
 func _on_timer_timeout():
 	queue_free()
 	explode()

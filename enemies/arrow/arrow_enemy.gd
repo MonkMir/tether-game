@@ -19,9 +19,13 @@ var state = State.COOLDOWN:
 	set(new_state):
 		if new_state == State.ATTACK:
 			AudioManager.play_sound(thruster_sfx, -8.0, self, true)
+			attack_power = 15
 		elif new_state == State.DECELERATE:
 			AudioManager.stop_sound(thruster_sfx, self)
 			AudioManager.play_sound(disengage_machine, -20.0, self, true)
+			attack_power = 12
+		elif new_state == State.COOLDOWN:
+			attack_power = 8
 		state = new_state
 var _is_in_bounds := false
 var _target_point := Vector2.INF
@@ -35,8 +39,6 @@ func _ready():
 	super()
 	enemy_name = "arrow"
 	speed = BASE_SPEED
-	attack_power = 15
-	
 
 
 func _process(delta: float):
@@ -45,7 +47,7 @@ func _process(delta: float):
 	
 	match state:
 		State.COOLDOWN:
-			var resting_speed := 20.0
+			var resting_speed := 18.5
 			
 			if timer.time_left == 0:
 				timer.start() # clean up with await
@@ -83,6 +85,14 @@ func _process(delta: float):
 		position = position.clamp(get_static_camera_rect().position, get_static_camera_rect().end)
 
 
+func unspin():
+	sprite.rotation = 0
+	collision.rotation = 0
+	
+	# Be deathly cautious adding parameters here that could cause silent errors
+	GameState.combo_counter += 1
+
+
 func _track_state_timeout():
 	if not player:
 		return
@@ -93,11 +103,3 @@ func _track_state_timeout():
 	#self.rotation = fmod(rotation, 2 * PI) #handles rotation overflow
 	unspin()
 	state = State.ATTACK
-
-
-func unspin():
-	sprite.rotation = 0
-	collision.rotation = 0
-	
-	# Be deathly cautious adding parameters here that could cause silent errors
-	GameState.combo_counter += 1

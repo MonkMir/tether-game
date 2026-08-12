@@ -8,7 +8,7 @@ enum State {
 }
 
 
-@export var rebound_force: int = 320
+@export var rebound_force: int = 385
 @export var parabolic_special_sfx : AudioStream
 
 var state := State.PASSIVE:
@@ -58,7 +58,7 @@ func _physics_process(delta: float):
 
 func _enter_special_state():
 	gravity_scale = 0.0
-	attack_power = 50
+	attack_power = 70
 	
 	if linear_velocity.y >= 0:
 		_rebound_direction = Vector2.UP
@@ -70,8 +70,8 @@ func _enter_excited_state():
 	AudioManager.play_sound(parabolic_special_sfx, -5.0, self, true)
 	attack_power = 100
 	
-	_hitbox_default.disabled = true
-	_hitbox_excited.disabled = false
+	_hitbox_default.set_deferred("disabled", true)
+	_hitbox_excited.set_deferred("disabled", false)
 	_excited_particles.emitting = true
 
 

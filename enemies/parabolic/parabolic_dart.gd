@@ -1,7 +1,7 @@
 extends Projectile
 
 
-const ATTACK_POWER := 10
+const ATTACK_POWER := 13
 
 
 @export var purple_shot : AudioStream
@@ -26,4 +26,5 @@ func _on_player_entered(hurtbox):
 	if hurtbox.is_in_group("player"):
 		player.receive_damage(ATTACK_POWER)
 	
-	SignalBus.player_hit.emit(player.global_position, position)
+	if player:
+		SignalBus.player_hit.emit(player.global_position, position)

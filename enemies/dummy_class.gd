@@ -53,7 +53,7 @@ func _physics_process(delta: float):
 		is_wrecking_ball = false
 	
 	if is_wrecking_ball:
-		var speed_to_damage_divisor : int = 15
+		var speed_to_damage_divisor : float = 15
 		attack_power = linear_velocity.length() / speed_to_damage_divisor
 	
 	if get_despawn_rect().has_point(global_position):
@@ -89,7 +89,7 @@ func _on_area_entered(_area: Area2D):
 		_area.receive_damage(attack_power)
 		SignalBus.enemy_hit.emit(self.global_position, _area.global_position)
 	
-	var max_self_damage: float = 16.0
+	var max_self_damage: float = 11.5
 	var self_damage: float
 	var to_max_speed_ratio : float = inverse_lerp(0, speed_limit, linear_velocity.length())
 	

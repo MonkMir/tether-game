@@ -1,7 +1,7 @@
 extends Projectile
 
 
-const ATTACK_POWER : int = 50
+const ATTACK_POWER : int = 65
 
 
 @export var large_explosion_sfx : AudioStream

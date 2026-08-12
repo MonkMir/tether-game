@@ -121,11 +121,11 @@ func _on_enemy_killed(victim_id: int) -> void:
 	
 	match attacker_type:
 		"arrow":
-			score_growth_sample = [1, 4, 8, 10]
+			score_growth_sample = [1, 3, 4, 6, 7]
 		"bomber":
-			score_growth_sample = [1, 2, 2, 2, 3]
+			score_growth_sample = [1, 2, 3, 4, 5]
 		"parabolic":
-			score_growth_sample = [1, 3, 5]
+			score_growth_sample = [1, 3, 5, 8, 10]
 	
 	if toss_kill_count <= score_growth_sample.size():
 		score_reward = score_growth_sample[toss_kill_count -1]

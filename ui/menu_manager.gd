@@ -108,10 +108,12 @@ func _input(event: InputEvent):
 #region MANAGER FUNCTIONS 
 # MENU TOGGLING
 
-
+# Hey are you stupid or something? make the audio file an optional argument
 func open_menu(new_menu: Node) -> void:
-	if new_menu != onready_menu:
+	if new_menu != onready_menu and new_menu != %GameOverScreen:
 		AudioManager.play_sound(open_sfx)
+	elif new_menu == %GameOverScreen:
+		AudioManager.play_sound(close_sfx, 6.0)
 	
 	var is_first_opened := false
 	if _menu_stack.is_empty():

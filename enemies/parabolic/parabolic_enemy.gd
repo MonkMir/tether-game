@@ -48,7 +48,7 @@ var movement_direction : Vector2 = Vector2.RIGHT
 func _ready():
 	super()
 	enemy_name = "parabolic"
-	attack_power = 10
+	attack_power = 9
 
 func _process(delta: float):
 	super(delta)

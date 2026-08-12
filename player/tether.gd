@@ -1,9 +1,9 @@
 extends Node2D
 
 
-@export var max_length : int = 10
-@export var spring_stiffness : float = 1.125
-@export var friction_damping := 5.0
+@export var max_length : int = 12
+@export var spring_stiffness : float = 1.4
+@export var friction_damping := 5.5
 
 var point_distance : float
 var current_max_length : float

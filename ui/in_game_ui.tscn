@@ -170,6 +170,7 @@ theme_override_font_sizes/font_size = 12
 text = "QUIT"
 
 [node name="GameOverScreen" type="MarginContainer" parent="MenuManager" unique_id=704737577]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -230,7 +231,7 @@ text = "Your text here :O"
 layout_mode = 2
 
 [node name="InputGuardTimer" type="Timer" parent="MenuManager/GameOverScreen" unique_id=833903203]
-wait_time = 1.25
+wait_time = 1.0499999999999998
 one_shot = true
 
 [connection signal="timeout" from="MenuManager/DelayUntilRepeat" to="MenuManager" method="_on_delay_until_repeat_timeout"]
