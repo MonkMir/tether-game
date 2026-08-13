@@ -98,7 +98,6 @@ theme = ExtResource("5_6rrfl")
 text = "QUIT"
 
 [node name="MainMenu" type="MarginContainer" parent="MenuManager" unique_id=13769595 node_paths=PackedStringArray("default_focus_object")]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -146,7 +145,6 @@ alignment = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("5_6rrfl")
-theme_override_font_sizes/font_size = 12
 text = "PLAY"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MenuManager/MainMenu/VBoxContainer" unique_id=648869905]
@@ -159,18 +157,17 @@ alignment = 1
 [node name="SettingsButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer/HBoxContainer" unique_id=2055075532]
 layout_mode = 2
 theme = ExtResource("5_6rrfl")
-theme_override_font_sizes/font_size = 12
 text = "SETTINGS"
 
 [node name="QuitButton" type="Button" parent="MenuManager/MainMenu/VBoxContainer/HBoxContainer" unique_id=1645163010]
 layout_mode = 2
 focus_neighbor_left = NodePath("../SettingsButton")
 theme = ExtResource("5_6rrfl")
-theme_override_font_sizes/font_size = 12
 text = "QUIT"
 
 [node name="GameOverScreen" type="MarginContainer" parent="MenuManager" unique_id=704737577]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

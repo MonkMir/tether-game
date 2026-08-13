@@ -43,6 +43,8 @@ func _ready():
 	GameState.pause_toggled.connect(_on_pause_toggled)
 	SignalBus.game_over.connect(_on_game_over)
 	
+	_get_buttons(self)
+	
 	dot_tilt_tolerance = cos(deg_to_rad(tolerance_angle_degrees))
 	
 	for node in get_children():
@@ -226,7 +228,6 @@ func _navigate_by_vector(input_vector: Vector2) -> void:
 				
 	if best_candidate_button:
 		best_candidate_button.grab_focus()
-		AudioManager.play_sound(navigate_sfx)
 
 
 func _clear_navigation_focus():
@@ -259,7 +260,14 @@ func _is_mouse_inside_window() -> bool:
 	var mouse_position : Vector2 = get_viewport().get_mouse_position()
 	return get_viewport().get_visible_rect().has_point(mouse_position)
 
-# BUTTON ANIMATION
+# BUTTON ANIMATION AND AUDIO
+
+func _get_buttons(node: Node) -> void:
+	if node is Button:
+		node.mouse_entered.connect(_on_highlight)
+		node.focus_entered.connect(_on_highlight)
+	for child in node.get_children():
+		_get_buttons(child)
 
 
 func _initialize_button_animations(currentNode: Node) -> void:
@@ -331,7 +339,7 @@ func _on_game_over():
 	$GameOverScreen.initialize_game_over_screen()
 #endregion
 
-# TIMEOUT CALLBACKS
+# MANAGER CALLBACKS
 
 func _on_delay_until_repeat_timeout():
 	repeat_timer.start()
@@ -339,3 +347,7 @@ func _on_delay_until_repeat_timeout():
 
 func _on_repeat_interval_timeout():
 	_navigate_by_vector(_joystick_vector)
+
+
+func _on_highlight() -> void:
+	AudioManager.play_sound(navigate_sfx)
