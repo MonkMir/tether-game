@@ -10,6 +10,7 @@ enum State {
 @export var explosion_scene : PackedScene
 
 var state := State.PASSIVE
+var is_exploded := false
 
 @onready var self_destruct_timer := $Timer
 @onready var _trigger_zone := $Trigger/TriggerZone
@@ -36,6 +37,10 @@ func _physics_process(delta: float):
 
 
 func self_destruct():
+	if is_exploded:
+		return
+	
+	is_exploded = true
 	var explosion := explosion_scene.instantiate()
 	add_child(explosion)
 	# Who is parent?

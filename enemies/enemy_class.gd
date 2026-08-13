@@ -67,12 +67,15 @@ func get_despawn_rect() -> Rect2:
 func receive_damage(damage: int):
 	if not health_bar:
 		return
+	AudioManager.stop_sound(light_hit_sfx)
 	AudioManager.play_sound(light_hit_sfx, 4.0)
 	health -= damage
 	health_bar.health = health
 
 
 func die():
-	AudioManager.play_sound(heavy_hit_sfx, 2.0)
+	AudioManager.stop_sound(heavy_hit_sfx)
+	AudioManager.play_sound(light_hit_sfx, -1.0)
+	AudioManager.play_sound(heavy_hit_sfx, 3.0)
 	SignalBus.enemy_died.emit(self.get_instance_id())
 	queue_free()

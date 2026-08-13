@@ -30,19 +30,3 @@ script = ExtResource("1_jisk1")
 [node name="SFXPlayer11" type="AudioStreamPlayer" parent="SFXPool" unique_id=478227110]
 
 [node name="SFXPlayer12" type="AudioStreamPlayer" parent="SFXPool" unique_id=179008795]
-
-[node name="SFXPlayer13" type="AudioStreamPlayer" parent="SFXPool" unique_id=2126160753]
-
-[node name="SFXPlayer14" type="AudioStreamPlayer" parent="SFXPool" unique_id=2044792220]
-
-[node name="SFXPlayer15" type="AudioStreamPlayer" parent="SFXPool" unique_id=1160374456]
-
-[node name="SFXPlayer16" type="AudioStreamPlayer" parent="SFXPool" unique_id=889727104]
-
-[node name="SFXPlayer17" type="AudioStreamPlayer" parent="SFXPool" unique_id=642268525]
-
-[node name="SFXPlayer18" type="AudioStreamPlayer" parent="SFXPool" unique_id=481178935]
-
-[node name="SFXPlayer19" type="AudioStreamPlayer" parent="SFXPool" unique_id=952877663]
-
-[node name="SFXPlayer20" type="AudioStreamPlayer" parent="SFXPool" unique_id=605200634]

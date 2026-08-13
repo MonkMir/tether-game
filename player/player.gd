@@ -104,7 +104,6 @@ func _ready():
 	$TetherRangeArea.area_exited.connect(func(_area): _enemies_in_range -= 1)
 
 
-
 func _unhandled_input(event: InputEvent) -> void:
 	match state:
 		State.IDLE:
